@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import type { ReactNode } from 'react'
+import { useReducedMotion } from 'framer-motion'
 import { Container } from '../ui/Container'
 import { Link } from '../ui/Link'
 import { cn } from '../ui/cn'
+import { useActiveSection } from '../../hooks/useActiveSection'
+import { CommandPalette } from './CommandPalette'
 
 type NavItem = {
   label: string
@@ -13,42 +16,18 @@ type PageShellProps = {
   children: ReactNode
   navItems?: NavItem[]
   className?: string
+  onClearFilters?: () => void
 }
 
-export function PageShell({ children, navItems = [], className }: PageShellProps) {
-  const [activeHref, setActiveHref] = useState(navItems[0]?.href ?? '')
-
-  useEffect(() => {
-    if (typeof document === 'undefined' || navItems.length === 0) return
-
-    const sectionIds = navItems
-      .map((item) => item.href.replace('#', ''))
-      .filter((id) => Boolean(id))
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((section): section is HTMLElement => Boolean(section))
-
-    if (sections.length === 0) return
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveHref(`#${entry.target.id}`)
-          }
-        })
-      },
-      { rootMargin: '-20% 0px -60% 0px', threshold: 0.1 },
-    )
-
-    sections.forEach((section) => observer.observe(section))
-
-    return () => observer.disconnect()
-  }, [navItems])
+export function PageShell({ children, navItems = [], className, onClearFilters }: PageShellProps) {
+  const reduceMotion = useReducedMotion() ?? false
+  const navHrefs = useMemo(() => navItems.map((item) => item.href), [navItems])
+  const activeHref = useActiveSection(navHrefs)
 
   return (
     <div className={cn('relative min-h-screen text-slate-100', className)}>
       <div className="pointer-events-none fixed inset-0 noise-overlay opacity-60" aria-hidden />
+      <CommandPalette navItems={navItems} onClearFilters={onClearFilters} />
       <header className="sticky top-0 z-40 border-b border-white/10 bg-night-950/70 backdrop-blur-xl">
         <Container className="flex items-center justify-between py-4">
           <div className="flex items-center gap-3">
@@ -71,12 +50,13 @@ export function PageShell({ children, navItems = [], className }: PageShellProps
                   className={cn('relative', isActive && 'text-white')}
                   aria-current={isActive ? 'page' : undefined}
                 >
-                  <span className="relative">
+                  <span className="relative pb-2">
                     {item.label}
                     <span
                       className={cn(
-                        'absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[rgb(var(--accent-1)/0.9)] opacity-0 transition',
-                        isActive && 'opacity-100',
+                        'absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-[rgb(var(--accent-1)/0.9)]',
+                        !reduceMotion && 'transition-transform duration-200',
+                        isActive && 'scale-x-100',
                       )}
                     />
                   </span>

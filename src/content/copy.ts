@@ -3,10 +3,11 @@ export const heroCopy = {
   title: 'Paradise Ecosystem organiza catalogos, modulos y decisiones con UI promptable.',
   description:
     'Landing informativa para equipos product/engineering. Sin venta, sin humo: arquitectura clara, modulos vivos y narrativa de copiloto. La IA viva es parte del roadmap, no del presente.',
+  subclaim: 'Core = identidad + estandares + catalogo. Modulos = repos independientes.',
   ctas: {
-    catalog: 'Catalogo',
-    showcase: 'Demo / Showcase',
-    github: 'GitHub',
+    catalog: 'Ver modulos',
+    showcase: 'Ver showcase',
+    github: 'GitHub Core',
   },
 }
 

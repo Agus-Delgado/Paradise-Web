@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { type CSSProperties, useMemo, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { links, roadmap } from './data/content'
 import {
@@ -6,7 +6,6 @@ import {
   paradiseCoreCopy,
   pillarsCopy,
   principlesCopy,
-  reviewFlowCopy,
   roadmapCopy,
   whatIsCopy,
 } from './content/copy'
@@ -59,18 +58,26 @@ const routerChips = [
   },
 ]
 
+const heroMeta = ['Zero-cost', 'Mock-first', 'Modular', 'Docs-first']
+const showcaseSteps = ['Explore pillars', 'Open a module', 'See artifacts (alerts/export/docs)', 'Share/hand off']
+const reviewFlowPrompt =
+  'review flow (2 min): explore pillars -> open a module -> see artifacts (alerts/export/docs) -> share/hand off'
+
 function App() {
   const reduceMotion = useReducedMotion() ?? false
   const [moduleQuery, setModuleQuery] = useState('')
   const [selectedPillar, setSelectedPillar] = useState<Pillar | 'all'>('all')
+  const [hoveredPillar, setHoveredPillar] = useState<Pillar | null>(null)
   const [selectedStatus, setSelectedStatus] = useState<Status | 'all'>('all')
   const [routerSelection, setRouterSelection] = useState<string | null>(null)
   const [highlightTags, setHighlightTags] = useState<string[]>([])
 
+  const activePillar = hoveredPillar ?? (selectedPillar === 'all' ? null : selectedPillar)
+
   const filteredModules = useMemo(() => {
     let list = modules
-    if (selectedPillar !== 'all') {
-      list = filterByPillar(list, selectedPillar)
+    if (activePillar) {
+      list = filterByPillar(list, activePillar)
     }
     if (selectedStatus !== 'all') {
       list = filterByStatus(list, selectedStatus)
@@ -82,12 +89,20 @@ function App() {
       const haystack = `${module.name} ${module.oneLiner} ${module.tags.join(' ')}`.toLowerCase()
       return haystack.includes(query)
     })
-  }, [moduleQuery, selectedPillar, selectedStatus])
+  }, [moduleQuery, activePillar, selectedStatus])
 
   const highlightedModules = useMemo(() => {
-    if (!highlightTags.length) return new Set<string>()
-    return new Set(modules.filter((module) => module.tags.some((tag) => highlightTags.includes(tag))).map((m) => m.id))
-  }, [highlightTags])
+    const ids = new Set<string>()
+    if (highlightTags.length) {
+      modules
+        .filter((module) => module.tags.some((tag) => highlightTags.includes(tag)))
+        .forEach((module) => ids.add(module.id))
+    }
+    if (activePillar) {
+      modules.filter((module) => module.pillar === activePillar).forEach((module) => ids.add(module.id))
+    }
+    return ids
+  }, [highlightTags, activePillar])
 
   const suggestedModules = useMemo(() => {
     if (!highlightTags.length) return []
@@ -95,14 +110,12 @@ function App() {
   }, [highlightTags])
 
   const navItems = [
-    { label: 'Hero', href: '#hero' },
-    { label: 'What', href: '#what' },
+    { label: 'About', href: '#about' },
     { label: 'Principles', href: '#principles' },
     { label: 'Pillars', href: '#pillars' },
     { label: 'Modules', href: '#modules' },
     { label: 'Showcase', href: '#showcase' },
     { label: 'Roadmap', href: '#roadmap' },
-    { label: 'Footer', href: '#footer' },
   ]
 
   const handleExplore = (chip: (typeof routerChips)[number]) => {
@@ -115,9 +128,25 @@ function App() {
     }
   }
 
+  const handleClearFilters = () => {
+    setSelectedPillar('all')
+    setSelectedStatus('all')
+    setModuleQuery('')
+    setHoveredPillar(null)
+  }
+
+  const handleStartTour = () => {
+    setSelectedPillar(Pillar.Ops)
+    setHoveredPillar(null)
+    const target = document.getElementById('modules')
+    if (target) {
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
+    }
+  }
+
   return (
     <ThemeProvider>
-      <PageShell navItems={navItems}>
+      <PageShell navItems={navItems} onClearFilters={handleClearFilters}>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-50 rounded-full bg-white px-4 py-2 text-sm font-semibold text-night-950 shadow"
@@ -126,30 +155,38 @@ function App() {
         </a>
 
         <div id="main" className="relative">
-          <HeroAurora className="pt-20">
+          <HeroAurora
+            className="pt-20"
+            style={{ '--grid-opacity': 0.04, '--glow-strength': 0.24 } as CSSProperties}
+          >
             <Container id="hero" className="pb-16 md:pt-8">
               <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-                <div>
+                <div className="max-w-[65ch]">
                   <Badge>{heroCopy.kicker}</Badge>
-                  <h1 className="mt-6 font-display text-4xl font-semibold text-white md:text-5xl">
+                  <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight text-white md:text-6xl">
                     {heroCopy.title}
                   </h1>
-                  <p className="mt-4 max-w-xl text-base text-slate-300 md:text-lg">{heroCopy.description}</p>
-                  <div className="mt-6 flex flex-wrap gap-2">
+                  <p className="mt-5 text-base leading-relaxed text-slate-300/85 md:text-lg">
+                    {heroCopy.description}
+                  </p>
+                  <p className="mt-3 text-sm font-medium tracking-wide text-slate-400 md:text-base">
+                    {heroCopy.subclaim}
+                  </p>
+                  <div className="mt-7 flex flex-wrap gap-2">
                     {toneTags.map((tag) => (
                       <Pill key={tag}>{tag}</Pill>
                     ))}
                   </div>
-                  <div className="mt-8 flex flex-wrap gap-3">
+                  <div className="mt-10 flex flex-wrap gap-3">
                     <Link
                       href="#modules"
-                      className="rounded-[var(--radius-pill)] bg-[rgb(var(--accent-1)/0.9)] px-6 py-3 text-sm font-semibold text-night-950 shadow-[0_0_40px_rgb(var(--accent-1)/var(--glow-strength))] hover:bg-[rgb(var(--accent-1)/1)]"
+                      className="rounded-[var(--radius-pill)] bg-[rgb(var(--accent-1)/0.9)] px-6 py-3 text-sm font-semibold text-night-950 shadow-[0_0_40px_rgb(var(--accent-1)/var(--glow-strength))] transition hover:bg-[rgb(var(--accent-1)/1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--accent-1)/0.85)]"
                     >
                       {heroCopy.ctas.catalog}
                     </Link>
                     <Link
                       href="#showcase"
-                      className="rounded-[var(--radius-pill)] border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:border-white/40"
+                      className="rounded-[var(--radius-pill)] border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--accent-1)/0.85)]"
                     >
                       {heroCopy.ctas.showcase}
                     </Link>
@@ -157,10 +194,20 @@ function App() {
                       href="https://github.com/paradise-ecosystem"
                       target="_blank"
                       rel="noreferrer"
-                      className="rounded-[var(--radius-pill)] border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white hover:border-white/40"
+                      className="rounded-[var(--radius-pill)] border border-white/20 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--accent-1)/0.85)]"
                     >
                       {heroCopy.ctas.github}
                     </Link>
+                  </div>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {heroMeta.map((item) => (
+                      <Badge
+                        key={item}
+                        className="border-white/15 bg-white/5 px-3 py-1 text-[0.55rem] font-semibold tracking-[0.28em] text-slate-200"
+                      >
+                        {item}
+                      </Badge>
+                    ))}
                   </div>
                 </div>
                 <div className="grid gap-6">
@@ -202,7 +249,7 @@ function App() {
 
           <Divider className="mx-auto max-w-6xl" />
 
-          <Section id="what" kicker="What is Paradise" title={whatIsCopy.title} description={whatIsCopy.description}>
+          <Section id="about" kicker="What is Paradise" title={whatIsCopy.title} description={whatIsCopy.description}>
             <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
               <div className="rounded-[var(--radius-lg)] border border-white/10 bg-night-900/70 p-6">
                 <p className="prompt-block">What is Paradise</p>
@@ -254,7 +301,12 @@ function App() {
             title={pillarsCopy.title}
             description={pillarsCopy.description}
           >
-            <PillarCards />
+            <PillarCards
+              selectedPillar={selectedPillar}
+              activePillar={activePillar}
+              onSelect={(pillar) => setSelectedPillar(pillar)}
+              onHover={setHoveredPillar}
+            />
           </Section>
 
           <Section
@@ -265,17 +317,43 @@ function App() {
           >
             <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
               <div className="rounded-[var(--radius-lg)] border border-white/10 bg-night-900/70 p-6">
-                <label className="prompt-block" htmlFor="moduleQuery">
-                  Filter modules
-                </label>
-                <input
-                  id="moduleQuery"
-                  value={moduleQuery}
-                  onChange={(event) => setModuleQuery(event.target.value)}
-                  placeholder="Ej: ops, knowledge, mvp"
-                  className="mt-3 w-full rounded-[var(--radius-md)] border border-white/10 bg-night-950/60 px-4 py-3 text-sm text-white shadow-inner transition focus:border-[rgb(var(--accent-1)/0.7)] focus:outline-none"
-                />
-                <div className="mt-5">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="min-w-[220px] flex-1">
+                    <label className="prompt-block" htmlFor="moduleQuery">
+                      Search modules
+                    </label>
+                    <input
+                      id="moduleQuery"
+                      value={moduleQuery}
+                      onChange={(event) => setModuleQuery(event.target.value)}
+                      placeholder="Ej: ops, knowledge, mvp"
+                      className="mt-3 w-full rounded-[var(--radius-md)] border border-white/10 bg-night-950/60 px-4 py-3 text-sm text-white shadow-inner transition focus:border-[rgb(var(--accent-1)/0.7)] focus:outline-none"
+                    />
+                  </div>
+                  <div className="min-w-[220px]">
+                    <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Active filters</p>
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      {selectedPillar !== 'all' && (
+                        <Pill className="border-white/20 bg-white/5 text-slate-200">
+                          {pillarLabel[selectedPillar]}
+                        </Pill>
+                      )}
+                      {selectedStatus !== 'all' && (
+                        <Pill className="border-white/20 bg-white/5 text-slate-200">{statusLabel[selectedStatus]}</Pill>
+                      )}
+                      {moduleQuery.trim() !== '' && (
+                        <Pill className="border-white/20 bg-white/5 text-slate-200">Query</Pill>
+                      )}
+                      {selectedPillar === 'all' && selectedStatus === 'all' && moduleQuery.trim() === '' && (
+                        <span className="text-xs text-slate-400">None</span>
+                      )}
+                      <Button size="sm" variant="ghost" onClick={handleClearFilters}>
+                        Clear filters
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-6">
                   <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">Pillar</p>
                   <div className="mt-3 flex flex-wrap gap-2">
                     <Button
@@ -321,6 +399,23 @@ function App() {
                 </div>
               </div>
               <div className="grid gap-4">
+                {activePillar && (
+                  <div className="flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-md)] border border-white/10 bg-night-950/60 px-4 py-3 text-xs text-slate-300">
+                    <span>
+                      Filtered by: <span className="font-semibold text-white">{pillarLabel[activePillar]}</span>
+                    </span>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => {
+                        setSelectedPillar('all')
+                        setHoveredPillar(null)
+                      }}
+                    >
+                      Clear
+                    </Button>
+                  </div>
+                )}
                 {filteredModules.map((module) => (
                   <ModuleCard
                     key={module.id}
@@ -330,7 +425,7 @@ function App() {
                 ))}
                 {filteredModules.length === 0 && (
                   <div className="rounded-[var(--radius-lg)] border border-dashed border-white/20 bg-night-900/40 p-6 text-sm text-slate-400">
-                    No modules match this filter yet. Ajusta el texto o prueba otro tag.
+                    No modules match this filter.
                   </div>
                 )}
               </div>
@@ -340,47 +435,36 @@ function App() {
           <Section
             id="showcase"
             kicker="Showcase"
-            title={reviewFlowCopy.title}
-            description={reviewFlowCopy.description}
+            title="Paradise Showcase"
+            description="Demo integradora del ecosistema en 2–3 minutos."
           >
-            <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]">
               <div className="rounded-[var(--radius-lg)] border border-white/10 bg-night-900/70 p-6">
-                <p className="prompt-block">Demo integradora</p>
-                <h3 className="mt-3 text-lg font-semibold text-white">Paradise Flow Demo</h3>
+                <p className="prompt-block">2-min tour</p>
+                <h3 className="mt-3 text-lg font-semibold text-white">Quick walkthrough</h3>
                 <p className="mt-2 text-sm text-slate-400">
-                  Simula un flujo completo: intake, routing, memoria y explicacion final. Todo local y determinista.
+                  Flujo de lectura para ubicar pilares, modulos y entregables sin promesas extra.
                 </p>
-                <div className="mt-4 grid gap-2 text-xs text-slate-400">
-                  {[
-                    'Entrada de requerimientos en lenguaje natural',
-                    'Routing determinista por contexto',
-                    'Memoria viva y trazas de auditoria',
-                    'UI promptable para iterar decisiones',
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-2">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[rgb(var(--accent-1)/0.9)]" />
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="rounded-[var(--radius-lg)] border border-white/10 bg-night-900/70 p-6">
-                <p className="prompt-block">{reviewFlowCopy.title}</p>
-                <div className="mt-4 grid gap-3">
-                  {reviewFlowCopy.steps.map((step) => (
-                    <div
-                      key={step.title}
-                      className="rounded-[var(--radius-md)] border border-white/10 bg-night-950/60 p-3"
+                <ol className="mt-5 grid gap-3">
+                  {showcaseSteps.map((step, index) => (
+                    <li
+                      key={step}
+                      className="flex items-center gap-3 rounded-[var(--radius-md)] border border-white/10 bg-night-950/60 px-4 py-3 text-sm text-slate-200"
                     >
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm font-semibold text-white">{step.title}</p>
-                        <span className="text-xs text-slate-400">{step.time}</span>
-                      </div>
-                      <p className="mt-1 text-xs text-slate-400">{step.detail}</p>
-                    </div>
+                      <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/15 bg-white/5 text-xs font-semibold text-white">
+                        {index + 1}
+                      </span>
+                      <span>{step}</span>
+                    </li>
                   ))}
+                </ol>
+                <div className="mt-6">
+                  <Button size="lg" variant="outline" onClick={handleStartTour}>
+                    Start the tour
+                  </Button>
                 </div>
               </div>
+              <PromptBlock label="Review flow (2 min)" value={reviewFlowPrompt} />
             </div>
           </Section>
 

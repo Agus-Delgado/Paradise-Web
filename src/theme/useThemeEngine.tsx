@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { createThemeTokens, hashString } from './themeEngine'
@@ -13,6 +13,9 @@ type ThemeContextValue = {
 
 const DEFAULT_PROMPT = 'calm aurora network'
 const STORAGE_KEY = 'paradise-theme-prompt'
+const RANDOMIZE_KEY = 'paradise-theme-randomize'
+const THEME_TRANSITION_CLASS = 'theme-transition'
+const TRANSITION_MS = 240
 
 const fallbackTokens: ThemeTokens = {
   accent1: '93 230 255',
@@ -48,12 +51,32 @@ const vibeSamples = [
   'vivid pulse matrix',
 ]
 
+function mulberry32(seed: number) {
+  return () => {
+    let t = (seed += 0x6d2b79f5)
+    t = Math.imul(t ^ (t >>> 15), t | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+function pick<T>(rng: () => number, items: T[]) {
+  return items[Math.floor(rng() * items.length)]
+}
+
 export function useThemeEngineState() {
   const reduceMotion = useReducedMotion() ?? false
   const [prompt, setPromptState] = useState(() => {
     if (typeof window === 'undefined') return DEFAULT_PROMPT
     return window.localStorage.getItem(STORAGE_KEY) ?? DEFAULT_PROMPT
   })
+  const [randomizeIndex, setRandomizeIndex] = useState(() => {
+    if (typeof window === 'undefined') return 0
+    const stored = window.localStorage.getItem(RANDOMIZE_KEY)
+    const parsed = stored ? Number.parseInt(stored, 10) : 0
+    return Number.isNaN(parsed) ? 0 : parsed
+  })
+  const transitionTimeout = useRef<number | null>(null)
 
   const tokens = useMemo(() => createThemeTokens(prompt, reduceMotion), [prompt, reduceMotion])
   const seed = useMemo(() => hashString(prompt || DEFAULT_PROMPT), [prompt])
@@ -84,6 +107,12 @@ export function useThemeEngineState() {
   }, [prompt])
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(RANDOMIZE_KEY, `${randomizeIndex}`)
+    }
+  }, [randomizeIndex])
+
+  useEffect(() => {
     if (typeof document === 'undefined') return
 
     const root = document.documentElement
@@ -98,14 +127,43 @@ export function useThemeEngineState() {
     }
   }, [style])
 
-  const setPrompt = useCallback((value: string) => {
-    setPromptState(value)
+  useEffect(() => {
+    return () => {
+      if (transitionTimeout.current !== null) {
+        window.clearTimeout(transitionTimeout.current)
+      }
+    }
   }, [])
 
+  const triggerTransition = useCallback(() => {
+    if (typeof document === 'undefined' || reduceMotion) return
+    const root = document.documentElement
+    root.classList.add(THEME_TRANSITION_CLASS)
+    if (transitionTimeout.current !== null) {
+      window.clearTimeout(transitionTimeout.current)
+    }
+    transitionTimeout.current = window.setTimeout(() => {
+      root.classList.remove(THEME_TRANSITION_CLASS)
+    }, TRANSITION_MS)
+  }, [reduceMotion])
+
+  const setPrompt = useCallback((value: string) => {
+    triggerTransition()
+    setPromptState(value)
+  }, [triggerTransition])
+
   const randomize = useCallback(() => {
-    const next = vibeSamples[Math.floor(Math.random() * vibeSamples.length)]
+    triggerTransition()
+    const seed = hashString(prompt || DEFAULT_PROMPT) + randomizeIndex + 1
+    const rng = mulberry32(seed)
+    let next = pick(rng, vibeSamples)
+    if (next === prompt && vibeSamples.length > 1) {
+      const currentIndex = vibeSamples.indexOf(next)
+      next = vibeSamples[(currentIndex + 1) % vibeSamples.length]
+    }
     setPromptState(next)
-  }, [])
+    setRandomizeIndex((current) => current + 1)
+  }, [prompt, randomizeIndex, triggerTransition])
 
   return {
     state: { prompt, seed, tokens },
