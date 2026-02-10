@@ -1,0 +1,50 @@
+[
+  {
+    "id": "core",
+    "name": "Paradise Core",
+    "summary": "Identidad, reputacion y permisos para agentes y equipos.",
+    "tags": ["identity", "trust", "governance"],
+    "status": "active",
+    "signals": ["identity graph", "reputation layers", "policy mesh"]
+  },
+  {
+    "id": "orchestrator",
+    "name": "Orchestrator",
+    "summary": "Ruteo inteligente de tareas y contexto multi-agente.",
+    "tags": ["routing", "coordination", "context"],
+    "status": "active",
+    "signals": ["task router", "context lanes", "skill registry"]
+  },
+  {
+    "id": "memory",
+    "name": "Living Memory",
+    "summary": "Memoria viva con trazabilidad y capacidad de auditoria.",
+    "tags": ["memory", "audit", "continuity"],
+    "status": "alpha",
+    "signals": ["event ledger", "timeline index", "trace hooks"]
+  },
+  {
+    "id": "studio",
+    "name": "Paradise Studio",
+    "summary": "Interfaz promptable para modelar flujos y experiencias.",
+    "tags": ["ui", "promptable", "design"],
+    "status": "alpha",
+    "signals": ["canvas blocks", "component registry", "preview lanes"]
+  },
+  {
+    "id": "router",
+    "name": "Copilot Router",
+    "summary": "Narrativa de copiloto para priorizar decisiones criticas.",
+    "tags": ["narrative", "insight", "decision"],
+    "status": "concept",
+    "signals": ["decision cues", "intent score", "risk window"]
+  },
+  {
+    "id": "trust",
+    "name": "Trust Gate",
+    "summary": "Seguridad y compliance sin friccion para flujos AI.",
+    "tags": ["security", "compliance", "policy"],
+    "status": "concept",
+    "signals": ["policy checks", "sandbox lanes", "token budget"]
+  }
+]
