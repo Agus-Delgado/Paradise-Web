@@ -65,61 +65,61 @@ export const principles = [
 
 export const roadmap = [
   {
-    phase: 'Phase 00: Foundation',
+    phase: 'Fase 00: Fundamentos',
     horizon: 'Q1 2026',
     goals: [
-      'Framework base y contratos de modulos',
-      'Modelo de señales y taxonomia',
-      'UI base para catalogos',
+      'Contratos base entre módulos',
+      'Modelo de señales y taxonomía',
+      'Catálogo navegable + docs',
     ],
   },
   {
-    phase: 'Phase 01: Signal Seed',
+    phase: 'Fase 01: Señales y alertas',
     horizon: 'Q2 2026',
     goals: [
-      'Registry local de modulos y plantillas',
-      'Copilot Router con rutas deterministas',
-      'Primer set de prompts guiados',
+      'Plantillas de alertas y playbooks',
+      'Router determinista para casos críticos',
+      'Prompts guiados para briefs/export',
     ],
   },
   {
-    phase: 'Phase 02: Flow Assembly',
+    phase: 'Fase 02: Flujos end-to-end',
     horizon: 'Q3 2026',
     goals: [
-      'Paradise Studio con canvas modular',
-      'Integracion de Living Memory',
-      'Controles de Trust Gate',
+      'Studio/canvas modular para armar recorridos',
+      'Memoria de decisiones y contexto',
+      'Guardrails y controles de confianza',
     ],
   },
   {
-    phase: 'Phase 03: Ecosystem Scale',
+    phase: 'Fase 03: Escala de ecosistema',
     horizon: 'Q4 2026',
     goals: [
-      'Marketplace de modulos',
+      'Galería/marketplace de módulos',
       'Playbooks por industria',
-      'Observabilidad avanzada',
+      'Observabilidad avanzada y reporting',
     ],
   },
 ]
 
 export const reviewFlow = [
   {
-    title: 'Sync signals',
+    title: 'Sincronizar señales',
     time: '0:30',
     detail: 'Se revisan intenciones, contexto y restricciones.',
   },
   {
-    title: 'Route decision',
+    title: 'Decisión de ruteo',
     time: '0:30',
     detail: 'El router determinista define la ruta y agentes.',
   },
   {
-    title: 'Assemble flow',
+    title: 'Armar el flujo',
     time: '0:30',
-    detail: 'Se activa la secuencia de modulos y memoria.',
+    detail: 'Se activa la secuencia de módulos y memoria.',
   },
   {
-    title: 'Review output',
+    title: 'Revisar salida',
     time: '0:30',
     detail: 'Se valida la respuesta con trazas y riesgos.',
   },
@@ -127,33 +127,33 @@ export const reviewFlow = [
 
 export const links = [
   {
-    label: 'Paradise Manifesto',
+    label: 'Manifiesto Paradise',
     href: 'https://paradise.ecosystem/manifesto',
-    note: 'Placeholder: reemplazar con URL real.',
+    note: 'Visión, principios y enfoque del ecosistema.',
   },
   {
-    label: 'Architecture Notes',
+    label: 'Notas de arquitectura',
     href: 'https://paradise.ecosystem/architecture',
-    note: 'Placeholder: reemplazar con URL real.',
+    note: 'Cómo se integran módulos, contratos y entregables.',
   },
   {
-    label: 'Community Channel',
+    label: 'Canal de comunidad',
     href: 'https://paradise.ecosystem/community',
-    note: 'Placeholder: reemplazar con URL real.',
+    note: 'Canal para feedback, solicitudes y colaboraciones.',
   },
 ]
 
 export const narrative = [
   {
-    title: 'Sense',
+    title: 'Señal',
     detail: 'Detecta señales clave y cambios de contexto.',
   },
   {
-    title: 'Route',
-    detail: 'Decide la mejor ruta de ejecucion y asigna agentes.',
+    title: 'Ruteo',
+    detail: 'Decide la mejor ruta de ejecución y asigna agentes.',
   },
   {
-    title: 'Explain',
-    detail: 'Entrega una respuesta con trazabilidad y proximos pasos.',
+    title: 'Explicación',
+    detail: 'Entrega una respuesta con trazabilidad y próximos pasos.',
   },
 ]

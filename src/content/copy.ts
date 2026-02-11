@@ -1,132 +1,132 @@
 export const heroCopy = {
-  kicker: 'AI-native overview',
-  title: 'Paradise Ecosystem organiza catalogos, modulos y decisiones con UI promptable.',
+  kicker: 'Decision Intelligence, sin fricción',
+  title: 'Paradise convierte señales dispersas en decisiones claras: módulos listos para operar, con una experiencia tipo “copiloto”.',
   description:
-    'Landing informativa para equipos product/engineering. Sin venta, sin humo: arquitectura clara, modulos vivos y narrativa de copiloto. La IA viva es parte del roadmap, no del presente.',
-  subclaim: 'Core = identidad + estandares + catalogo. Modulos = repos independientes.',
+    'Un ecosistema modular para equipos de operaciones, producto y datos. Detecta cambios, prioriza incidentes, y estandariza entregables (alerts, briefs, playbooks) para que el equipo actúe más rápido y con menos ruido.',
+  subclaim: 'Unificá señal + contexto + ejecución: desde monitoreo hasta handoff, en un mismo marco.',
   ctas: {
-    catalog: 'Ver modulos',
-    showcase: 'Ver showcase',
-    github: 'GitHub Core',
+    catalog: 'Ver soluciones',
+    showcase: 'Ver demo (2 min)',
+    github: 'Ver repos',
   },
 }
 
 export const whatIsCopy = {
-  title: 'Paradise es un ecosistema AI-first, no un producto de venta.',
+  title: 'Una capa de producto para operar mejor (sin reinventar tu stack).',
   description:
-    'Paradise conecta modulos, agentes y experiencia de usuario en un solo marco. Los features AI live se planifican como roadmap, con foco en confiabilidad y trazabilidad.',
+    'Paradise te ayuda a pasar de “datos y dashboards” a “decisiones y ejecución”: detecta señales relevantes, arma contexto en lenguaje claro y propone un plan accionable. Se integra por módulos, para que puedas empezar pequeño y escalar.',
   bullets: [
-    'Paradise Core no es monorepo',
-    'Cada modulo vive en su repo',
-    'Zero-cost + mock-first para iterar rapido',
-    'UI promptable sin dependencias externas',
+    'Menos ruido: priorización por impacto y severidad',
+    'Más velocidad: playbooks y handoffs listos para usar',
+    'Más confianza: trazabilidad y criterio determinista donde importa',
+    'Modular: activá solo lo que necesitás (Ops, Anomalías, Conocimiento, etc.)',
   ],
 }
 
 export const paradiseCoreCopy = {
   title: 'Paradise Core',
   description:
-    'Capa base para identidad, contexto y politicas. Define contratos entre modulos sin forzar arquitectura unica.',
+    'La base del ecosistema: identidad, contexto y reglas. Define contratos entre módulos para que todo sea consistente sin forzar una única arquitectura.',
   items: [
     {
-      title: 'Identity Fabric',
-      description: 'Identidad, permisos y reputacion para equipos y agentes.',
+      title: 'Identity & Access',
+      description: 'Roles, permisos y ownership para equipos y flujos críticos.',
     },
     {
       title: 'Context Router',
-      description: 'Ruteo determinista de tareas y decisiones criticas.',
+      description: 'Ruteo de tareas con criterios claros (menos “depende”).',
     },
     {
       title: 'Signal Ledger',
-      description: 'Eventos trazables con auditoria integrada.',
+      description: 'Historial de señales/acciones para trazabilidad y auditoría.',
     },
     {
       title: 'Policy Mesh',
-      description: 'Reglas y compliance aplicadas desde el inicio.',
+      description: 'Reglas, guardrails y estándares para operar con confianza.',
     },
   ],
 }
 
 export const principlesCopy = {
-  title: 'Principios que alinean modulos y decisiones.',
-  description: 'Guia clara para coherencia entre equipos, datos y agentes.',
+  title: 'Beneficios pensados para negocio y operación.',
+  description: 'Resultados típicos cuando estandarizás señal, contexto y ejecución.',
   items: [
     {
-      title: 'Deterministic First',
-      description: 'Sin dependencias externas: todo local y predecible.',
+      title: 'Tiempo de respuesta menor',
+      description: 'Menos idas y vueltas: alerts + contexto + playbook en un solo lugar.',
     },
     {
-      title: 'Human-Led Autonomy',
-      description: 'Los humanos definen el norte y la IA ejecuta con claridad.',
+      title: 'Menos fricción entre equipos',
+      description: 'Handoffs claros y artefactos reutilizables para coordinación.',
     },
     {
-      title: 'Composable by Default',
-      description: 'Cada modulo se integra con pocas fricciones.',
+      title: 'Decisiones más confiables',
+      description: 'Criterio determinista y trazabilidad cuando el riesgo lo exige.',
     },
     {
-      title: 'Trustable Signals',
-      description: 'Cada accion deja un rastro explicable y auditable.',
+      title: 'Escalable por módulos',
+      description: 'Empezá por un caso (p. ej. anomalías) y sumá capacidades después.',
     },
     {
-      title: 'Accessible Velocity',
-      description: 'Experiencia rapida, legible y accesible para todos.',
+      title: 'Listo para demo/POC',
+      description: 'Mock-first para iterar rápido y mostrar valor sin dependencias.',
     },
   ],
 }
 
 export const pillarsCopy = {
-  title: 'Pillars que sostienen la capa Paradise.',
-  description: 'Always on signals.',
+  title: 'Capacidades clave del ecosistema.',
+  description: 'Bloques que podés combinar según tu necesidad.',
   items: [
     {
-      title: 'Coordination Fabric',
-      description: 'Orquestacion de agentes, humanos y sistemas en una sola capa.',
+      title: 'Operaciones & Alertas',
+      description: 'KPIs, alertas y playbooks para operar con foco en impacto.',
     },
     {
-      title: 'Promptable UI',
-      description: 'Interfaces que responden a lenguaje natural y contexto vivo.',
+      title: 'Detección de anomalías',
+      description: 'Señales tempranas y priorización por severidad/riesgo.',
     },
     {
-      title: 'Trust by Design',
-      description: 'Seguridad, auditoria y compliance en cada flujo.',
+      title: 'Conocimiento & Contexto',
+      description: 'Mapa semántico + memoria de decisiones para evitar pérdida de contexto.',
     },
     {
-      title: 'Modular Ecosystem',
-      description: 'Bloques interoperables con contratos claros.',
+      title: 'UX de Copiloto',
+      description: 'Briefs en lenguaje claro y entregables listos para compartir.',
     },
     {
-      title: 'Signal Observability',
-      description: 'Trazas y telemetria para decisiones confiables.',
+      title: 'Confianza por diseño',
+      description: 'Trazabilidad, reglas y guardrails para operar con confianza.',
     },
   ],
 }
 
 export const roadmapCopy = {
-  title: 'Ritmo claro, fases 0-3.',
-  description: 'Updated Feb 10, 2026. AI live se activa en roadmap, no en el presente.',
+  title: 'Hoja de ruta incremental: valor primero, sofisticación después.',
+  description: 'Actualizado el 10 feb 2026. La “IA viva” llega después de validar flujos y trazabilidad.',
 }
 
 export const reviewFlowCopy = {
-  title: 'Review flow (2 min)',
-  description: 'Showcase como demo integradora para validar el flujo end-to-end.',
+  title: 'Flujo sugerido (2 min)',
+  description: 'Showcase como demo integradora para validar el flujo de punta a punta.',
   steps: [
     {
-      title: 'Sync signals',
+      title: 'Sincronizar señales',
       time: '0:30',
       detail: 'Se revisan intenciones, contexto y restricciones.',
     },
     {
-      title: 'Route decision',
+      title: 'Decisión de ruteo',
       time: '0:30',
       detail: 'El router determinista define la ruta y agentes.',
     },
     {
-      title: 'Assemble flow',
+      title: 'Armar el flujo',
       time: '0:30',
-      detail: 'Se activa la secuencia de modulos y memoria.',
+      detail: 'Se activa la secuencia de módulos y memoria.',
     },
     {
-      title: 'Review output',
+      title: 'Revisar salida',
       time: '0:30',
       detail: 'Se valida la respuesta con trazas y riesgos.',
     },

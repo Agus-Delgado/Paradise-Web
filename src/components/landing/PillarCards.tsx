@@ -15,50 +15,50 @@ const pillars = [
   {
     id: PillarId.Ops,
     title: pillarLabel[PillarId.Ops],
-    output: 'KPIs + Alerts + Runbooks',
+    output: 'KPIs + Alertas + Runbooks',
     description: 'Routing operativo con señales claras y playbooks ejecutables.',
     icon: Workflow,
   },
   {
     id: PillarId.Anomalies,
     title: pillarLabel[PillarId.Anomalies],
-    output: 'Anomalies + Signals + Risk',
-    description: 'Deteccion temprana con scoring de impacto y contexto.',
+    output: 'Anomalías + Señales + Riesgo',
+    description: 'Detección temprana con scoring de impacto y contexto.',
     icon: Radar,
   },
   {
     id: PillarId.Knowledge,
     title: pillarLabel[PillarId.Knowledge],
-    output: 'Context + Memory + Knowledge',
+    output: 'Contexto + Memoria + Conocimiento',
     description: 'Consolida fuentes y memoria para decisiones trazables.',
     icon: Sparkles,
   },
   {
     id: PillarId.Modeling,
     title: pillarLabel[PillarId.Modeling],
-    output: 'Semantic Models + BI Bridge',
-    description: 'Capa semantica y contratos para data apps confiables.',
+    output: 'Modelos semánticos + Puente BI',
+    description: 'Capa semántica y contratos para data apps confiables.',
     icon: Blocks,
   },
   {
     id: PillarId.Copilot,
     title: pillarLabel[PillarId.Copilot],
-    output: 'Briefs + Decisions + Narratives',
+    output: 'Briefs + Decisiones + Narrativas',
     description: 'Copiloto explicable para rutas, riesgos y pasos.',
     icon: ShieldCheck,
   },
   {
     id: PillarId.Delivery,
     title: pillarLabel[PillarId.Delivery],
-    output: 'Handoffs + Status + Owners',
-    description: 'Transiciones de delivery sin perdida de contexto.',
+    output: 'Handoffs + Estado + Responsables',
+    description: 'Transiciones de entrega sin pérdida de contexto.',
     icon: Workflow,
   },
   {
     id: PillarId.Ecosystem,
     title: pillarLabel[PillarId.Ecosystem],
-    output: 'Integrations + Modules + Demos',
-    description: 'Conecta piezas y valida el flujo end-to-end.',
+    output: 'Integraciones + Módulos + Demos',
+    description: 'Conecta piezas y valida el flujo punta a punta.',
     icon: Blocks,
   },
 ]
@@ -90,7 +90,7 @@ export function PillarCards({ selectedPillar, activePillar, onSelect, onHover }:
             onFocus={() => onHover(pillar.id)}
             onBlur={() => onHover(null)}
             aria-pressed={isSelected}
-            aria-label={`${pillar.title} pillar`}
+            aria-label={`Capacidad: ${pillar.title}`}
           >
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-[var(--radius-sm)] bg-white/10 text-[rgb(var(--accent-1)/0.9)]">
