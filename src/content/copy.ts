@@ -1,9 +1,11 @@
 export const heroCopy = {
-  kicker: 'Decision Intelligence, sin fricción',
-  title: 'Paradise convierte señales dispersas en decisiones claras: módulos listos para operar, con una experiencia tipo “copiloto”.',
+  kicker: 'Ecosistema modular, listo para mostrar valor',
+  title:
+    'Paradise convierte ideas en productos demostrables: módulos con experiencia “tipo consola”, pensados para operar, coordinar y mejorar decisiones.',
   description:
-    'Un ecosistema modular para equipos de operaciones, producto y datos. Detecta cambios, prioriza incidentes, y estandariza entregables (alerts, briefs, playbooks) para que el equipo actúe más rápido y con menos ruido.',
-  subclaim: 'Unificá señal + contexto + ejecución: desde monitoreo hasta handoff, en un mismo marco.',
+    'Un conjunto de soluciones que se adaptan a distintos contextos (clubs, educación, logística, laboratorios y más). Cada módulo funciona por sí solo, pero todos comparten una misma lógica: claridad, orden y acciones concretas.',
+  subclaim:
+    'Menos complejidad, más impacto: información entendible, flujos guiados y entregables listos para compartir.',
   ctas: {
     catalog: 'Ver soluciones',
     showcase: 'Ver demo (2 min)',
@@ -14,12 +16,12 @@ export const heroCopy = {
 export const whatIsCopy = {
   title: 'Una capa de producto para operar mejor (sin reinventar tu stack).',
   description:
-    'Paradise te ayuda a pasar de “datos y dashboards” a “decisiones y ejecución”: detecta señales relevantes, arma contexto en lenguaje claro y propone un plan accionable. Se integra por módulos, para que puedas empezar pequeño y escalar.',
+    'Paradise te ayuda a pasar de “información dispersa” a “acciones claras”: ordena lo importante, lo presenta en lenguaje simple y te deja un camino concreto para avanzar. Se integra por módulos, para empezar pequeño y sumar capacidades cuando haga falta.',
   bullets: [
-    'Menos ruido: priorización por impacto y severidad',
-    'Más velocidad: playbooks y handoffs listos para usar',
-    'Más confianza: trazabilidad y criterio determinista donde importa',
-    'Modular: activá solo lo que necesitás (Ops, Anomalías, Conocimiento, etc.)',
+    'Menos ruido: priorización por impacto y urgencia',
+    'Más velocidad: guías y entregables listos para usar',
+    'Más confianza: historial de decisiones y cambios relevantes',
+    'Modular: activá solo lo que necesitás y escalá después',
   ],
 }
 
@@ -53,15 +55,15 @@ export const principlesCopy = {
   items: [
     {
       title: 'Tiempo de respuesta menor',
-      description: 'Menos idas y vueltas: alerts + contexto + playbook en un solo lugar.',
+      description: 'Menos idas y vueltas: alertas claras, contexto y siguientes pasos en un solo lugar.',
     },
     {
       title: 'Menos fricción entre equipos',
-      description: 'Handoffs claros y artefactos reutilizables para coordinación.',
+      description: 'Entregables claros y reutilizables para coordinar sin pérdida de contexto.',
     },
     {
       title: 'Decisiones más confiables',
-      description: 'Criterio determinista y trazabilidad cuando el riesgo lo exige.',
+      description: 'Criterios claros y trazabilidad para explicar “por qué” y “qué cambió”.',
     },
     {
       title: 'Escalable por módulos',
@@ -69,7 +71,7 @@ export const principlesCopy = {
     },
     {
       title: 'Listo para demo/POC',
-      description: 'Mock-first para iterar rápido y mostrar valor sin dependencias.',
+      description: 'Mock-first para iterar rápido y mostrar valor sin depender de infraestructura.',
     },
   ],
 }

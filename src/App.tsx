@@ -47,9 +47,29 @@ const routerChips = [
     tags: ['knowledge', 'memory'],
   },
   {
-    label: 'Modelado',
+    label: 'Educación',
     targetId: 'modules',
-    tags: ['modeling', 'semantic'],
+    tags: ['education', 'community'],
+  },
+  {
+    label: 'Deporte & Clubes',
+    targetId: 'modules',
+    tags: ['sports', 'community'],
+  },
+  {
+    label: 'Logística',
+    targetId: 'modules',
+    tags: ['logistics', 'triage', 'alerts'],
+  },
+  {
+    label: 'Laboratorios',
+    targetId: 'modules',
+    tags: ['labs', 'quality', 'audit'],
+  },
+  {
+    label: 'Nimbus (Cloud)',
+    targetId: 'modules',
+    tags: ['cloud', 'registry', 'events'],
   },
   {
     label: 'Copiloto',
