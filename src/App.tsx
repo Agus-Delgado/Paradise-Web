@@ -12,6 +12,7 @@ import {
   FullCatalog,
   HeroCommercial,
   HowItWorks,
+  LegalFooter,
   OutcomesGrid,
   UseCaseTabs,
   WhoUses,
@@ -118,6 +119,8 @@ export default function App() {
           <CreatorSection />
 
           <Contact title={marketingCopy.contact.title} body={marketingCopy.contact.body} links={marketingCopy.contact.links} />
+
+          <LegalFooter />
         </div>
       </PageShell>
     </ThemeProvider>

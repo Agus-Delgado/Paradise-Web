@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { Container } from '../ui/Container'
@@ -30,22 +30,27 @@ export function PageShell({
 }: PageShellProps) {
   const reduceMotion = useReducedMotion() ?? false
   const navHrefs = useMemo(() => navItems.map((item) => item.href), [navItems])
-  const [activeSection, setActiveSection] = useState(navHrefs[0] ?? '')
+  const navIds = useMemo(() => navHrefs.map((href) => href.replace('#', '')).filter(Boolean), [navHrefs])
+  const [activeSection, setActiveSection] = useState(navIds[0] ?? 'solucion')
   const [menuOpen, setMenuOpen] = useState(false)
+  const headerRef = useRef<HTMLElement | null>(null)
+  const mainRef = useRef<HTMLElement | null>(null)
+  const ioLastUpdateRef = useRef(0)
+  const fallbackEnabledRef = useRef(false)
 
   useEffect(() => {
-    if (!activeSection && navHrefs.length) {
-      setActiveSection(navHrefs[0])
+    if (!activeSection && navIds.length) {
+      setActiveSection(navIds[0])
     }
-  }, [activeSection, navHrefs])
+  }, [activeSection, navIds])
 
   const handleNavClick = useCallback(
     (href: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
       event.preventDefault()
-      setActiveSection(href)
+      const id = href.replace('#', '')
+      setActiveSection(id)
       setMenuOpen(false)
 
-      const id = href.replace('#', '')
       const target = document.getElementById(id)
       if (target) {
         target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
@@ -53,6 +58,53 @@ export function PageShell({
     },
     [reduceMotion],
   )
+
+  const getHeaderOffset = useCallback(() => {
+    if (!headerRef.current) return 0
+    return headerRef.current.getBoundingClientRect().height
+  }, [])
+
+  const getScrollRoot = useCallback(() => {
+    const marked = document.querySelector<HTMLElement>('[data-scroll-container="true"]')
+    if (marked) return marked
+    if (mainRef.current) {
+      const styles = window.getComputedStyle(mainRef.current)
+      if (styles.overflowY === 'auto' || styles.overflowY === 'scroll') {
+        return mainRef.current
+      }
+    }
+    return null
+  }, [])
+
+  const runFallback = useCallback(() => {
+    const sections = navIds
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section))
+
+    if (!sections.length) return
+
+    const headerOffset = getHeaderOffset()
+    const offsetTarget = headerOffset + 24
+    const root = getScrollRoot()
+    const rootRect = root ? root.getBoundingClientRect() : null
+
+    let bestId = sections[0]?.id ?? ''
+    let bestDistance = Number.POSITIVE_INFINITY
+
+    sections.forEach((section) => {
+      const rect = section.getBoundingClientRect()
+      const top = rootRect ? rect.top - rootRect.top : rect.top
+      const distance = Math.abs(top - offsetTarget)
+      if (distance < bestDistance) {
+        bestDistance = distance
+        bestId = section.id
+      }
+    })
+
+    if (bestId) {
+      setActiveSection(bestId)
+    }
+  }, [getHeaderOffset, getScrollRoot, navIds])
 
   useEffect(() => {
     if (!menuOpen) return
@@ -68,15 +120,18 @@ export function PageShell({
   }, [menuOpen])
 
   useEffect(() => {
-    if (typeof document === 'undefined' || navHrefs.length === 0) return
+    if (typeof document === 'undefined' || navIds.length === 0) return
 
-    const sectionIds = navHrefs.map((href) => href.replace('#', '')).filter(Boolean)
-    const sections = sectionIds
+    const sections = navIds
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => Boolean(section))
 
-    if (sections.length === 0) return
+    if (sections.length === 0) {
+      fallbackEnabledRef.current = true
+      return
+    }
 
+    const root = getScrollRoot()
     const observer = new IntersectionObserver(
       (entries) => {
         const visible = entries
@@ -84,16 +139,62 @@ export function PageShell({
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
 
         if (visible[0]) {
-          setActiveSection(`#${visible[0].target.id}`)
+          const nextId = visible[0].target.id
+          // console.debug('active via IO', nextId, visible[0].intersectionRatio)
+          ioLastUpdateRef.current = Date.now()
+          setActiveSection(nextId)
         }
       },
-      { rootMargin: '-20% 0px -60% 0px', threshold: 0.45 },
+      {
+        root,
+        rootMargin: '-15% 0px -70% 0px',
+        threshold: [0.2, 0.35, 0.5, 0.65],
+      },
     )
 
     sections.forEach((section) => observer.observe(section))
 
-    return () => observer.disconnect()
-  }, [navHrefs])
+    const fallbackTimer = window.setTimeout(() => {
+      if (!ioLastUpdateRef.current) {
+        fallbackEnabledRef.current = true
+        runFallback()
+      }
+    }, 1200)
+
+    return () => {
+      window.clearTimeout(fallbackTimer)
+      observer.disconnect()
+    }
+  }, [getScrollRoot, navIds, runFallback])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    let frame = 0
+    const root = getScrollRoot()
+    const target = root ?? window
+
+    const onScroll = () => {
+      if (frame) return
+      frame = window.requestAnimationFrame(() => {
+        frame = 0
+        const timeSinceIo = Date.now() - ioLastUpdateRef.current
+        if (fallbackEnabledRef.current || timeSinceIo > 1200) {
+          fallbackEnabledRef.current = true
+          runFallback()
+        }
+      })
+    }
+
+    target.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+
+    return () => {
+      target.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (frame) window.cancelAnimationFrame(frame)
+    }
+  }, [getScrollRoot, runFallback])
 
 
   return (
@@ -101,7 +202,10 @@ export function PageShell({
       <div className="pointer-events-none fixed inset-0 noise-overlay opacity-60" aria-hidden />
       {enableCommandPalette ? <CommandPalette navItems={navItems} onClearFilters={onClearFilters} /> : null}
 
-      <header className="sticky top-0 z-40 border-b border-[var(--p-border)] bg-[rgba(10,12,16,0.55)] backdrop-blur-xl">
+      <header
+        ref={headerRef}
+        className="sticky top-0 z-40 border-b border-[var(--p-border)] bg-[rgba(10,12,16,0.55)] backdrop-blur-xl"
+      >
         <Container className="flex items-center justify-start gap-8 py-3.5">
           <div className="flex w-[230px] items-center gap-3">
             <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[var(--radius-sm)] border border-white/10 bg-white/5 text-sm font-semibold">
@@ -119,7 +223,7 @@ export function PageShell({
           <div className="flex flex-1 items-center justify-end gap-3">
             <nav className="relative hidden items-center gap-2 text-sm font-medium text-slate-300 md:flex">
             {navItems.map((item) => {
-              const isActive = item.href === activeSection
+              const isActive = item.href.replace('#', '') === activeSection
               return (
                 <Link
                   key={item.href}
@@ -164,7 +268,7 @@ export function PageShell({
                   muted
                   className={cn(
                     'rounded-[var(--radius-md)] px-3 py-2 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]',
-                    item.href === activeSection &&
+                      item.href.replace('#', '') === activeSection &&
                       'bg-gradient-to-r from-[rgb(var(--p-accent-rgb)/0.2)] to-[rgb(var(--p-accent2-rgb)/0.2)] text-white border border-[var(--p-border-strong)]',
                   )}
                   onClick={handleNavClick(item.href)}
@@ -177,32 +281,8 @@ export function PageShell({
         ) : null}
       </header>
 
-      <main>{children}</main>
+      <main ref={mainRef}>{children}</main>
 
-      <footer className="border-t border-white/10 py-10">
-        <Container className="flex flex-col items-start justify-between gap-6 text-xs text-slate-400 md:flex-row md:items-center">
-          <div>
-            <p className="font-semibold text-slate-200">{brand.title}</p>
-            <p className="mt-2 max-w-md text-xs text-slate-400">
-              {brand.subtitle}. Modular, mock-first y listo para POC.
-            </p>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="#solucion" muted>
-              Solución
-            </Link>
-            <Link href="#casos" muted>
-              Casos
-            </Link>
-            <Link href="#modulos" muted>
-              Módulos
-            </Link>
-            <Link href="#contacto" muted>
-              Contacto
-            </Link>
-          </div>
-        </Container>
-      </footer>
     </div>
   )
 }

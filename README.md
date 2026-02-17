@@ -161,9 +161,17 @@ Cada modulo tiene este shape:
 
 ---
 
-## Licencia
+## Licencia y uso
 
-MIT (o la que defina el ecosistema / repos madre).
+El código de este repositorio está licenciado bajo MIT. Ver [LICENSE](LICENSE).
+
+Opción activa: MIT. Si querés cambiar la licencia, reemplazá el archivo LICENSE y ajustá el texto del footer/legal y esta sección.
+
+Marca y contenido:
+- "Paradise" y los nombres de sus módulos son identificadores del proyecto y no se otorgan derechos de uso de marca.
+- El contenido del sitio (copy, branding, imágenes) puede tener restricciones distintas al código.
+
+Ver detalles en [TRADEMARK.md](TRADEMARK.md).
 
 ---
 

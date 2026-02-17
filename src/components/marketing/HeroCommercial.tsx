@@ -21,8 +21,8 @@ export function HeroCommercial({ kicker, title, description, ctas, proof }: Hero
   const secondaryExternal = isExternalHref(ctas.secondary.href)
 
   return (
-    <HeroAurora className="pt-20" style={{ '--grid-opacity': 0.035, '--glow-strength': 0.22 } as CSSProperties}>
-      <Container id="solucion" className="scroll-mt-[var(--header-offset)] pb-14 md:pt-8">
+    <HeroAurora id="solucion" className="pt-20" style={{ '--grid-opacity': 0.035, '--glow-strength': 0.22 } as CSSProperties}>
+      <Container className="scroll-mt-[var(--header-offset)] pb-14 md:pt-8">
         <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
           <div className="max-w-[65ch]">
             <Badge>{kicker}</Badge>
