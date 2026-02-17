@@ -18,7 +18,7 @@ export function Card({ className, ...props }: CardProps) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: reduceMotion ? 0.01 : 0.4 + 0.3 * intensity, ease: 'easeOut' }}
       className={cn(
-        'rounded-[var(--radius-lg)] border border-[rgb(var(--accent-1)/0.18)] bg-night-900/70 p-6 backdrop-blur-xl shadow-card',
+        'p-card rounded-[var(--radius-lg)] p-6 backdrop-blur-xl',
         className,
       )}
       {...props}

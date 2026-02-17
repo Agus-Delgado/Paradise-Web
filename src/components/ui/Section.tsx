@@ -13,7 +13,7 @@ type SectionProps = {
 
 export function Section({ id, kicker, title, description, children, className }: SectionProps) {
   return (
-    <section id={id} className={cn('py-14 md:py-20', className)}>
+    <section id={id} className={cn('scroll-mt-[var(--header-offset)] py-14 md:py-20', className)}>
       <Container>
         {(kicker || title || description) && (
           <div className="mb-8 max-w-[65ch]">

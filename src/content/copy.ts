@@ -8,8 +8,8 @@ export const heroCopy = {
     'Menos complejidad, más impacto: información entendible, flujos guiados y entregables listos para compartir.',
   ctas: {
     catalog: 'Ver soluciones',
-    showcase: 'Ver demo (2 min)',
-    github: 'Ver repos',
+    showcase: 'Contactar',
+    github: 'GitHub (Creador)',
   },
 }
 

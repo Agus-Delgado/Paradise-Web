@@ -12,7 +12,7 @@ type CommandAction = {
 }
 
 type CommandPaletteProps = {
-  navItems: { label: string; href: string }[]
+  navItems: ReadonlyArray<{ label: string; href: string }>
   onClearFilters?: () => void
 }
 
