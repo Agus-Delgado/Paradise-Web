@@ -19,7 +19,7 @@ export function CreatorSection() {
                 <div className="relative h-56 w-56 overflow-hidden rounded-[32px] border border-[rgb(var(--p-accent-rgb)/0.35)] shadow-[0_18px_40px_-28px_rgba(124,58,237,0.6)] md:h-60 md:w-60">
                   {!imageError ? (
                     <img
-                      src="/static/IMG/foto.jpeg"
+                      src="/IMG/foto.jpeg"
                       alt="Agustin Delgado"
                       loading="lazy"
                       onError={() => setImageError(true)}
