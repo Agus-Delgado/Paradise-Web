@@ -6,20 +6,19 @@ import { marketingCopy } from './content/marketingCopy'
 import {
   Contact,
   CreatorSection,
+  EcosystemMap,
   Faq,
   FeaturedModules,
-  FinalCTA,
-  FullCatalog,
   HeroCommercial,
+  HonestRoadmap,
   HowItWorks,
   LegalFooter,
-  OutcomesGrid,
+  ParadiseDemo,
+  TrustStrip,
   UseCaseTabs,
-  WhoUses,
 } from './components/marketing'
 
-function pickFeatured(all: ModuleItem[], max = 6) {
-  // Prefer Active/MVP and distribute across pillars.
+function pickFeatured(all: ModuleItem[], max = 5) {
   const priority = (m: ModuleItem) => (m.status === Status.Active ? 2 : m.status === Status.Mvp ? 1 : 0)
   const sorted = [...all].sort((a, b) => priority(b) - priority(a))
   const byPillar = new Map<string, ModuleItem[]>()
@@ -51,12 +50,12 @@ function pickFeatured(all: ModuleItem[], max = 6) {
 export default function App() {
   const [selectedTags, setSelectedTags] = useState<string[]>([])
 
-  const featured = useMemo(() => pickFeatured(modules, 6), [])
+  const featured = useMemo(() => pickFeatured(modules, 5), [])
   const navItems = marketingCopy.nav
 
   return (
     <ThemeProvider>
-      <PageShell navItems={navItems} enableCommandPalette={false}>
+      <PageShell navItems={navItems} enableCommandPalette={false} brand={{ title: 'Paradise', subtitle: 'Ecosistema evolutivo' }}>
         <a
           href="#solucion"
           className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-50 rounded-full bg-white px-4 py-2 text-sm font-semibold text-night-950 shadow"
@@ -71,11 +70,30 @@ export default function App() {
             description={marketingCopy.hero.description}
             ctas={marketingCopy.hero.ctas}
             proof={marketingCopy.hero.proof}
+            heroSignals={marketingCopy.hero.heroSignals}
+            heroModules={marketingCopy.hero.heroModules}
+            heroArtifact={marketingCopy.hero.heroArtifact}
           />
 
-          <OutcomesGrid title={marketingCopy.outcomes.title} items={marketingCopy.outcomes.items} />
+          <TrustStrip items={marketingCopy.trustStrip} />
 
-          <WhoUses title={marketingCopy.who.title} items={marketingCopy.who.items} />
+          <ParadiseDemo
+            title={marketingCopy.demo.title}
+            subtitle={marketingCopy.demo.subtitle}
+            scenarios={marketingCopy.demo.scenarios}
+          />
+
+          <HowItWorks
+            title={marketingCopy.how.title}
+            steps={marketingCopy.how.steps}
+            technicalToggle={marketingCopy.how.technicalToggle}
+          />
+
+          <EcosystemMap
+            title={marketingCopy.ecosystem.title}
+            subtitle={marketingCopy.ecosystem.subtitle}
+            categories={marketingCopy.ecosystem.categories}
+          />
 
           <UseCaseTabs
             title={marketingCopy.useCases.title}
@@ -85,38 +103,23 @@ export default function App() {
             onSelectTags={(tags) => setSelectedTags([...tags])}
           />
 
-          <HowItWorks title={marketingCopy.how.title} steps={marketingCopy.how.steps} technicalToggle={marketingCopy.how.technicalToggle} />
-
           <FeaturedModules
             title={marketingCopy.featured.title}
             subtitle={marketingCopy.featured.subtitle}
             items={featured}
+            allModules={modules}
             highlightTags={selectedTags}
           />
 
-          <FullCatalog
-            title={marketingCopy.fullCatalog.title}
-            subtitle={marketingCopy.fullCatalog.subtitle}
-            toggleLabel={marketingCopy.fullCatalog.toggle}
-            hideLabel={marketingCopy.fullCatalog.hide}
-            searchPlaceholder={marketingCopy.fullCatalog.searchPlaceholder}
-            filtersLabel={marketingCopy.fullCatalog.filtersLabel}
-            clearLabel={marketingCopy.fullCatalog.clear}
-            modules={modules}
-            selectedTags={selectedTags}
-            onClearSelectedTags={() => setSelectedTags([])}
+          <HonestRoadmap
+            title={marketingCopy.roadmap.title}
+            subtitle={marketingCopy.roadmap.subtitle}
+            columns={marketingCopy.roadmap.columns}
           />
-
-          <FinalCTA
-            title={marketingCopy.finalCta.title}
-            body={marketingCopy.finalCta.body}
-            primary={marketingCopy.finalCta.primary}
-            secondary={marketingCopy.finalCta.secondary}
-          />
-
-          <Faq title={marketingCopy.faq.title} items={marketingCopy.faq.items} />
 
           <CreatorSection />
+
+          <Faq title={marketingCopy.faq.title} items={marketingCopy.faq.items} />
 
           <Contact title={marketingCopy.contact.title} body={marketingCopy.contact.body} links={marketingCopy.contact.links} />
 

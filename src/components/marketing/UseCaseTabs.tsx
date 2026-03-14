@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { ModuleItem } from '../../data/modules'
 import { Container } from '../ui/Container'
 import { Section } from '../ui/Section'
@@ -34,48 +34,60 @@ export function UseCaseTabs({
 
   const recommended = useMemo(() => {
     if (!activeCase) return []
-    return modules
-      .filter((m) => m.tags.some((t) => activeCase.tags.includes(t)))
-      .slice(0, 2)
+    return modules.filter((m) => m.tags.some((t) => activeCase.tags.includes(t))).slice(0, 1)
   }, [modules, activeCase])
 
+  useEffect(() => {
+    if (activeCase) {
+      onSelectTags?.([...activeCase.tags])
+    }
+  }, [activeCase, onSelectTags])
+
+  const heroModule = recommended[0]
+
   return (
-    <Section id="casos" className="py-16">
+    <Section id="casos" className="py-18 md:py-24">
       <Container>
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <h2 className="font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">{title}</h2>
-              <p className="p-text-muted mt-3 text-sm leading-relaxed md:text-base">{subtitle}</p>
+            <p className="prompt-block">Casos / soluciones</p>
+            <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">{title}</h2>
+            <p className="p-text-muted mt-3 text-sm leading-relaxed md:text-base">{subtitle}</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            {cases.map((c) => {
-              const isActive = c.key === active
-              return (
-                <button
-                  key={c.key}
-                  type="button"
-                  onClick={() => setActive(c.key)}
-                  className={cn(
-                      'p-chip rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em]',
-                      isActive && 'p-chip-active',
-                  )}
-                >
-                  {c.label}
-                </button>
-              )
-            })}
+            {cases.map((c) => (
+              <Button
+                key={c.key}
+                variant={c.key === active ? 'primary' : 'outline'}
+                size="sm"
+                onClick={() => setActive(c.key)}
+                className={cn(c.key === active && 'shadow-[0_0_24px_-14px_var(--p-glow)]')}
+              >
+                {c.label}
+              </Button>
+            ))}
           </div>
         </div>
 
         {activeCase ? (
-          <div className="mt-8 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-            <Card className="p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">Problema</p>
-              <p className="mt-2 text-base font-semibold text-white">{activeCase.problem}</p>
-              <p className="mt-5 text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">Entrega</p>
-                <p className="p-text-muted mt-2 text-sm leading-relaxed">{activeCase.outcome}</p>
+          <div className="mt-8 grid gap-4 lg:grid-cols-[0.98fr_1.02fr] lg:items-stretch">
+            <Card className="flex h-full flex-col justify-between p-6">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">Problema</p>
+                <p className="mt-2 max-w-[24ch] text-[1.08rem] font-semibold leading-relaxed text-white">{activeCase.problem}</p>
+                <p className="mt-6 text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">Resultado esperado</p>
+                <p className="p-text-muted mt-2 max-w-[42ch] text-sm leading-relaxed">{activeCase.outcome}</p>
 
-              <div className="mt-6 flex flex-wrap gap-2">
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {activeCase.tags.map((tag) => (
+                    <span key={tag} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-slate-200">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-7 flex flex-wrap gap-2">
                 <Button
                   variant="outline"
                   onClick={() => {
@@ -89,18 +101,13 @@ export function UseCaseTabs({
               </div>
             </Card>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              {recommended.map((m) => (
-                <ModuleCard key={m.id} module={m} highlightTags={[...activeCase.tags]} compact />
-              ))}
-              {recommended.length === 0 ? (
-                <Card className="p-6 md:col-span-2">
-                    <p className="p-text-muted text-sm">
-                    No encontramos módulos con esos tags todavía. Podés explorar el catálogo completo.
-                  </p>
-                </Card>
-              ) : null}
-            </div>
+            {heroModule ? (
+              <ModuleCard module={heroModule} highlightTags={[...activeCase.tags]} variant="featured" />
+            ) : (
+              <Card className="p-6">
+                <p className="p-text-muted text-sm">No encontramos módulos con esos tags todavía. Podés explorar el catálogo completo.</p>
+              </Card>
+            )}
           </div>
         ) : null}
       </Container>
