@@ -26,13 +26,13 @@ export const marketingCopy = {
     { label: 'Contacto', href: '#contacto' },
   ],
   hero: {
-    kicker: 'Ecosistema evolutivo',
-    title: 'Paradise ordena señales, activa módulos y evoluciona con cada dominio.',
+    kicker: 'Paradise Web',
+    title: '¿Creés en el paraíso?',
     description:
-      'Una capa visual para coordinar operaciones, comunidad, educación y nuevos verticales sin perder claridad. Paradise muestra qué entra, cómo se adapta y qué resultado queda listo para mover trabajo real.',
+      'Paradise es un ecosistema evolutivo diseñado para conectar visión, inteligencia y construcción.',
     ctas: {
-      primary: { label: 'Ver demo', href: '#demo' },
-      secondary: { label: 'Explorar módulos', href: '#modulos' },
+      primary: { label: 'Explorar Paradise', href: '#ecosistema' },
+      secondary: { label: 'Ver introducción' },
     },
     proof: ['visual', 'modular', 'evolutivo', 'listo para demo'],
     heroSignals: ['alerta SLA rota', 'brief de club', 'agenda de curso', 'cola operativa'],
