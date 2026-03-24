@@ -1,3 +1,6 @@
+/**
+ * Tipos alternativos para modules.json. No usados por la landing principal, que utiliza modules.ts.
+ */
 export type ModuleItem = {
   id: string
   name: string

@@ -16,6 +16,7 @@ const priorityOrder = [
   'paradise-nimbus',
   'paradise-clubnet',
   'paradise-aulora',
+  'paradise-atria',
   'atlasops',
   'paradise-routeops',
   'pulse',
@@ -39,12 +40,14 @@ export function FeaturedModules({
   items,
   allModules,
   highlightTags,
+  preferredModuleId,
 }: {
   title: string
   subtitle: string
   items: ModuleItem[]
   allModules: ModuleItem[]
   highlightTags?: string[]
+  preferredModuleId?: string
 }) {
   const availableModules = useMemo(() => {
     const curated = allModules
@@ -54,9 +57,15 @@ export function FeaturedModules({
   }, [allModules, items])
 
   const suggestedModule = useMemo(() => {
-    if (!highlightTags?.length) return availableModules[0]
-    return availableModules.find((module) => module.tags.some((tag) => highlightTags.includes(tag))) ?? availableModules[0]
-  }, [availableModules, highlightTags])
+    if (preferredModuleId) {
+      const byId = availableModules.find((m) => m.id === preferredModuleId)
+      if (byId) return byId
+    }
+    if (highlightTags?.length) {
+      return availableModules.find((module) => module.tags.some((tag) => highlightTags.includes(tag))) ?? availableModules[0]
+    }
+    return availableModules[0]
+  }, [availableModules, highlightTags, preferredModuleId])
 
   const [selectedId, setSelectedId] = useState<string>(suggestedModule?.id ?? availableModules[0]?.id ?? '')
 
@@ -153,15 +162,73 @@ export function FeaturedModules({
               ) : null}
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link href={selectedModule.repoUrl} muted className="p-btn-secondary rounded-[var(--radius-pill)] px-5 py-3 text-sm font-semibold">
-                  Repo
-                </Link>
-                {selectedModule.demoUrl ? (
+                {selectedModule.repoUrl && selectedModule.repoUrl !== '#' ? (
+                  <Link href={selectedModule.repoUrl} muted className="p-btn-secondary rounded-[var(--radius-pill)] px-5 py-3 text-sm font-semibold">
+                    Repo
+                  </Link>
+                ) : null}
+                {selectedModule.demoUrl && selectedModule.demoUrl !== '#' ? (
                   <Link href={selectedModule.demoUrl} muted className="p-btn-secondary rounded-[var(--radius-pill)] px-5 py-3 text-sm font-semibold">
                     Demo
                   </Link>
                 ) : null}
-                {selectedModule.docsUrl ? (
+                {selectedModule.docsUrl && selectedModule.docsUrl !== '#' ? (
+                  <Link href={selectedModule.docsUrl} muted className="p-btn-secondary rounded-[var(--radius-pill)] px-5 py-3 text-sm font-semibold">
+                    Docs
+                  </Link>
+                ) : null}
+              </div>
+            </Card>
+          ) : selectedModule && !detail ? (
+            <Card className="flex flex-col gap-5 p-7 md:p-8">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <div className="flex flex-wrap gap-2">
+                    <Pill>{selectedModule.name}</Pill>
+                    <Pill className="p-chip-active">{statusLabel[selectedModule.status]}</Pill>
+                  </div>
+                  <h3 className="mt-4 max-w-[18ch] text-2xl font-semibold tracking-tight text-white md:text-3xl">
+                    {selectedModule.oneLiner}
+                  </h3>
+                </div>
+                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-[rgb(var(--accent-2)/0.92)]">
+                  <Sparkles className="h-5 w-5" />
+                </div>
+              </div>
+              {selectedModule.highlights.length ? (
+                <ul className="p-text-muted grid gap-2 text-sm">
+                  {selectedModule.highlights.map((h) => (
+                    <li key={h} className="flex gap-2">
+                      <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[rgb(var(--p-accent-rgb)/0.7)]" />
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+              <p className="p-text-muted rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm italic">
+                Detalle en preparación.
+              </p>
+              {selectedModule.tags.length ? (
+                <div className="flex flex-wrap gap-2">
+                  {selectedModule.tags.map((tag) => (
+                    <Pill key={tag} className={cn(highlightTags?.includes(tag) && 'p-chip-active')}>
+                      {tag}
+                    </Pill>
+                  ))}
+                </div>
+              ) : null}
+              <div className="flex flex-wrap gap-3">
+                {selectedModule.repoUrl && selectedModule.repoUrl !== '#' ? (
+                  <Link href={selectedModule.repoUrl} muted className="p-btn-secondary rounded-[var(--radius-pill)] px-5 py-3 text-sm font-semibold">
+                    Repo
+                  </Link>
+                ) : null}
+                {selectedModule.demoUrl && selectedModule.demoUrl !== '#' ? (
+                  <Link href={selectedModule.demoUrl} muted className="p-btn-secondary rounded-[var(--radius-pill)] px-5 py-3 text-sm font-semibold">
+                    Demo
+                  </Link>
+                ) : null}
+                {selectedModule.docsUrl && selectedModule.docsUrl !== '#' ? (
                   <Link href={selectedModule.docsUrl} muted className="p-btn-secondary rounded-[var(--radius-pill)] px-5 py-3 text-sm font-semibold">
                     Docs
                   </Link>

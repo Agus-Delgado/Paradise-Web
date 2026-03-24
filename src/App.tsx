@@ -13,6 +13,7 @@ import {
   HonestRoadmap,
   HowItWorks,
   LegalFooter,
+  ParadiseBrainShowcase,
   ParadiseDemo,
   TrustStrip,
   UseCaseTabs,
@@ -49,6 +50,9 @@ function pickFeatured(all: ModuleItem[], max = 5) {
 
 export default function App() {
   const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [selectedModuleId, setSelectedModuleId] = useState<string | null>(
+    () => marketingCopy.useCases.cases[0]?.recommendedModuleId ?? null
+  )
 
   const featured = useMemo(() => pickFeatured(modules, 5), [])
   const navItems = marketingCopy.nav
@@ -83,6 +87,8 @@ export default function App() {
             scenarios={marketingCopy.demo.scenarios}
           />
 
+          <ParadiseBrainShowcase />
+
           <HowItWorks
             title={marketingCopy.how.title}
             steps={marketingCopy.how.steps}
@@ -101,6 +107,7 @@ export default function App() {
             cases={marketingCopy.useCases.cases}
             modules={modules}
             onSelectTags={(tags) => setSelectedTags([...tags])}
+            onSelectModuleId={(id) => setSelectedModuleId(id)}
           />
 
           <FeaturedModules
@@ -109,6 +116,7 @@ export default function App() {
             items={featured}
             allModules={modules}
             highlightTags={selectedTags}
+            preferredModuleId={selectedModuleId ?? undefined}
           />
 
           <HonestRoadmap

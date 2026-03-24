@@ -144,6 +144,16 @@ export const modules: ModuleItem[] = [
     tags: ['education', 'community', 'coordination', 'demo'],
   },
   {
+    id: 'paradise-atria',
+    name: 'Paradise Atria',
+    pillar: Pillar.Ecosystem,
+    status: Status.Mvp,
+    oneLiner: 'Consola de operación clínica: agenda, pacientes y experiencia del consultorio',
+    highlights: ['agenda clínica', 'gestión de turnos y cancelaciones', 'experiencia del paciente'],
+    repoUrl: '',
+    tags: ['health', 'clinical', 'scheduling', 'patient-experience', 'operations'],
+  },
+  {
     id: 'paradise-routeops',
     name: 'Paradise RouteOps',
     pillar: Pillar.Ops,

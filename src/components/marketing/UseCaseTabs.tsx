@@ -13,6 +13,7 @@ type UseCase = {
   problem: string
   outcome: string
   tags: ReadonlyArray<string>
+  recommendedModuleId?: string
 }
 
 export function UseCaseTabs({
@@ -21,12 +22,14 @@ export function UseCaseTabs({
   cases,
   modules,
   onSelectTags,
+  onSelectModuleId,
 }: {
   title: string
   subtitle: string
   cases: ReadonlyArray<UseCase>
   modules: ModuleItem[]
   onSelectTags?: (tags: ReadonlyArray<string>) => void
+  onSelectModuleId?: (moduleId: string) => void
 }) {
   const [active, setActive] = useState(cases[0]?.key ?? 'ops')
 
@@ -34,14 +37,21 @@ export function UseCaseTabs({
 
   const recommended = useMemo(() => {
     if (!activeCase) return []
+    if (activeCase.recommendedModuleId) {
+      const byId = modules.find((m) => m.id === activeCase.recommendedModuleId)
+      if (byId) return [byId]
+    }
     return modules.filter((m) => m.tags.some((t) => activeCase.tags.includes(t))).slice(0, 1)
   }, [modules, activeCase])
 
   useEffect(() => {
     if (activeCase) {
       onSelectTags?.([...activeCase.tags])
+      if (activeCase.recommendedModuleId) {
+        onSelectModuleId?.(activeCase.recommendedModuleId)
+      }
     }
-  }, [activeCase, onSelectTags])
+  }, [activeCase, onSelectTags, onSelectModuleId])
 
   const heroModule = recommended[0]
 
@@ -92,6 +102,9 @@ export function UseCaseTabs({
                   variant="outline"
                   onClick={() => {
                     onSelectTags?.([...activeCase.tags])
+                    if (activeCase.recommendedModuleId) {
+                      onSelectModuleId?.(activeCase.recommendedModuleId)
+                    }
                     const target = document.getElementById('modulos')
                     target?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                   }}
@@ -102,7 +115,12 @@ export function UseCaseTabs({
             </Card>
 
             {heroModule ? (
-              <ModuleCard module={heroModule} highlightTags={[...activeCase.tags]} variant="featured" />
+              <ModuleCard
+                module={heroModule}
+                highlightTags={[...activeCase.tags]}
+                variant="featured"
+                pillarLabelOverride="Módulo recomendado"
+              />
             ) : (
               <Card className="p-6">
                 <p className="p-text-muted text-sm">No encontramos módulos con esos tags todavía. Podés explorar el catálogo completo.</p>

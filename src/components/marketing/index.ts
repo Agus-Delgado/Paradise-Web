@@ -1,6 +1,7 @@
 export * from './HeroCommercial'
 export * from './TrustStrip'
 export * from './ParadiseDemo'
+export * from './ParadiseBrainShowcase'
 export * from './HowItWorks'
 export * from './EcosystemMap'
 export * from './UseCaseTabs'

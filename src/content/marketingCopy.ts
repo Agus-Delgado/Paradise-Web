@@ -1,9 +1,23 @@
-export type UseCaseKey = 'ops' | 'community' | 'education' | 'logistics' | 'nimbus'
+export type UseCaseKey =
+  | 'ops'
+  | 'community'
+  | 'education'
+  | 'logistics'
+  | 'nimbus'
+  | 'health'
+  | 'pulse'
+  | 'qc-sentinel'
+  | 'vault'
+  | 'velvet'
+  | 'orbit'
+  | 'relay'
+  | 'meter'
 
 export const marketingCopy = {
   nav: [
     { label: 'Solución', href: '#solucion' },
     { label: 'Demo', href: '#demo' },
+    { label: 'Cómo piensa', href: '#como-piensa' },
     { label: 'Cómo funciona', href: '#como-funciona' },
     { label: 'Ecosistema', href: '#ecosistema' },
     { label: 'Módulos', href: '#modulos' },
@@ -31,6 +45,16 @@ export const marketingCopy = {
     subtitle:
       'La demo muestra el corazón del ecosistema: entran señales, Paradise decide qué capa participa y deja un artifact listo para usar, compartir o explicar.',
     scenarios: [
+      {
+        key: 'health',
+        label: 'Salud',
+        intro: 'Operación clínica: agenda, turnos, cancelaciones y experiencia del paciente en una consola.',
+        signals: ['turno cancelado', 'paciente reprogramado', 'agenda del consultorio'],
+        modules: ['Paradise-AI', 'Paradise Atria', 'Nexus'],
+        artifactType: 'resumen clínico',
+        artifactTitle: 'Estado de agenda y próximas acciones',
+        artifactBody: ['cancelaciones: 2 pendientes de reasignar', 'agenda: mañana con 3 slots disponibles', 'siguiente paso: notificar pacientes + optimizar slots'],
+      },
       {
         key: 'ops',
         label: 'Operaciones',
@@ -123,7 +147,7 @@ export const marketingCopy = {
         id: 'community',
         title: 'Comunidad / Experiencia',
         description: 'Espacios donde la coordinación también es relación, agenda y experiencia.',
-        modules: ['Paradise ClubNet', 'AI Delivery Copilot'],
+        modules: ['Paradise ClubNet', 'Paradise Atria', 'AI Delivery Copilot'],
       },
       {
         id: 'education',
@@ -135,7 +159,7 @@ export const marketingCopy = {
         id: 'verticals',
         title: 'Verticales en evolución',
         description: 'Módulos y experiencias que pueden crecer por dominio sin romper la lógica transversal del ecosistema.',
-        modules: ['The Velvet', 'Paradise Halo', 'nuevos verticales'],
+        modules: ['The Velvet', 'Paradise Atria', 'nuevos verticales'],
       },
     ],
   },
@@ -149,6 +173,7 @@ export const marketingCopy = {
         problem: 'Muchas señales, poca claridad sobre impacto, ownership y siguiente movimiento.',
         outcome: 'Triage, prioridad visible, artifact accionable y handoff claro.',
         tags: ['ops', 'alerts', 'triage', 'routing', 'signals'],
+        recommendedModuleId: 'atlasops',
       },
       {
         key: 'community' as const,
@@ -156,6 +181,7 @@ export const marketingCopy = {
         problem: 'Clubes y espacios comunitarios se vuelven caóticos cuando agenda, seguimiento y comunicación viven separados.',
         outcome: 'Experiencia más clara para coordinar comunidad, agenda y recursos.',
         tags: ['sports', 'community', 'operations', 'demo'],
+        recommendedModuleId: 'paradise-clubnet',
       },
       {
         key: 'education' as const,
@@ -163,6 +189,7 @@ export const marketingCopy = {
         problem: 'Cursos, seguimiento y comunicación suelen quedar dispersos entre demasiadas herramientas.',
         outcome: 'Una consola más legible para cursos, novedades y materiales.',
         tags: ['education', 'community', 'knowledge', 'coordination'],
+        recommendedModuleId: 'paradise-aulora',
       },
       {
         key: 'logistics' as const,
@@ -170,6 +197,7 @@ export const marketingCopy = {
         problem: 'Rutas, colas y handoffs se vuelven opacos muy rápido cuando el volumen sube.',
         outcome: 'Flujo operativo y dispatch con prioridad, detalle y ownership visible.',
         tags: ['logistics', 'delivery', 'routing', 'ops'],
+        recommendedModuleId: 'paradise-routeops',
       },
       {
         key: 'nimbus' as const,
@@ -177,6 +205,71 @@ export const marketingCopy = {
         problem: 'Querés conectar módulos sin reventar la arquitectura cada vez que aparece un caso nuevo.',
         outcome: 'Registry, eventos y artifacts como base evolutiva.',
         tags: ['cloud', 'registry', 'events', 'artifacts'],
+        recommendedModuleId: 'paradise-nimbus',
+      },
+      {
+        key: 'health' as const,
+        label: 'Salud',
+        problem: 'Agenda, turnos, cancelaciones y experiencia del paciente se dispersan entre sistemas que no conversan.',
+        outcome: 'Consola clara para operación clínica, seguimiento de turnos y experiencia del consultorio.',
+        tags: ['health', 'clinical', 'scheduling', 'patient-experience', 'operations'],
+        recommendedModuleId: 'paradise-atria',
+      },
+      {
+        key: 'pulse' as const,
+        label: 'Pulse',
+        problem: 'Las señales operativas se pierden en el ruido: falta visibilidad rápida del estado general y del monitoreo de actividad.',
+        outcome: 'Detección de anomalías con priorización por impacto y contexto antes/después para decidir qué importa.',
+        tags: ['anomalies', 'detection', 'risk', 'signals'],
+        recommendedModuleId: 'pulse',
+      },
+      {
+        key: 'qc-sentinel' as const,
+        label: 'QC Sentinel',
+        problem: 'Control de calidad sin validaciones claras: desvíos que se detectan tarde y alertas que no llegan a tiempo.',
+        outcome: 'Workbench de calidad con trazabilidad, checks automáticos y decisiones de lote listas para compliance.',
+        tags: ['labs', 'quality', 'audit', 'compliance'],
+        recommendedModuleId: 'paradise-qc-sentinel',
+      },
+      {
+        key: 'vault' as const,
+        label: 'Vault',
+        problem: 'Schemas, contratos y definiciones dispersos: sin trazabilidad ni gobierno de datos visible para el equipo.',
+        outcome: 'Data room para documentación técnica, contratos y schemas navegables en un solo lugar.',
+        tags: ['knowledge', 'contracts', 'artifacts', 'docs'],
+        recommendedModuleId: 'paradise-vault',
+      },
+      {
+        key: 'velvet' as const,
+        label: 'The Velvet',
+        problem: 'Operación de nightlife fragmentada: reservas, staff y experiencia del cliente viven en sistemas que no conversan.',
+        outcome: 'Consola operativa unificada para puerta, seguridad, staff y cierre de la noche en curso.',
+        tags: ['community', 'operations', 'events', 'nightlife'],
+        recommendedModuleId: 'the-velvet',
+      },
+      {
+        key: 'orbit' as const,
+        label: 'Orbit',
+        problem: 'Coordinación transversal opaca: seguimiento multi-frente y orquestación operativa sin visibilidad central.',
+        outcome: 'Registry y discovery para explorar módulos, estado y actividad del ecosistema en tiempo real.',
+        tags: ['ecosystem', 'registry', 'discovery', 'events'],
+        recommendedModuleId: 'paradise-orbit',
+      },
+      {
+        key: 'relay' as const,
+        label: 'Relay',
+        problem: 'Integraciones y automatizaciones que se configuran a mano: eventos y conexiones entre sistemas frágiles.',
+        outcome: 'Hub de integraciones para webhooks, email, Slack y replay de eventos con trazabilidad de entregas.',
+        tags: ['integrations', 'events', 'webhooks', 'delivery'],
+        recommendedModuleId: 'paradise-relay',
+      },
+      {
+        key: 'meter' as const,
+        label: 'Meter',
+        problem: 'Medición de uso y actividad invisible: sin visibilidad del comportamiento del sistema ni de los límites de plan.',
+        outcome: 'Billing y usage analytics para entender consumo, adopción y plan vigente por tenant.',
+        tags: ['billing', 'usage', 'events', 'saas'],
+        recommendedModuleId: 'paradise-meter',
       },
     ],
   },

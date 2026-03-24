@@ -14,6 +14,8 @@ type ModuleCardProps = {
   compact?: boolean
   variant?: 'default' | 'featured'
   hideFooter?: boolean
+  /** Override the pillar label (e.g. "Módulo recomendado" in Soluciones destacadas) */
+  pillarLabelOverride?: string
 }
 
 const statusClass: Record<ModuleItem['status'], string> = {
@@ -28,7 +30,7 @@ function isHighlightedByTags(module: ModuleItem, tags?: string[]) {
   return module.tags.some((t) => tags.includes(t))
 }
 
-export function ModuleCard({ module, highlighted, highlightTags, compact, variant = 'default', hideFooter }: ModuleCardProps) {
+export function ModuleCard({ module, highlighted, highlightTags, compact, variant = 'default', hideFooter, pillarLabelOverride }: ModuleCardProps) {
   const reduceMotion = useReducedMotion() ?? false
   const { state } = useThemeEngine()
   const intensity = state.tokens.motionIntensity
@@ -55,7 +57,7 @@ export function ModuleCard({ module, highlighted, highlightTags, compact, varian
       )}
     >
       <header className="flex items-start justify-between gap-3">
-        <Pill className="border-white/20 bg-white/5 text-slate-200">{pillarLabel[module.pillar]}</Pill>
+        <Pill className="border-white/20 bg-white/5 text-slate-200">{pillarLabelOverride ?? pillarLabel[module.pillar]}</Pill>
         <span
           className={cn(
             'rounded-full border px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.2em]',
@@ -96,19 +98,21 @@ export function ModuleCard({ module, highlighted, highlightTags, compact, varian
       </div>
 
       {!hideFooter ? <footer className={cn('mt-6 flex flex-wrap gap-3', compact && 'mt-5')}>
-        <Link href={module.repoUrl} muted className="p-btn-secondary inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold">
-          <Github className="h-4 w-4" />
-          Repo
-        </Link>
+        {module.repoUrl && module.repoUrl !== '#' ? (
+          <Link href={module.repoUrl} muted className="p-btn-secondary inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold">
+            <Github className="h-4 w-4" />
+            Repo
+          </Link>
+        ) : null}
 
-        {module.demoUrl ? (
+        {module.demoUrl && module.demoUrl !== '#' ? (
           <Link href={module.demoUrl} muted className="p-btn-secondary inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold">
             <MonitorPlay className="h-4 w-4" />
             Demo
           </Link>
         ) : null}
 
-        {module.docsUrl ? (
+        {module.docsUrl && module.docsUrl !== '#' ? (
           <Link href={module.docsUrl} muted className="p-btn-secondary inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold">
             <FileText className="h-4 w-4" />
             Docs

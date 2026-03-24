@@ -44,6 +44,18 @@ export const moduleDetails: Record<string, ModuleDetail> = {
     differentiator: 'Convierte un dominio social y deportivo complejo en una consola modular entendible y adaptable.',
     statusNote: 'MVP activo, demo-first y listo para mostrar una vertical completa dentro de Paradise.',
   },
+  'paradise-atria': {
+    problem: 'En clínicas y consultorios, agenda, pacientes, cancelaciones y experiencia del paciente suelen vivir fragmentados.',
+    forWho: 'Clínicas, consultorios y equipos de salud que necesitan orden en turnos, cancelaciones y flujo del paciente.',
+    howItWorks: [
+      'Centraliza agenda clínica con visibilidad de turnos, reprogramaciones y cancelaciones en una sola consola.',
+      'Ofrece vista operativa por consultorio para que recepción y médicos coordinen sin perder contexto.',
+      'Integra seguimiento del paciente y estado de experiencia para decisión y comunicación clara.',
+    ],
+    outputs: ['estado de agenda', 'resumen de cancelaciones', 'experiencia paciente', 'export operativo'],
+    differentiator: 'Enfocado en operación clínica real y experiencia del paciente, no en software genérico de salud.',
+    statusNote: 'MVP demo-first para vertical de salud, listo para mostrar cómo Paradise baja a dominios regulados.',
+  },
   'paradise-aulora': {
     problem: 'Escuelas y cursos suelen repartir agenda, comunicación, notas y seguimiento en demasiadas pantallas y roles.',
     forWho: 'Instituciones educativas que necesitan orden por escuela, rol y curso sin perder claridad.',

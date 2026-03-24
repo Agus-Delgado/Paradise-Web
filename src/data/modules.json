@@ -1,5 +1,6 @@
 [
   {
+    "_note": "Legacy: la landing usa modules.ts como fuente principal. Este archivo no se importa en la app.",
     "id": "core",
     "name": "Paradise Core",
     "summary": "Identidad, reputacion y permisos para agentes y equipos.",
