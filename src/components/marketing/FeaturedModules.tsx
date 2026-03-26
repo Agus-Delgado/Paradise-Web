@@ -79,42 +79,42 @@ export function FeaturedModules({
   const detail = selectedModule ? moduleDetails[selectedModule.id] : undefined
 
   return (
-    <Section id="modulos" className="py-18 md:py-24">
+    <Section id="modulos" className="py-16 sm:py-18 md:py-24">
       <Container>
-        <h2 className="font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">{title}</h2>
+        <h2 className="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">{title}</h2>
         <p className="p-text-muted mt-3 max-w-3xl text-sm leading-relaxed md:text-base">{subtitle}</p>
 
-        <div className="mt-10 grid gap-5 xl:grid-cols-[1.04fr_0.96fr] xl:items-start">
+        <div className="mt-8 grid gap-4 sm:mt-10 sm:gap-5 xl:grid-cols-[1.04fr_0.96fr] xl:items-start">
           {selectedModule && detail ? (
-            <Card className="p-7 md:p-8">
+            <Card className="p-5 sm:p-6 md:p-8">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <div className="flex flex-wrap gap-2">
                     <Pill>{selectedModule.name}</Pill>
                     <Pill className="p-chip-active">{statusLabel[selectedModule.status]}</Pill>
                   </div>
-                  <h3 className="mt-4 max-w-[18ch] text-2xl font-semibold tracking-tight text-white md:text-3xl">
+                  <h3 className="mt-3 max-w-[18ch] text-[1.42rem] font-semibold tracking-tight text-white sm:mt-4 sm:text-2xl md:text-3xl">
                     {selectedModule.oneLiner}
                   </h3>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-[rgb(var(--accent-2)/0.92)]">
+                <div className="rounded-xl border border-white/10 bg-white/[0.04] p-2.5 text-[rgb(var(--accent-2)/0.92)] sm:rounded-2xl sm:p-3">
                   <Sparkles className="h-5 w-5" />
                 </div>
               </div>
 
-              <div className="mt-7 grid gap-4 md:grid-cols-2">
-                <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-5">
+              <div className="mt-6 grid gap-3.5 sm:mt-7 sm:gap-4 md:grid-cols-2">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-4 sm:rounded-3xl sm:p-5">
                   <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-400">Problema que resuelve</p>
                   <p className="mt-3 text-sm leading-relaxed text-slate-100">{detail.problem}</p>
                 </div>
-                <div className="rounded-3xl border border-white/10 bg-white/[0.035] p-5">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.035] p-4 sm:rounded-3xl sm:p-5">
                   <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-400">Para quién sirve</p>
                   <p className="mt-3 text-sm leading-relaxed text-slate-100">{detail.forWho}</p>
                 </div>
               </div>
 
-              <div className="mt-5 grid gap-4 md:grid-cols-[1.1fr_0.9fr]">
-                <div className="rounded-3xl border border-[rgb(var(--p-accent-rgb)/0.16)] bg-[radial-gradient(circle_at_top,rgb(var(--p-accent-rgb)/0.14),transparent_70%),rgba(255,255,255,0.04)] p-5">
+              <div className="mt-4 grid gap-3.5 sm:mt-5 sm:gap-4 md:grid-cols-[1.1fr_0.9fr]">
+                <div className="rounded-2xl border border-[rgb(var(--p-accent-rgb)/0.16)] bg-[radial-gradient(circle_at_top,rgb(var(--p-accent-rgb)/0.14),transparent_70%),rgba(255,255,255,0.04)] p-4 sm:rounded-3xl sm:p-5">
                   <div className="flex items-center gap-2 text-white">
                     <Layers3 className="h-4 w-4 text-[rgb(var(--accent-2)/0.9)]" />
                     <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-300">Cómo trabaja</p>
@@ -129,7 +129,7 @@ export function FeaturedModules({
                   </ul>
                 </div>
 
-                <div className="rounded-3xl border border-emerald-400/18 bg-[linear-gradient(180deg,rgba(16,185,129,0.08),rgba(255,255,255,0.03))] p-5">
+                <div className="rounded-2xl border border-emerald-400/18 bg-[linear-gradient(180deg,rgba(16,185,129,0.08),rgba(255,255,255,0.03))] p-4 sm:rounded-3xl sm:p-5">
                   <div className="flex items-center gap-2 text-white">
                     <CheckCircle2 className="h-4 w-4 text-emerald-300" />
                     <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-200">Lo que entrega</p>
@@ -145,7 +145,7 @@ export function FeaturedModules({
                 </div>
               </div>
 
-              <div className="mt-5 rounded-3xl border border-white/10 bg-white/[0.03] p-5">
+              <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:mt-5 sm:rounded-3xl sm:p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-400">Por qué importa dentro de Paradise</p>
                 <p className="mt-3 text-sm leading-relaxed text-slate-100">{detail.differentiator}</p>
                 <p className="mt-4 text-sm leading-relaxed text-slate-300">{detail.statusNote}</p>
@@ -161,7 +161,7 @@ export function FeaturedModules({
                 </div>
               ) : null}
 
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-5 flex flex-wrap gap-2.5 sm:mt-6 sm:gap-3">
                 {selectedModule.repoUrl && selectedModule.repoUrl !== '#' ? (
                   <Link href={selectedModule.repoUrl} muted className="p-btn-secondary rounded-[var(--radius-pill)] px-5 py-3 text-sm font-semibold">
                     Repo
@@ -180,18 +180,18 @@ export function FeaturedModules({
               </div>
             </Card>
           ) : selectedModule && !detail ? (
-            <Card className="flex flex-col gap-5 p-7 md:p-8">
+            <Card className="flex flex-col gap-4 sm:gap-5 p-5 sm:p-6 md:p-8">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <div className="flex flex-wrap gap-2">
                     <Pill>{selectedModule.name}</Pill>
                     <Pill className="p-chip-active">{statusLabel[selectedModule.status]}</Pill>
                   </div>
-                  <h3 className="mt-4 max-w-[18ch] text-2xl font-semibold tracking-tight text-white md:text-3xl">
+                  <h3 className="mt-3 max-w-[18ch] text-[1.42rem] font-semibold tracking-tight text-white sm:mt-4 sm:text-2xl md:text-3xl">
                     {selectedModule.oneLiner}
                   </h3>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3 text-[rgb(var(--accent-2)/0.92)]">
+                <div className="rounded-xl border border-white/10 bg-white/[0.04] p-2.5 text-[rgb(var(--accent-2)/0.92)] sm:rounded-2xl sm:p-3">
                   <Sparkles className="h-5 w-5" />
                 </div>
               </div>

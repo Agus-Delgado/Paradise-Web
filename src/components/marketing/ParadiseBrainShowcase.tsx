@@ -19,11 +19,11 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
   if (!trace) return null
 
   return (
-    <Section id="como-piensa" className="py-18 md:py-24">
+    <Section id="como-piensa" className="py-16 sm:py-18 md:py-24">
       <Container>
         <div className="max-w-3xl">
           <p className="prompt-block">Explainability</p>
-          <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">
+          <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">
             Cómo piensa Paradise IA
           </h2>
           <p className="p-text-muted mt-4 text-sm leading-relaxed md:text-base">
@@ -32,7 +32,7 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
           </p>
         </div>
 
-        <div className="mt-8 flex flex-wrap gap-2">
+        <div className="mt-7 flex flex-wrap gap-2 sm:mt-8">
           {traces.map((t) => (
             <Button
               key={t.key}
@@ -46,8 +46,8 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
           ))}
         </div>
 
-        <Card className="demo-shell mt-8 overflow-hidden p-0">
-          <div className="border-b border-white/10 px-5 py-4 text-sm text-slate-300 md:px-6">
+        <Card className="demo-shell mt-7 overflow-hidden p-0 sm:mt-8">
+          <div className="border-b border-white/10 px-4 py-3.5 text-sm text-slate-300 sm:px-5 sm:py-4 md:px-6">
             <span className="font-semibold text-white">{trace.label}</span>
           </div>
 
@@ -62,18 +62,18 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
                 className="space-y-0"
               >
                 {/* 1. Tu pedido */}
-                <div className="p-5 md:p-6">
+                <div className="p-4 sm:p-5 md:p-6">
                   <div className="flex items-center gap-2 text-sm font-semibold text-white">
                     <MessageSquare className="h-4 w-4 text-[rgb(var(--p-accent-rgb)/0.95)]" />
                     1. Tu pedido
                   </div>
-                  <p className="mt-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm leading-relaxed text-slate-200">
+                  <p className="mt-3 rounded-xl border border-white/10 bg-white/[0.04] px-3.5 py-2.5 text-sm leading-relaxed text-slate-200 sm:rounded-2xl sm:px-4 sm:py-3">
                     &ldquo;{trace.request}&rdquo;
                   </p>
                 </div>
 
                 {/* 2. Qué detectó Paradise */}
-                <div className="p-5 md:p-6">
+                <div className="p-4 sm:p-5 md:p-6">
                   <div className="flex items-center gap-2 text-sm font-semibold text-white">
                     <Brain className="h-4 w-4 text-[rgb(var(--p-accent-rgb)/0.95)]" />
                     2. Qué detectó Paradise
@@ -82,7 +82,7 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
                 </div>
 
                 {/* 3. Señales determinantes */}
-                <div className="p-5 md:p-6">
+                <div className="p-4 sm:p-5 md:p-6">
                   <div className="flex items-center gap-2 text-sm font-semibold text-white">
                     <FileSearch className="h-4 w-4 text-[rgb(var(--p-accent-rgb)/0.95)]" />
                     3. Señales determinantes
@@ -91,7 +91,7 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
                     {trace.determinantSignals.map((s) => (
                       <span
                         key={s.label}
-                        className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs text-slate-200"
+                        className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs leading-relaxed text-slate-200"
                       >
                         <span className="font-medium text-slate-400">{s.label}:</span> {s.value}
                       </span>
@@ -100,7 +100,7 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
                 </div>
 
                 {/* 4. Módulo recomendado */}
-                <div className="p-5 md:p-6">
+                <div className="p-4 sm:p-5 md:p-6">
                   <div className="flex items-center gap-2 text-sm font-semibold text-white">
                     <Route className="h-4 w-4 text-[rgb(var(--p-accent-rgb)/0.95)]" />
                     4. Módulo recomendado
@@ -126,7 +126,7 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
                 </div>
 
                 {/* 5. Qué contexto usó */}
-                <div className="p-5 md:p-6">
+                <div className="p-4 sm:p-5 md:p-6">
                   <div className="flex items-center gap-2 text-sm font-semibold text-white">
                     <Layers3 className="h-4 w-4 text-[rgb(var(--p-accent-rgb)/0.95)]" />
                     5. Qué contexto usó
@@ -166,7 +166,7 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
                 </div>
 
                 {/* 6. Qué conocimiento aplicó */}
-                <div className="p-5 md:p-6">
+                <div className="p-4 sm:p-5 md:p-6">
                   <div className="flex items-center gap-2 text-sm font-semibold text-white">
                     <Lightbulb className="h-4 w-4 text-[rgb(var(--p-accent-rgb)/0.95)]" />
                     6. Qué conocimiento aplicó
@@ -189,12 +189,12 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
                 </div>
 
                 {/* 7. Respuesta generada */}
-                <div className="p-5 md:p-6">
+                <div className="p-4 sm:p-5 md:p-6">
                   <div className="flex items-center gap-2 text-sm font-semibold text-white">
                     <Sparkles className="h-4 w-4 text-emerald-400" />
                     7. Respuesta generada
                   </div>
-                  <div className="artifact-card mt-3 rounded-[20px] border border-emerald-400/25 bg-[linear-gradient(180deg,rgba(16,185,129,0.06),rgba(255,255,255,0.02))] p-5">
+                  <div className="artifact-card mt-3 rounded-[16px] border border-emerald-400/25 bg-[linear-gradient(180deg,rgba(16,185,129,0.06),rgba(255,255,255,0.02))] p-4 sm:rounded-[20px] sm:p-5">
                     <p className="text-sm font-medium leading-relaxed text-white">{trace.response.summary}</p>
                     <ul className="mt-4 space-y-2 text-sm text-slate-300">
                       {trace.response.why.map((w) => (

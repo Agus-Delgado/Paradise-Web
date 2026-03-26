@@ -208,15 +208,15 @@ export function PageShell({
         ref={headerRef}
         className="sticky top-0 z-40 border-b border-[var(--p-border)] bg-[rgba(10,12,16,0.55)] backdrop-blur-xl"
       >
-        <Container className="flex flex-nowrap items-center justify-between gap-4 py-3.5 md:gap-6">
-          <div className="flex min-w-0 max-w-[min(230px,32vw)] shrink-0 items-center gap-3">
-            <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[var(--radius-sm)] border border-white/10 bg-white/5 text-sm font-semibold">
+        <Container className="flex flex-nowrap items-center justify-between gap-3 py-2.5 sm:gap-4 sm:py-3 md:gap-6 md:py-3.5">
+          <div className="flex min-w-0 max-w-[min(210px,58vw)] shrink-0 items-center gap-2.5 sm:max-w-[min(230px,32vw)] sm:gap-3">
+            <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-[var(--radius-sm)] border border-white/10 bg-white/5 text-sm font-semibold sm:h-10 sm:w-10">
               <span className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--accent-1)/0.35)] via-transparent to-transparent" />
               <span className="relative">P</span>
             </div>
             <div>
-              <p className="font-display text-base font-semibold">{brand.title}</p>
-              <p className="max-w-[22ch] truncate text-[0.7rem] leading-tight text-slate-400 sm:text-xs">
+              <p className="font-display text-[0.95rem] font-semibold sm:text-base">{brand.title}</p>
+              <p className="max-w-[18ch] truncate text-[0.66rem] leading-tight text-slate-400 sm:max-w-[22ch] sm:text-xs">
                 {brand.subtitle}
               </p>
             </div>
@@ -260,7 +260,7 @@ export function PageShell({
 
             <button
               type="button"
-              className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-[var(--p-border)] bg-white/5 px-3 py-2 text-xs font-semibold text-slate-200 transition hover:border-[var(--p-border-strong)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)] md:hidden"
+              className="inline-flex min-h-10 shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-[var(--p-border)] bg-white/5 px-3.5 py-2 text-xs font-semibold text-slate-200 transition hover:border-[var(--p-border-strong)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)] md:hidden"
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((open) => !open)}
@@ -272,8 +272,8 @@ export function PageShell({
         </Container>
 
         {menuOpen ? (
-          <div className="border-t border-[var(--p-border)] bg-[rgba(10,12,16,0.75)] backdrop-blur-xl md:hidden">
-            <Container className="flex flex-col gap-2 py-4">
+          <div className="border-t border-[var(--p-border)] bg-[rgba(10,12,16,0.82)] backdrop-blur-xl md:hidden">
+            <Container className="flex flex-col gap-2.5 py-3.5">
               {onReenterParadise ? (
                 <button
                   type="button"
@@ -281,7 +281,7 @@ export function PageShell({
                     onReenterParadise()
                     setMenuOpen(false)
                   }}
-                  className="mb-1 rounded-[var(--radius-md)] border border-white/12 bg-white/[0.06] px-3 py-2.5 text-center text-sm font-semibold text-slate-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]"
+                  className="mb-1 rounded-[var(--radius-md)] border border-white/12 bg-white/[0.06] px-3 py-3 text-center text-sm font-semibold text-slate-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]"
                 >
                   Intro
                 </button>
@@ -292,7 +292,7 @@ export function PageShell({
                   href={item.href}
                   muted
                   className={cn(
-                    'rounded-[var(--radius-md)] px-3 py-2 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]',
+                    'rounded-[var(--radius-md)] px-3 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]',
                       item.href.replace('#', '') === activeSection &&
                       'bg-gradient-to-r from-[rgb(var(--p-accent-rgb)/0.2)] to-[rgb(var(--p-accent2-rgb)/0.2)] text-white border border-[var(--p-border-strong)]',
                   )}

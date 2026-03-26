@@ -45,22 +45,22 @@ export function HeroCommercial({
 
   return (
     <>
-      <HeroAurora id="solucion" className="pt-20" style={{ '--grid-opacity': 0.035, '--glow-strength': 0.22 } as CSSProperties}>
-        <Container className="scroll-mt-[var(--header-offset)] pb-12 md:pt-8 md:pb-16">
-          <div className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+      <HeroAurora id="solucion" className="pt-16 sm:pt-20" style={{ '--grid-opacity': 0.035, '--glow-strength': 0.22 } as CSSProperties}>
+        <Container className="scroll-mt-[var(--header-offset)] pb-10 sm:pb-12 md:pt-8 md:pb-16">
+          <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
             <div className="max-w-[60ch]">
               <Badge>{kicker}</Badge>
-              <h1 className="mt-6 max-w-[13ch] font-display text-[2.45rem] font-bold leading-[1.04] tracking-tight text-white md:text-[3.45rem] xl:text-[4.1rem]">
+              <h1 className="mt-5 max-w-[14ch] font-display text-[2rem] font-bold leading-[1.05] tracking-tight text-white sm:text-[2.45rem] md:mt-6 md:max-w-[13ch] md:text-[3.45rem] xl:text-[4.1rem]">
                 {title}
               </h1>
-              <p className="p-text-muted mt-5 max-w-[58ch] text-[1.02rem] leading-relaxed md:text-[1.12rem]">{description}</p>
+              <p className="p-text-muted mt-4 max-w-[58ch] text-[0.97rem] leading-relaxed sm:mt-5 sm:text-[1.02rem] md:text-[1.12rem]">{description}</p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-7 flex flex-wrap gap-2.5 sm:mt-8 sm:gap-3">
                 <Link
                   href={ctas.primary.href}
                   target={primaryExternal ? '_blank' : undefined}
                   rel={primaryExternal ? 'noopener noreferrer' : undefined}
-                  className="p-btn-primary rounded-[var(--radius-pill)] px-6 py-3 text-sm font-semibold"
+                  className="p-btn-primary min-h-11 rounded-[var(--radius-pill)] px-5 py-2.5 text-sm font-semibold sm:px-6 sm:py-3"
                 >
                   {ctas.primary.label}
                 </Link>
@@ -70,39 +70,39 @@ export function HeroCommercial({
                   onClick={() => setOpenVideo(true)}
                   aria-haspopup="dialog"
                   aria-expanded={openVideo}
-                  className="p-btn-secondary inline-flex rounded-[var(--radius-pill)] px-6 py-3 text-sm font-semibold"
+                  className="p-btn-secondary inline-flex min-h-11 rounded-[var(--radius-pill)] px-5 py-2.5 text-sm font-semibold sm:px-6 sm:py-3"
                 >
                   {ctas.secondary.label}
                 </button>
               </div>
 
-              <div className="mt-7 flex flex-wrap gap-2">
+              <div className="mt-6 flex flex-wrap gap-2 sm:mt-7">
                 {proof.map((item) => (
                   <Pill key={item}>{item}</Pill>
                 ))}
               </div>
             </div>
 
-            <div className="hero-scene p-card relative overflow-hidden rounded-[34px] p-5 md:p-6">
+            <div className="hero-scene p-card relative overflow-hidden rounded-[26px] p-4 sm:rounded-[30px] sm:p-5 md:rounded-[34px] md:p-6">
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-              <div className="grid gap-4 md:grid-cols-[0.86fr_1.14fr]">
+              <div className="grid gap-3.5 sm:gap-4 md:grid-cols-[0.86fr_1.14fr]">
                 <div className="space-y-3">
                   <p className="text-center text-[0.72rem] font-semibold uppercase tracking-[0.3em] text-[rgb(var(--accent-1)/0.86)]">Señales</p>
                   {heroSignals.map((signal) => (
-                    <div key={signal} className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 text-sm text-slate-200">
+                    <div key={signal} className="rounded-xl border border-white/10 bg-white/[0.045] px-3.5 py-2.5 text-sm text-slate-200 sm:rounded-2xl sm:px-4 sm:py-3">
                       {signal}
                     </div>
                   ))}
                 </div>
 
                 <div className="space-y-4">
-                  <div className="rounded-[28px] border border-[rgb(var(--p-accent-rgb)/0.28)] bg-[radial-gradient(circle_at_top,rgb(var(--p-accent-rgb)/0.18),transparent_68%),rgba(255,255,255,0.05)] p-5 shadow-[0_0_48px_-26px_var(--p-glow)]">
+                  <div className="rounded-[22px] border border-[rgb(var(--p-accent-rgb)/0.28)] bg-[radial-gradient(circle_at_top,rgb(var(--p-accent-rgb)/0.18),transparent_68%),rgba(255,255,255,0.05)] p-4 shadow-[0_0_48px_-26px_var(--p-glow)] sm:rounded-[28px] sm:p-5">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[rgb(var(--accent-2)/0.9)]">Paradise core</p>
-                        <p className="mt-2 text-lg font-semibold text-white">Coordina qué entra, qué módulo toca y qué sale listo.</p>
+                        <p className="mt-2 text-base font-semibold text-white sm:text-lg">Coordina qué entra, qué módulo toca y qué sale listo.</p>
                       </div>
-                      <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-[rgb(var(--accent-2)/0.95)]">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-[rgb(var(--accent-2)/0.95)] sm:h-11 sm:w-11 sm:rounded-2xl">
                         <Sparkles className="h-5 w-5" />
                       </span>
                     </div>
@@ -110,14 +110,14 @@ export function HeroCommercial({
 
                   <div className="grid gap-3 md:grid-cols-2">
                     {heroModules.map((module) => (
-                      <div key={module} className="rounded-2xl border border-white/10 bg-white/[0.035] px-4 py-3 text-sm text-slate-200">
+                    <div key={module} className="rounded-xl border border-white/10 bg-white/[0.035] px-3.5 py-2.5 text-sm text-slate-200 sm:rounded-2xl sm:px-4 sm:py-3">
                         {module}
                       </div>
                     ))}
                   </div>
 
-                  <div className="rounded-[28px] border border-emerald-400/30 bg-[linear-gradient(180deg,rgba(16,185,129,0.08),rgba(255,255,255,0.03))] p-5 shadow-[0_0_36px_-24px_rgba(16,185,129,0.55)]">
-                    <div className="flex items-center gap-3 text-sm font-semibold text-white">
+                  <div className="rounded-[22px] border border-emerald-400/30 bg-[linear-gradient(180deg,rgba(16,185,129,0.08),rgba(255,255,255,0.03))] p-4 shadow-[0_0_36px_-24px_rgba(16,185,129,0.55)] sm:rounded-[28px] sm:p-5">
+                    <div className="flex items-start gap-2.5 text-sm font-semibold text-white sm:items-center sm:gap-3">
                       <ArrowRight className="h-4 w-4 text-emerald-300" />
                       {heroArtifact}
                     </div>

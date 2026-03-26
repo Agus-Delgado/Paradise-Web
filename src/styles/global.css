@@ -82,6 +82,7 @@
 
   #root {
     min-height: 100vh;
+    overflow-x: clip;
   }
 
   a {
@@ -94,6 +95,12 @@
   input:focus-visible {
     outline: 2px solid rgb(var(--p-accent-rgb) / 0.8);
     outline-offset: 2px;
+  }
+
+  @media (max-width: 767px) {
+    :root {
+      --header-offset: 80px;
+    }
   }
 }
 

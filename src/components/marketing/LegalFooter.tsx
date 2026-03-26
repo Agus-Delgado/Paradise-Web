@@ -5,14 +5,14 @@ export function LegalFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-[var(--p-border)] bg-[rgba(10,12,16,0.55)] py-10 text-slate-300">
+    <footer className="border-t border-[var(--p-border)] bg-[rgba(10,12,16,0.55)] py-8 sm:py-10 text-slate-300">
       <Container>
-        <div className="grid gap-8 md:grid-cols-[1.1fr_1fr_1fr]">
+        <div className="grid gap-6 sm:gap-8 md:grid-cols-[1.1fr_1fr_1fr]">
           <div className="space-y-3 text-xs sm:text-sm">
             <p className="text-sm font-semibold text-white">Legal</p>
             <p className="p-text-muted">© {year} Paradise — Licenciado bajo MIT para el código. Marca y contenido reservados.</p>
             <p className="p-text-muted">Creado por Agustín Delgado.</p>
-            <div className="flex flex-wrap gap-3 pt-2 text-xs">
+            <div className="flex flex-wrap gap-2.5 pt-1.5 text-xs sm:gap-3 sm:pt-2">
               <Link href="#aviso-legal" muted className="hover:text-white">
                 Aviso legal
               </Link>
@@ -45,7 +45,7 @@ export function LegalFooter() {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-[var(--p-border)] pt-4 text-xs sm:text-sm">
+        <div className="mt-6 border-t border-[var(--p-border)] pt-4 text-xs sm:mt-8 sm:text-sm">
           <p className="p-text-muted">
             Los nombres 'Paradise' y los nombres de sus módulos pueden considerarse marcas o identificadores del
             proyecto.
