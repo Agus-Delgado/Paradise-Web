@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { ThemeProvider } from './theme/useThemeEngine'
 import { PageShell } from './components/layout/PageShell'
 import { modules, Status, type ModuleItem } from './data/modules'
@@ -18,6 +18,7 @@ import {
   TrustStrip,
   UseCaseTabs,
 } from './components/marketing'
+import { ParadiseIntroGate } from './components/marketing/ParadiseIntroGate'
 
 function pickFeatured(all: ModuleItem[], max = 5) {
   const priority = (m: ModuleItem) => (m.status === Status.Active ? 2 : m.status === Status.Mvp ? 1 : 0)
@@ -49,17 +50,36 @@ function pickFeatured(all: ModuleItem[], max = 5) {
 }
 
 export default function App() {
+  const [introOpen, setIntroOpen] = useState(true)
+  const [introSession, setIntroSession] = useState(0)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(
     () => marketingCopy.useCases.cases[0]?.recommendedModuleId ?? null
   )
+
+  const openIntro = useCallback(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0)
+    }
+    setIntroSession((s) => s + 1)
+    setIntroOpen(true)
+  }, [])
 
   const featured = useMemo(() => pickFeatured(modules, 5), [])
   const navItems = marketingCopy.nav
 
   return (
     <ThemeProvider>
-      <PageShell navItems={navItems} enableCommandPalette={false} brand={{ title: 'Paradise', subtitle: 'Ecosistema evolutivo' }}>
+      {introOpen ? (
+        <ParadiseIntroGate key={introSession} onDismissed={() => setIntroOpen(false)} />
+      ) : null}
+
+      <PageShell
+        navItems={navItems}
+        enableCommandPalette={false}
+        brand={{ title: 'Paradise', subtitle: 'Ecosistema evolutivo' }}
+        onReenterParadise={openIntro}
+      >
         <a
           href="#solucion"
           className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-50 rounded-full bg-white px-4 py-2 text-sm font-semibold text-night-950 shadow"

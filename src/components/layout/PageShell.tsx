@@ -18,6 +18,7 @@ type PageShellProps = {
   onClearFilters?: () => void
   enableCommandPalette?: boolean
   brand?: { title: string; subtitle: string }
+  onReenterParadise?: () => void
 }
 
 export function PageShell({
@@ -27,6 +28,7 @@ export function PageShell({
   onClearFilters,
   enableCommandPalette = false,
   brand = { title: 'Paradise', subtitle: 'Ecosistema evolutivo' },
+  onReenterParadise,
 }: PageShellProps) {
   const reduceMotion = useReducedMotion() ?? false
   const navHrefs = useMemo(() => navItems.map((item) => item.href), [navItems])
@@ -206,22 +208,22 @@ export function PageShell({
         ref={headerRef}
         className="sticky top-0 z-40 border-b border-[var(--p-border)] bg-[rgba(10,12,16,0.55)] backdrop-blur-xl"
       >
-        <Container className="flex items-center justify-start gap-8 py-3.5">
-          <div className="flex w-[230px] items-center gap-3">
+        <Container className="flex flex-nowrap items-center justify-between gap-4 py-3.5 md:gap-6">
+          <div className="flex min-w-0 max-w-[min(230px,32vw)] shrink-0 items-center gap-3">
             <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-[var(--radius-sm)] border border-white/10 bg-white/5 text-sm font-semibold">
               <span className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--accent-1)/0.35)] via-transparent to-transparent" />
               <span className="relative">P</span>
             </div>
             <div>
               <p className="font-display text-base font-semibold">{brand.title}</p>
-              <p className="max-w-[22ch] text-[0.7rem] leading-tight text-slate-400 sm:text-xs">
+              <p className="max-w-[22ch] truncate text-[0.7rem] leading-tight text-slate-400 sm:text-xs">
                 {brand.subtitle}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-1 items-center justify-end gap-3">
-            <nav className="relative hidden items-center gap-2 text-sm font-medium text-slate-300 md:flex">
+          <div className="flex min-w-0 flex-1 items-center justify-end gap-2 md:gap-3">
+            <nav className="relative hidden min-w-0 flex-nowrap items-center gap-1.5 text-sm font-medium text-slate-300 md:flex">
             {navItems.map((item) => {
               const isActive = item.href.replace('#', '') === activeSection
               return (
@@ -231,7 +233,7 @@ export function PageShell({
                   data-nav={item.href}
                   muted
                   className={cn(
-                    'rounded-full px-3 py-1.5 text-sm text-slate-200 transition-colors duration-200 ease-out hover:bg-white/5 hover:text-white',
+                    'whitespace-nowrap rounded-full px-2.5 py-1.5 text-sm text-slate-200 transition-colors duration-200 ease-out hover:bg-white/5 hover:text-white',
                     !reduceMotion && 'transition-transform hover:-translate-y-0.5',
                     isActive &&
                       'bg-gradient-to-r from-[rgb(var(--p-accent-rgb)/0.28)] to-[rgb(var(--p-accent2-rgb)/0.28)] text-white border border-[var(--p-border-strong)]',
@@ -245,9 +247,20 @@ export function PageShell({
             })}
             </nav>
 
+            {onReenterParadise ? (
+              <button
+                type="button"
+                onClick={onReenterParadise}
+                aria-label="Open Paradise intro"
+                className="hidden shrink-0 items-center whitespace-nowrap rounded-full border border-white/12 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-slate-200 shadow-[0_0_20px_-12px_rgba(0,0,0,0.5)] transition hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)] md:inline-flex"
+              >
+                Intro
+              </button>
+            ) : null}
+
             <button
               type="button"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--p-border)] bg-white/5 px-3 py-2 text-xs font-semibold text-slate-200 transition hover:border-[var(--p-border-strong)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)] md:hidden"
+              className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border border-[var(--p-border)] bg-white/5 px-3 py-2 text-xs font-semibold text-slate-200 transition hover:border-[var(--p-border-strong)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)] md:hidden"
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((open) => !open)}
@@ -261,6 +274,18 @@ export function PageShell({
         {menuOpen ? (
           <div className="border-t border-[var(--p-border)] bg-[rgba(10,12,16,0.75)] backdrop-blur-xl md:hidden">
             <Container className="flex flex-col gap-2 py-4">
+              {onReenterParadise ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onReenterParadise()
+                    setMenuOpen(false)
+                  }}
+                  className="mb-1 rounded-[var(--radius-md)] border border-white/12 bg-white/[0.06] px-3 py-2.5 text-center text-sm font-semibold text-slate-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]"
+                >
+                  Intro
+                </button>
+              ) : null}
               {navItems.map((item) => (
                 <Link
                   key={item.href}

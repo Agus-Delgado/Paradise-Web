@@ -20,7 +20,7 @@ export function CreatorSection() {
                   {!imageError ? (
                     <img
                       src="/IMG/foto.jpeg"
-                      alt="Agustin Delgado"
+                      alt="Agustin Delgado, impulso inicial de Paradise"
                       loading="lazy"
                       onError={() => setImageError(true)}
                       className="h-full w-full object-cover"
@@ -35,13 +35,24 @@ export function CreatorSection() {
             </div>
 
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-300">Conocé al creador</p>
-              <h3 className="mt-3 font-display text-2xl font-semibold text-white md:text-4xl">Agustin Delgado</h3>
+              <h3 className="font-display text-2xl font-semibold text-white md:text-4xl">
+                La visión detrás de Paradise
+              </h3>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-300 md:text-base">
+                Una visión inicial que apunta a evolucionar como ecosistema: abierto a más módulos, voces y dominios
+                sumándose sobre el mismo núcleo, sin perder identidad.
+              </p>
               <p className="p-text-muted mt-4 max-w-2xl text-sm leading-relaxed md:text-base">
-                Profesional orientado a datos, producto e inteligencia artificial aplicada. Me muevo entre analítica, desarrollo de experiencias modulares y diseño de demos que vuelvan entendible lo complejo para negocio y técnica.
+                Paradise parte de acercar datos, producto e inteligencia artificial aplicada en experiencias modulares y
+                demos que vuelvan legible lo complejo para negocio y técnica — con sistemas evolutivos y una narrativa
+                clara.
               </p>
               <p className="p-text-muted mt-3 max-w-2xl text-sm leading-relaxed md:text-base">
-                Paradise nace desde esa mezcla: pensar sistemas evolutivos, darles una identidad clara y construir productos que puedan crecer por dominio sin perder coherencia visual ni conceptual.
+                El horizonte es colectivo: construir capas que crezcan con coherencia visual y conceptual, y dejar
+                espacio para que el proyecto se expanda más allá de una sola línea de trabajo.
+              </p>
+              <p className="mt-4 max-w-2xl text-sm text-slate-400">
+                Impulso inicial: <span className="text-slate-300">Agustin Delgado</span>
               </p>
 
               <div className="mt-6 flex flex-wrap gap-3">
