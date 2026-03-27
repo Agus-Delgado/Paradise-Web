@@ -1,6 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { Cpu, Orbit, Route, Users, GraduationCap, Sparkles } from 'lucide-react'
-import { Container } from '../ui/Container'
 import { Section } from '../ui/Section'
 import { cn } from '../ui/cn'
 
@@ -31,8 +30,7 @@ export function EcosystemMap({
 }) {
   const reduceMotion = useReducedMotion() ?? false
   return (
-    <Section id="ecosistema" className="py-16 sm:py-18 md:py-24">
-      <Container>
+    <Section id="ecosistema" className="py-16 sm:py-20 md:py-24">
         <div className="max-w-3xl">
           <p className="prompt-block">Arquitectura visible</p>
           <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">{title}</h2>
@@ -77,7 +75,6 @@ export function EcosystemMap({
             )
           })}
         </div>
-      </Container>
     </Section>
   )
 }

@@ -1,5 +1,7 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useReducedMotion } from 'framer-motion'
 import { ThemeProvider } from './theme/useThemeEngine'
+import { cn } from './components/ui/cn'
 import { PageShell } from './components/layout/PageShell'
 import { modules, Status, type ModuleItem } from './data/modules'
 import { marketingCopy } from './content/marketingCopy'
@@ -50,8 +52,10 @@ function pickFeatured(all: ModuleItem[], max = 5) {
 }
 
 export default function App() {
+  const reduceMotion = useReducedMotion() ?? false
   const [introOpen, setIntroOpen] = useState(true)
   const [introSession, setIntroSession] = useState(0)
+  const [landingReveal, setLandingReveal] = useState(false)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(
     () => marketingCopy.useCases.cases[0]?.recommendedModuleId ?? null
@@ -64,6 +68,23 @@ export default function App() {
     setIntroSession((s) => s + 1)
     setIntroOpen(true)
   }, [])
+
+  useEffect(() => {
+    if (introOpen) {
+      queueMicrotask(() => setLandingReveal(false))
+      return
+    }
+    if (reduceMotion) {
+      queueMicrotask(() => setLandingReveal(true))
+      return
+    }
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => setLandingReveal(true))
+    })
+    return () => cancelAnimationFrame(id)
+  }, [introOpen, reduceMotion])
+
+  const mainVisible = reduceMotion ? !introOpen : !introOpen && landingReveal
 
   const featured = useMemo(() => pickFeatured(modules, 5), [])
   const navItems = marketingCopy.nav
@@ -87,7 +108,14 @@ export default function App() {
           Saltar al contenido
         </a>
 
-        <div className="relative">
+        <div
+          className={cn(
+            'relative',
+            !reduceMotion && 'transition-opacity duration-[450ms] ease-out',
+            mainVisible ? 'opacity-100' : 'opacity-0',
+            !mainVisible && 'pointer-events-none',
+          )}
+        >
           <HeroCommercial
             kicker={marketingCopy.hero.kicker}
             title={marketingCopy.hero.title}

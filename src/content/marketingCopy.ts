@@ -20,6 +20,7 @@ export const marketingCopy = {
     { label: 'Cómo piensa', href: '#como-piensa' },
     { label: 'Cómo funciona', href: '#como-funciona' },
     { label: 'Ecosistema', href: '#ecosistema' },
+    { label: 'Casos', href: '#casos' },
     { label: 'Módulos', href: '#modulos' },
     { label: 'Roadmap', href: '#roadmap' },
     { label: 'FAQ', href: '#faq' },

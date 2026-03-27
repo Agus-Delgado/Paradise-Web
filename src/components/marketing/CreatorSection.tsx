@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Container } from '../ui/Container'
 import { Section } from '../ui/Section'
 import { Card } from '../ui/Card'
 import { Link } from '../ui/Link'
@@ -8,8 +7,7 @@ export function CreatorSection() {
   const [imageError, setImageError] = useState(false)
 
   return (
-    <Section id="creador" className="py-16 sm:py-18 md:py-24">
-      <Container>
+    <Section id="creador" className="py-16 sm:py-20 md:py-24">
         <Card className="relative overflow-hidden p-5 sm:p-7 md:p-8">
           <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[rgb(var(--p-accent-rgb)/0.12)] via-transparent to-[rgb(var(--p-accent2-rgb)/0.1)]" />
           <div className="grid gap-6 sm:gap-7 md:grid-cols-[0.88fr_1.12fr] md:items-center">
@@ -76,7 +74,6 @@ export function CreatorSection() {
             </div>
           </div>
         </Card>
-      </Container>
     </Section>
   )
 }

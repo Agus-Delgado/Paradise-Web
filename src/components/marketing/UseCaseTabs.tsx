@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { ModuleItem } from '../../data/modules'
-import { Container } from '../ui/Container'
 import { Section } from '../ui/Section'
 import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
@@ -56,8 +55,7 @@ export function UseCaseTabs({
   const heroModule = recommended[0]
 
   return (
-    <Section id="casos" className="py-16 sm:py-18 md:py-24">
-      <Container>
+    <Section id="casos" className="py-16 sm:py-20 md:py-24">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <p className="prompt-block">Casos / soluciones</p>
@@ -128,7 +126,6 @@ export function UseCaseTabs({
             )}
           </div>
         ) : null}
-      </Container>
     </Section>
   )
 }

@@ -3,7 +3,6 @@ import { Brain, FileSearch, Layers3, Lightbulb, MessageSquare, Route, Sparkles }
 import { useMemo, useState } from 'react'
 import type { ShowcaseTrace } from '../../data/showcaseTraces'
 import { showcaseTraces } from '../../data/showcaseTraces'
-import { Container } from '../ui/Container'
 import { Section } from '../ui/Section'
 import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
@@ -19,8 +18,7 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
   if (!trace) return null
 
   return (
-    <Section id="como-piensa" className="py-16 sm:py-18 md:py-24">
-      <Container>
+    <Section id="como-piensa" className="py-16 sm:py-20 md:py-24">
         <div className="max-w-3xl">
           <p className="prompt-block">Explainability</p>
           <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">
@@ -221,7 +219,6 @@ export function ParadiseBrainShowcase({ traces = showcaseTraces }: { traces?: re
             </AnimatePresence>
           </div>
         </Card>
-      </Container>
     </Section>
   )
 }

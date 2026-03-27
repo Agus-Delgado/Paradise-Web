@@ -1,5 +1,4 @@
 import { ShieldCheck, Sparkles, Workflow, Wrench } from 'lucide-react'
-import { Container } from '../ui/Container'
 import { Section } from '../ui/Section'
 import { Card } from '../ui/Card'
 
@@ -13,7 +12,6 @@ const iconMap = {
 export function TrustStrip({ items }: { items: readonly string[] }) {
   return (
     <Section className="pt-0 pb-8 sm:pb-10 md:pb-14">
-      <Container>
         <div className="grid gap-3 sm:gap-3.5 md:grid-cols-4">
           {items.map((item) => {
             const Icon = iconMap[item as keyof typeof iconMap] ?? Sparkles
@@ -30,7 +28,6 @@ export function TrustStrip({ items }: { items: readonly string[] }) {
             )
           })}
         </div>
-      </Container>
     </Section>
   )
 }

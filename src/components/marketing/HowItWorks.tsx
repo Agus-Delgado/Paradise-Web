@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Container } from '../ui/Container'
 import { Section } from '../ui/Section'
 import { Card } from '../ui/Card'
 import { Divider } from '../ui/Divider'
@@ -21,7 +20,6 @@ export function HowItWorks({
 
   return (
     <Section id="como-funciona" className="py-16">
-      <Container>
         <h2 className="font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">{title}</h2>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {steps.map((s) => (
@@ -61,7 +59,6 @@ export function HowItWorks({
             ) : null}
           </div>
         </div>
-      </Container>
     </Section>
   )
 }

@@ -1,7 +1,6 @@
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'framer-motion'
 import { FileText, Layers3, RadioTower, Sparkles } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { Container } from '../ui/Container'
 import { Section } from '../ui/Section'
 import { Card } from '../ui/Card'
 import { Button } from '../ui/Button'
@@ -34,8 +33,7 @@ export function ParadiseDemo({
   if (!activeScenario) return null
 
   return (
-    <Section id="demo" className="py-16 sm:py-18 md:py-24">
-      <Container>
+    <Section id="demo" className="py-16 sm:py-20 md:py-24">
         <div className="max-w-3xl">
           <p className="prompt-block">Demostración guiada</p>
           <h2 className="mt-4 font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">{title}</h2>
@@ -185,7 +183,6 @@ export function ParadiseDemo({
             </div>
           </LayoutGroup>
         </Card>
-      </Container>
     </Section>
   )
 }

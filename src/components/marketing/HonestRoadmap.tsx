@@ -1,5 +1,4 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { Container } from '../ui/Container'
 import { Section } from '../ui/Section'
 import { Card } from '../ui/Card'
 
@@ -20,8 +19,7 @@ export function HonestRoadmap({
 }) {
   const reduceMotion = useReducedMotion() ?? false
   return (
-    <Section id="roadmap" className="py-18 md:py-24">
-      <Container>
+    <Section id="roadmap" className="py-16 md:py-24">
         <div className="max-w-3xl">
           <p className="prompt-block">Roadmap honesto</p>
           <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">{title}</h2>
@@ -52,7 +50,6 @@ export function HonestRoadmap({
             </motion.div>
           ))}
         </div>
-      </Container>
     </Section>
   )
 }

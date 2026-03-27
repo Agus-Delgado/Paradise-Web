@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ArrowRight, CheckCircle2, Layers3, Sparkles } from 'lucide-react'
 import type { ModuleItem } from '../../data/modules'
-import { Container } from '../ui/Container'
 import { Section } from '../ui/Section'
 import { ModuleCard } from '../landing/ModuleCard'
 import { Card } from '../ui/Card'
@@ -79,8 +78,7 @@ export function FeaturedModules({
   const detail = selectedModule ? moduleDetails[selectedModule.id] : undefined
 
   return (
-    <Section id="modulos" className="py-16 sm:py-18 md:py-24">
-      <Container>
+    <Section id="modulos" className="py-16 sm:py-20 md:py-24">
         <h2 className="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">{title}</h2>
         <p className="p-text-muted mt-3 max-w-3xl text-sm leading-relaxed md:text-base">{subtitle}</p>
 
@@ -262,7 +260,6 @@ export function FeaturedModules({
           <ArrowRight className="h-4 w-4 text-[rgb(var(--accent-2)/0.9)]" />
           Elegí cualquier módulo para ver una lectura más detallada de qué resuelve, cómo opera y qué entrega.
         </div>
-      </Container>
     </Section>
   )
 }

@@ -224,39 +224,41 @@ export function PageShell({
 
           <div className="flex min-w-0 flex-1 items-center justify-end gap-2 md:gap-3">
             <nav className="relative hidden min-w-0 flex-nowrap items-center gap-1.5 text-sm font-medium text-slate-300 md:flex">
-            {navItems.map((item) => {
-              const isActive = item.href.replace('#', '') === activeSection
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  data-nav={item.href}
-                  muted
+              {navItems.map((item) => {
+                const isActive = item.href.replace('#', '') === activeSection
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    data-nav={item.href}
+                    muted
+                    className={cn(
+                      'whitespace-nowrap rounded-full px-2.5 py-1.5 text-sm text-slate-200 transition-colors duration-200 ease-out hover:bg-white/5 hover:text-white',
+                      !reduceMotion && 'transition-transform hover:-translate-y-0.5',
+                      isActive &&
+                        'bg-gradient-to-r from-[rgb(var(--p-accent-rgb)/0.28)] to-[rgb(var(--p-accent2-rgb)/0.28)] text-white border border-[var(--p-border-strong)]',
+                    )}
+                    aria-current={isActive ? 'page' : undefined}
+                    onClick={handleNavClick(item.href)}
+                  >
+                    {item.label}
+                  </Link>
+                )
+              })}
+              {onReenterParadise ? (
+                <button
+                  type="button"
+                  onClick={onReenterParadise}
+                  aria-label="Open Paradise intro"
                   className={cn(
-                    'whitespace-nowrap rounded-full px-2.5 py-1.5 text-sm text-slate-200 transition-colors duration-200 ease-out hover:bg-white/5 hover:text-white',
+                    'shrink-0 whitespace-nowrap rounded-full px-2.5 py-1.5 text-sm text-slate-200 transition-colors duration-200 ease-out hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]',
                     !reduceMotion && 'transition-transform hover:-translate-y-0.5',
-                    isActive &&
-                      'bg-gradient-to-r from-[rgb(var(--p-accent-rgb)/0.28)] to-[rgb(var(--p-accent2-rgb)/0.28)] text-white border border-[var(--p-border-strong)]',
                   )}
-                  aria-current={isActive ? 'page' : undefined}
-                  onClick={handleNavClick(item.href)}
                 >
-                  {item.label}
-                </Link>
-              )
-            })}
+                  Intro
+                </button>
+              ) : null}
             </nav>
-
-            {onReenterParadise ? (
-              <button
-                type="button"
-                onClick={onReenterParadise}
-                aria-label="Open Paradise intro"
-                className="hidden shrink-0 items-center whitespace-nowrap rounded-full border border-white/12 bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-slate-200 shadow-[0_0_20px_-12px_rgba(0,0,0,0.5)] transition hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)] md:inline-flex"
-              >
-                Intro
-              </button>
-            ) : null}
 
             <button
               type="button"
@@ -281,7 +283,7 @@ export function PageShell({
                     onReenterParadise()
                     setMenuOpen(false)
                   }}
-                  className="mb-1 rounded-[var(--radius-md)] border border-white/12 bg-white/[0.06] px-3 py-3 text-center text-sm font-semibold text-slate-200 transition hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]"
+                  className="rounded-[var(--radius-md)] px-3 py-2.5 text-left text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]"
                 >
                   Intro
                 </button>
