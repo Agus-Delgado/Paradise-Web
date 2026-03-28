@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import { useCallback, useRef, useState } from 'react'
-import { ArrowRight, Sparkles } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
+import { ParadiseMark } from '../branding/ParadiseMark'
 import { Badge } from '../ui/Badge'
 import { Container } from '../ui/Container'
 import { Link } from '../ui/Link'
@@ -98,13 +99,17 @@ export function HeroCommercial({
                 <div className="space-y-4">
                   <div className="rounded-[22px] border border-[rgb(var(--p-accent-rgb)/0.28)] bg-[radial-gradient(circle_at_top,rgb(var(--p-accent-rgb)/0.18),transparent_68%),rgba(255,255,255,0.05)] p-4 shadow-[0_0_48px_-26px_var(--p-glow)] sm:rounded-[28px] sm:p-5">
                     <div className="flex items-start justify-between gap-3">
-                      <div>
+                      <div className="min-w-0">
                         <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[rgb(var(--accent-2)/0.9)]">Paradise core</p>
                         <p className="mt-2 text-base font-semibold text-white sm:text-lg">Coordina qué entra, qué módulo toca y qué sale listo.</p>
                       </div>
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-[rgb(var(--accent-2)/0.95)] sm:h-11 sm:w-11 sm:rounded-2xl">
-                        <Sparkles className="h-5 w-5" />
-                      </span>
+                      <ParadiseMark
+                        variant="onDark"
+                        decorative
+                        heightClass="h-7 sm:h-8"
+                        maxWidthClass="max-w-[104px] sm:max-w-[118px]"
+                        className="object-right opacity-[0.96]"
+                      />
                     </div>
                   </div>
 

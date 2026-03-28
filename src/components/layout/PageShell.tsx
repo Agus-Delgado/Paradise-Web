@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useReducedMotion } from 'framer-motion'
+import { ParadiseMark } from '../branding/ParadiseMark'
 import { Container } from '../ui/Container'
 import { Link } from '../ui/Link'
 import { cn } from '../ui/cn'
@@ -209,12 +210,9 @@ export function PageShell({
         className="sticky top-0 z-40 border-b border-[var(--p-border)] bg-[rgba(10,12,16,0.55)] backdrop-blur-xl"
       >
         <Container className="flex flex-nowrap items-center justify-between gap-3 py-2.5 sm:gap-4 sm:py-3 md:gap-6 md:py-3.5">
-          <div className="flex min-w-0 max-w-[min(210px,58vw)] shrink-0 items-center gap-2.5 sm:max-w-[min(230px,32vw)] sm:gap-3">
-            <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-[var(--radius-sm)] border border-white/10 bg-white/5 text-sm font-semibold sm:h-10 sm:w-10">
-              <span className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--accent-1)/0.35)] via-transparent to-transparent" />
-              <span className="relative">P</span>
-            </div>
-            <div>
+          <div className="flex min-w-0 max-w-[min(240px,62vw)] shrink-0 items-center gap-2.5 sm:max-w-[min(270px,36vw)] sm:gap-3">
+            <ParadiseMark variant="onDark" decorative className="object-left" />
+            <div className="min-w-0">
               <p className="font-display text-[0.95rem] font-semibold sm:text-base">{brand.title}</p>
               <p className="max-w-[18ch] truncate text-[0.66rem] leading-tight text-slate-400 sm:max-w-[22ch] sm:text-xs">
                 {brand.subtitle}

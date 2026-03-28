@@ -1,8 +1,9 @@
-﻿import { useCallback, useEffect, useId, useRef, useState, type TransitionEvent } from 'react'
+import { useCallback, useEffect, useId, useRef, useState, type TransitionEvent } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import { WELCOME_AUDIO_PUBLIC_PATH } from '../../constants/welcomeAudio'
 import { PARADISE_INTRO_VIDEO_PATH } from '../../constants/paradiseIntro'
 import { useWelcomeParadiseAudio } from '../../hooks/useWelcomeParadiseAudio'
+import { ParadiseMark } from '../branding/ParadiseMark'
 import { Button } from '../ui/Button'
 import { cn } from '../ui/cn'
 
@@ -84,6 +85,16 @@ export function ParadiseIntroGate({ onDismissed }: ParadiseIntroGateProps) {
         </p>
 
         <div className="flex w-full max-w-4xl flex-col items-center">
+          <div className="mb-5 flex w-full justify-center sm:mb-6 md:mb-7">
+            <ParadiseMark
+              variant="onBlack"
+              decorative
+              heightClass="h-11 sm:h-14 md:h-[4.25rem]"
+              maxWidthClass="max-w-[min(280px,82vw)] sm:max-w-[300px] md:max-w-[320px]"
+              className="object-center"
+            />
+          </div>
+
           <div
             className={cn(
               'relative w-full overflow-hidden rounded-2xl',

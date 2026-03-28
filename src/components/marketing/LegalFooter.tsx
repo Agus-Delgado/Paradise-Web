@@ -1,3 +1,4 @@
+import { ParadiseMark } from '../branding/ParadiseMark'
 import { Container } from '../ui/Container'
 import { Link } from '../ui/Link'
 
@@ -9,6 +10,13 @@ export function LegalFooter() {
       <Container>
         <div className="grid gap-6 sm:gap-8 md:grid-cols-[1.1fr_1fr_1fr]">
           <div className="space-y-3 text-xs sm:text-sm">
+            <ParadiseMark
+              variant="onDark"
+              decorative
+              heightClass="h-7 sm:h-8"
+              maxWidthClass="max-w-[120px] sm:max-w-[132px]"
+              className="object-left opacity-95"
+            />
             <p className="text-sm font-semibold text-white">Legal</p>
             <p className="p-text-muted">© {year} Paradise — Licenciado bajo MIT para el código. Marca y contenido reservados.</p>
             <p className="p-text-muted">Creado por Agustín Delgado.</p>

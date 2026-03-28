@@ -1,5 +1,6 @@
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'framer-motion'
-import { FileText, Layers3, RadioTower, Sparkles } from 'lucide-react'
+import { FileText, Layers3, RadioTower } from 'lucide-react'
+import { ParadiseMark } from '../branding/ParadiseMark'
 import { useMemo, useState } from 'react'
 import { Section } from '../ui/Section'
 import { Card } from '../ui/Card'
@@ -106,13 +107,17 @@ export function ParadiseDemo({
                       transition={{ type: 'spring', stiffness: 260, damping: 28 }}
                       className="flex items-center justify-between gap-4"
                     >
-                      <div>
+                      <div className="min-w-0">
                         <p className="text-[0.68rem] uppercase tracking-[0.3em] text-[rgb(var(--accent-1)/0.82)]">Paradise</p>
                         <p className="mt-2 text-base font-semibold text-white sm:text-lg">Coordina, clasifica y decide el siguiente paso</p>
                       </div>
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-[rgb(var(--accent-2)/0.96)] sm:h-12 sm:w-12 sm:rounded-2xl">
-                        <Sparkles className="h-5 w-5" />
-                      </span>
+                      <ParadiseMark
+                        variant="onDark"
+                        decorative
+                        heightClass="h-7 sm:h-8"
+                        maxWidthClass="max-w-[104px] sm:max-w-[120px]"
+                        className="object-right opacity-[0.96]"
+                      />
                     </motion.div>
                     <div className="mt-5 flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-slate-400">
                       <span className="h-px flex-1 bg-gradient-to-r from-transparent via-white/25 to-white/5" />
