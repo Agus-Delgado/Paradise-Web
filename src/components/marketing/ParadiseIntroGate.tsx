@@ -7,11 +7,15 @@ import { ParadiseMark } from '../branding/ParadiseMark'
 import { Button } from '../ui/Button'
 import { cn } from '../ui/cn'
 
+import { getSiteCopy, type Locale } from '../../content/localization'
+
 type ParadiseIntroGateProps = {
   onDismissed: () => void
+  locale?: Locale
 }
 
-export function ParadiseIntroGate({ onDismissed }: ParadiseIntroGateProps) {
+export function ParadiseIntroGate({ onDismissed, locale = 'es' }: ParadiseIntroGateProps) {
+  const copy = getSiteCopy(locale).introGate
   const reduceMotion = useReducedMotion() ?? false
   const fadeMs = reduceMotion ? 0 : 700
   const [exiting, setExiting] = useState(false)
@@ -81,7 +85,7 @@ export function ParadiseIntroGate({ onDismissed }: ParadiseIntroGateProps) {
 
       <div className="relative flex min-h-full flex-col items-center justify-center px-5 py-12 sm:px-8">
         <p id="paradise-intro-title" className="sr-only">
-          Paradise intro
+          {copy.dialogLabel}
         </p>
 
         <div className="flex w-full max-w-4xl flex-col items-center">
@@ -109,7 +113,7 @@ export function ParadiseIntroGate({ onDismissed }: ParadiseIntroGateProps) {
                 muted
                 loop
                 playsInline
-                aria-label="Paradise manifesto video"
+                aria-label={copy.videoLabel}
               >
                 <source src={PARADISE_INTRO_VIDEO_PATH} type="video/mp4" />
               </video>
@@ -122,7 +126,7 @@ export function ParadiseIntroGate({ onDismissed }: ParadiseIntroGateProps) {
               className="font-display text-[1.65rem] font-semibold leading-[1.12] tracking-[-0.02em] text-slate-100 sm:text-[1.95rem] md:text-[2.2rem]"
             >
               <span className="bg-gradient-to-r from-white via-slate-50 to-slate-400/95 bg-clip-text text-transparent">
-                Welcome to Paradise
+                {copy.title}
               </span>
             </p>
             <Button
@@ -132,10 +136,10 @@ export function ParadiseIntroGate({ onDismissed }: ParadiseIntroGateProps) {
               onClick={playWelcome}
               disabled={isPlaying || exiting}
               aria-busy={isPlaying}
-              aria-label="Play welcome message and enter Paradise"
+              aria-label={copy.buttonAria}
               className="min-w-[220px] shadow-[0_22px_56px_-32px_var(--p-glow),0_0_0_1px_rgba(255,255,255,0.06)] disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Enter Paradise
+              {copy.button}
             </Button>
           </div>
         </div>

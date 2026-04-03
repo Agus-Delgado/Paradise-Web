@@ -4,6 +4,7 @@ import { Card } from '../ui/Card'
 import { Divider } from '../ui/Divider'
 import { PromptBlock } from '../landing/PromptBlock'
 import { Button } from '../ui/Button'
+import { getSiteCopy, type Locale } from '../../content/localization'
 
 type Step = { title: string; body: string }
 
@@ -11,11 +12,15 @@ export function HowItWorks({
   title,
   steps,
   technicalToggle,
+  locale = 'es',
 }: {
   title: string
   steps: ReadonlyArray<Step>
   technicalToggle: { title: string; body: string; cta: string }
+  locale?: Locale
 }) {
+  const labels = getSiteCopy(locale).howItWorks
+  void labels
   const [open, setOpen] = useState(false)
 
   return (

@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { Section } from '../ui/Section'
 import { Card } from '../ui/Card'
+import { getSiteCopy, type Locale } from '../../content/localization'
 
 type RoadmapColumn = {
   title: string
@@ -12,16 +13,19 @@ export function HonestRoadmap({
   title,
   subtitle,
   columns,
+  locale = 'es',
 }: {
   title: string
   subtitle: string
   columns: readonly RoadmapColumn[]
+  locale?: Locale
 }) {
+  const labels = getSiteCopy(locale).roadmap
   const reduceMotion = useReducedMotion() ?? false
   return (
     <Section id="roadmap" className="py-16 md:py-24">
         <div className="max-w-3xl">
-          <p className="prompt-block">Roadmap honesto</p>
+          <p className="prompt-block">{labels.eyebrow}</p>
           <h2 className="mt-4 font-display text-3xl font-semibold tracking-tight text-white md:text-4xl">{title}</h2>
           <p className="p-text-muted mt-4 text-sm leading-relaxed md:text-base">{subtitle}</p>
         </div>
@@ -35,7 +39,7 @@ export function HonestRoadmap({
               transition={{ duration: 0.24, delay: idx * 0.04 }}
             >
               <Card className="h-full p-6">
-                <p className="text-[0.68rem] uppercase tracking-[0.28em] text-slate-400">Estado</p>
+                <p className="text-[0.68rem] uppercase tracking-[0.28em] text-slate-400">{labels.state}</p>
                 <h3 className="mt-3 text-lg font-semibold text-white">{column.title}</h3>
                 <p className="p-text-muted mt-3 text-sm leading-relaxed">{column.description}</p>
                 <ul className="mt-5 grid gap-3 text-sm text-slate-200">

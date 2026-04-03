@@ -3,8 +3,7 @@ import { useReducedMotion } from 'framer-motion'
 import { ThemeProvider } from './theme/useThemeEngine'
 import { cn } from './components/ui/cn'
 import { PageShell } from './components/layout/PageShell'
-import { modules, Status, type ModuleItem } from './data/modules'
-import { marketingCopy } from './content/marketingCopy'
+import { Status, type ModuleItem } from './data/modules'
 import {
   Contact,
   CreatorSection,
@@ -21,6 +20,15 @@ import {
   UseCaseTabs,
 } from './components/marketing'
 import { ParadiseIntroGate } from './components/marketing/ParadiseIntroGate'
+import {
+  defaultLocale,
+  getMarketingCopy,
+  getModules,
+  getShowcaseTraces,
+  getSiteCopy,
+  localeOptions,
+  type Locale,
+} from './content/localization'
 
 function pickFeatured(all: ModuleItem[], max = 5) {
   const priority = (m: ModuleItem) => (m.status === Status.Active ? 2 : m.status === Status.Mvp ? 1 : 0)
@@ -51,15 +59,40 @@ function pickFeatured(all: ModuleItem[], max = 5) {
   return out.slice(0, max)
 }
 
+function getInitialLocale(): Locale {
+  if (typeof window === 'undefined') return defaultLocale
+  const saved = window.localStorage.getItem('paradise-locale')
+  if (saved === 'es' || saved === 'en') return saved
+  const browser = window.navigator.language.toLowerCase()
+  return browser.startsWith('es') ? 'es' : 'en'
+}
+
 export default function App() {
   const reduceMotion = useReducedMotion() ?? false
+  const [locale, setLocale] = useState<Locale>(getInitialLocale)
   const [introOpen, setIntroOpen] = useState(true)
   const [introSession, setIntroSession] = useState(0)
   const [landingReveal, setLandingReveal] = useState(false)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
+
+  const marketingCopy = useMemo(() => getMarketingCopy(locale), [locale])
+  const siteCopy = useMemo(() => getSiteCopy(locale), [locale])
+  const modules = useMemo(() => getModules(locale), [locale])
+  const showcaseTraces = useMemo(() => getShowcaseTraces(locale), [locale])
+
   const [selectedModuleId, setSelectedModuleId] = useState<string | null>(
-    () => marketingCopy.useCases.cases[0]?.recommendedModuleId ?? null
+    () => marketingCopy.useCases.cases[0]?.recommendedModuleId ?? null,
   )
+
+  useEffect(() => {
+    setSelectedModuleId(marketingCopy.useCases.cases[0]?.recommendedModuleId ?? null)
+  }, [marketingCopy.useCases.cases])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem('paradise-locale', locale)
+    document.documentElement.lang = locale
+  }, [locale])
 
   const openIntro = useCallback(() => {
     if (typeof window !== 'undefined') {
@@ -85,27 +118,29 @@ export default function App() {
   }, [introOpen, reduceMotion])
 
   const mainVisible = reduceMotion ? !introOpen : !introOpen && landingReveal
-
-  const featured = useMemo(() => pickFeatured(modules, 5), [])
+  const featured = useMemo(() => pickFeatured(modules, 5), [modules])
   const navItems = marketingCopy.nav
 
   return (
     <ThemeProvider>
-      {introOpen ? (
-        <ParadiseIntroGate key={introSession} onDismissed={() => setIntroOpen(false)} />
-      ) : null}
+      {introOpen ? <ParadiseIntroGate key={introSession} onDismissed={() => setIntroOpen(false)} locale={locale} /> : null}
 
       <PageShell
         navItems={navItems}
         enableCommandPalette={false}
-        brand={{ title: 'Paradise', subtitle: 'Ecosistema evolutivo' }}
+        brand={{ title: 'Paradise', subtitle: siteCopy.brandSubtitle }}
         onReenterParadise={openIntro}
+        locale={locale}
+        onLocaleChange={setLocale}
+        localeOptions={localeOptions}
+        introLabel={siteCopy.introButton}
+        languageLabel={siteCopy.languageLabel}
       >
         <a
           href="#solucion"
           className="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-50 rounded-full bg-white px-4 py-2 text-sm font-semibold text-night-950 shadow"
         >
-          Saltar al contenido
+          {siteCopy.skipToContent}
         </a>
 
         <div
@@ -125,29 +160,18 @@ export default function App() {
             heroSignals={marketingCopy.hero.heroSignals}
             heroModules={marketingCopy.hero.heroModules}
             heroArtifact={marketingCopy.hero.heroArtifact}
+            locale={locale}
           />
 
           <TrustStrip items={marketingCopy.trustStrip} />
 
-          <ParadiseDemo
-            title={marketingCopy.demo.title}
-            subtitle={marketingCopy.demo.subtitle}
-            scenarios={marketingCopy.demo.scenarios}
-          />
+          <ParadiseDemo title={marketingCopy.demo.title} subtitle={marketingCopy.demo.subtitle} scenarios={marketingCopy.demo.scenarios} locale={locale} />
 
-          <ParadiseBrainShowcase />
+          <ParadiseBrainShowcase traces={showcaseTraces} locale={locale} />
 
-          <HowItWorks
-            title={marketingCopy.how.title}
-            steps={marketingCopy.how.steps}
-            technicalToggle={marketingCopy.how.technicalToggle}
-          />
+          <HowItWorks title={marketingCopy.how.title} steps={marketingCopy.how.steps} technicalToggle={marketingCopy.how.technicalToggle} locale={locale} />
 
-          <EcosystemMap
-            title={marketingCopy.ecosystem.title}
-            subtitle={marketingCopy.ecosystem.subtitle}
-            categories={marketingCopy.ecosystem.categories}
-          />
+          <EcosystemMap title={marketingCopy.ecosystem.title} subtitle={marketingCopy.ecosystem.subtitle} categories={marketingCopy.ecosystem.categories} locale={locale} />
 
           <UseCaseTabs
             title={marketingCopy.useCases.title}
@@ -156,6 +180,7 @@ export default function App() {
             modules={modules}
             onSelectTags={(tags) => setSelectedTags([...tags])}
             onSelectModuleId={(id) => setSelectedModuleId(id)}
+            locale={locale}
           />
 
           <FeaturedModules
@@ -165,21 +190,18 @@ export default function App() {
             allModules={modules}
             highlightTags={selectedTags}
             preferredModuleId={selectedModuleId ?? undefined}
+            locale={locale}
           />
 
-          <HonestRoadmap
-            title={marketingCopy.roadmap.title}
-            subtitle={marketingCopy.roadmap.subtitle}
-            columns={marketingCopy.roadmap.columns}
-          />
+          <HonestRoadmap title={marketingCopy.roadmap.title} subtitle={marketingCopy.roadmap.subtitle} columns={marketingCopy.roadmap.columns} locale={locale} />
 
-          <CreatorSection />
+          <CreatorSection locale={locale} />
 
           <Faq title={marketingCopy.faq.title} items={marketingCopy.faq.items} />
 
           <Contact title={marketingCopy.contact.title} body={marketingCopy.contact.body} links={marketingCopy.contact.links} />
 
-          <LegalFooter />
+          <LegalFooter locale={locale} />
         </div>
       </PageShell>
     </ThemeProvider>

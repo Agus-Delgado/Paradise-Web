@@ -9,6 +9,8 @@ import { Pill } from '../ui/Pill'
 import { HeroAurora } from '../landing/HeroAurora'
 import { ManifestoVideoModal } from './ManifestoVideoModal'
 
+import type { Locale } from '../../content/localization'
+
 type HeroCommercialProps = {
   kicker: string
   title: string
@@ -21,6 +23,7 @@ type HeroCommercialProps = {
   heroSignals: readonly string[]
   heroModules: readonly string[]
   heroArtifact: string
+  locale?: Locale
 }
 
 export function HeroCommercial({
@@ -32,6 +35,7 @@ export function HeroCommercial({
   heroSignals,
   heroModules,
   heroArtifact,
+  locale = 'es',
 }: HeroCommercialProps) {
   const [openVideo, setOpenVideo] = useState(false)
   const manifestBtnRef = useRef<HTMLButtonElement>(null)
@@ -88,7 +92,7 @@ export function HeroCommercial({
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
               <div className="grid gap-3.5 sm:gap-4 md:grid-cols-[0.86fr_1.14fr]">
                 <div className="space-y-3">
-                  <p className="text-center text-[0.72rem] font-semibold uppercase tracking-[0.3em] text-[rgb(var(--accent-1)/0.86)]">Señales</p>
+                  <p className="text-center text-[0.72rem] font-semibold uppercase tracking-[0.3em] text-[rgb(var(--accent-1)/0.86)]">{locale === 'en' ? 'Signals' : 'Señales'}</p>
                   {heroSignals.map((signal) => (
                     <div key={signal} className="rounded-xl border border-white/10 bg-white/[0.045] px-3.5 py-2.5 text-sm text-slate-200 sm:rounded-2xl sm:px-4 sm:py-3">
                       {signal}
@@ -101,7 +105,7 @@ export function HeroCommercial({
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
                         <p className="text-[0.68rem] uppercase tracking-[0.28em] text-[rgb(var(--accent-2)/0.9)]">Paradise core</p>
-                        <p className="mt-2 text-base font-semibold text-white sm:text-lg">Coordina qué entra, qué módulo toca y qué sale listo.</p>
+                        <p className="mt-2 text-base font-semibold text-white sm:text-lg">{locale === 'en' ? 'Coordinates what comes in, which module gets involved, and what comes out ready.' : 'Coordina qué entra, qué módulo toca y qué sale listo.'}</p>
                       </div>
                       <ParadiseMark
                         variant="onDark"

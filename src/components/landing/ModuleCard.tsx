@@ -1,11 +1,11 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { FileText, Github, MonitorPlay } from 'lucide-react'
 import type { ModuleItem } from '../../data/modules'
-import { pillarLabel, statusLabel } from '../../data/modules'
 import { Pill } from '../ui/Pill'
 import { cn } from '../ui/cn'
 import { useThemeEngine } from '../../theme/useThemeEngine'
 import { Link } from '../ui/Link'
+import { getPillarLabel, getSiteCopy, getStatusLabel, type Locale } from '../../content/localization'
 
 type ModuleCardProps = {
   module: ModuleItem
@@ -14,8 +14,8 @@ type ModuleCardProps = {
   compact?: boolean
   variant?: 'default' | 'featured'
   hideFooter?: boolean
-  /** Override the pillar label (e.g. "Módulo recomendado" in Soluciones destacadas) */
   pillarLabelOverride?: string
+  locale?: Locale
 }
 
 const statusClass: Record<ModuleItem['status'], string> = {
@@ -30,10 +30,13 @@ function isHighlightedByTags(module: ModuleItem, tags?: string[]) {
   return module.tags.some((t) => tags.includes(t))
 }
 
-export function ModuleCard({ module, highlighted, highlightTags, compact, variant = 'default', hideFooter, pillarLabelOverride }: ModuleCardProps) {
+export function ModuleCard({ module, highlighted, highlightTags, compact, variant = 'default', hideFooter, pillarLabelOverride, locale = 'es' }: ModuleCardProps) {
   const reduceMotion = useReducedMotion() ?? false
   const { state } = useThemeEngine()
   const intensity = state.tokens.motionIntensity
+  const statusLabel = getStatusLabel(locale)
+  const pillarLabel = getPillarLabel(locale)
+  const labels = getSiteCopy(locale).moduleCard
 
   const computedHighlighted = highlighted ?? isHighlightedByTags(module, highlightTags)
   const featured = variant === 'featured'
@@ -58,12 +61,7 @@ export function ModuleCard({ module, highlighted, highlightTags, compact, varian
     >
       <header className="flex items-start justify-between gap-3">
         <Pill className="border-white/20 bg-white/5 text-slate-200">{pillarLabelOverride ?? pillarLabel[module.pillar]}</Pill>
-        <span
-          className={cn(
-            'rounded-full border px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.2em]',
-            statusClass[module.status],
-          )}
-        >
+        <span className={cn('rounded-full border px-3 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.2em]', statusClass[module.status])}>
           {statusLabel[module.status]}
         </span>
       </header>
@@ -87,38 +85,34 @@ export function ModuleCard({ module, highlighted, highlightTags, compact, varian
           <div className="mt-5 flex flex-wrap gap-2">
             {specTags.slice(0, featured ? 6 : 5).map((tag) => {
               const emphasized = highlightTags?.includes(tag)
-              return (
-                <Pill key={tag} className={cn(emphasized && 'p-chip-active')}>
-                  {tag}
-                </Pill>
-              )
+              return <Pill key={tag} className={cn(emphasized && 'p-chip-active')}>{tag}</Pill>
             })}
           </div>
         ) : null}
       </div>
 
-      {!hideFooter ? <footer className={cn('mt-6 flex flex-wrap gap-3', compact && 'mt-5')}>
-        {module.repoUrl && module.repoUrl !== '#' ? (
-          <Link href={module.repoUrl} muted className="p-btn-secondary inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold">
-            <Github className="h-4 w-4" />
-            Repo
-          </Link>
-        ) : null}
-
-        {module.demoUrl && module.demoUrl !== '#' ? (
-          <Link href={module.demoUrl} muted className="p-btn-secondary inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold">
-            <MonitorPlay className="h-4 w-4" />
-            Demo
-          </Link>
-        ) : null}
-
-        {module.docsUrl && module.docsUrl !== '#' ? (
-          <Link href={module.docsUrl} muted className="p-btn-secondary inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold">
-            <FileText className="h-4 w-4" />
-            Docs
-          </Link>
-        ) : null}
-      </footer> : null}
+      {!hideFooter ? (
+        <footer className={cn('mt-6 flex flex-wrap gap-3', compact && 'mt-5')}>
+          {module.repoUrl && module.repoUrl !== '#' ? (
+            <Link href={module.repoUrl} muted className="p-btn-secondary inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold">
+              <Github className="h-4 w-4" />
+              {labels.repo}
+            </Link>
+          ) : null}
+          {module.demoUrl && module.demoUrl !== '#' ? (
+            <Link href={module.demoUrl} muted className="p-btn-secondary inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold">
+              <MonitorPlay className="h-4 w-4" />
+              {labels.demo}
+            </Link>
+          ) : null}
+          {module.docsUrl && module.docsUrl !== '#' ? (
+            <Link href={module.docsUrl} muted className="p-btn-secondary inline-flex items-center gap-2 rounded-[var(--radius-pill)] px-4 py-2 text-xs font-semibold">
+              <FileText className="h-4 w-4" />
+              {labels.docs}
+            </Link>
+          ) : null}
+        </footer>
+      ) : null}
     </motion.article>
   )
 }

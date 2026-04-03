@@ -6,6 +6,7 @@ import { Container } from '../ui/Container'
 import { Link } from '../ui/Link'
 import { cn } from '../ui/cn'
 import { CommandPalette } from './CommandPalette'
+import type { Locale } from '../../content/localization'
 
 type NavItem = {
   label: string
@@ -20,6 +21,11 @@ type PageShellProps = {
   enableCommandPalette?: boolean
   brand?: { title: string; subtitle: string }
   onReenterParadise?: () => void
+  locale?: Locale
+  onLocaleChange?: (locale: Locale) => void
+  localeOptions?: ReadonlyArray<{ value: Locale; label: string; shortLabel: string }>
+  introLabel?: string
+  languageLabel?: string
 }
 
 export function PageShell({
@@ -30,6 +36,11 @@ export function PageShell({
   enableCommandPalette = false,
   brand = { title: 'Paradise', subtitle: 'Ecosistema evolutivo' },
   onReenterParadise,
+  locale = 'es',
+  onLocaleChange,
+  localeOptions = [],
+  introLabel = 'Intro',
+  languageLabel = 'Idioma',
 }: PageShellProps) {
   const reduceMotion = useReducedMotion() ?? false
   const navHrefs = useMemo(() => navItems.map((item) => item.href), [navItems])
@@ -243,6 +254,28 @@ export function PageShell({
                   </Link>
                 )
               })}
+              {localeOptions.length ? (
+                <div className="ml-1 flex items-center gap-1 rounded-full border border-[var(--p-border)] bg-white/[0.035] px-1.5 py-1" aria-label={languageLabel}>
+                  {localeOptions.map((option) => {
+                    const active = option.value === locale
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => onLocaleChange?.(option.value)}
+                        aria-pressed={active}
+                        aria-label={option.label}
+                        className={cn(
+                          'rounded-full px-2 py-1 text-xs font-semibold text-slate-300 transition',
+                          active && 'bg-white/10 text-white border border-[var(--p-border-strong)]',
+                        )}
+                      >
+                        {option.shortLabel}
+                      </button>
+                    )
+                  })}
+                </div>
+              ) : null}
               {onReenterParadise ? (
                 <button
                   type="button"
@@ -253,7 +286,7 @@ export function PageShell({
                     !reduceMotion && 'transition-transform hover:-translate-y-0.5',
                   )}
                 >
-                  Intro
+                  {introLabel}
                 </button>
               ) : null}
             </nav>
@@ -274,6 +307,31 @@ export function PageShell({
         {menuOpen ? (
           <div className="border-t border-[var(--p-border)] bg-[rgba(10,12,16,0.82)] backdrop-blur-xl md:hidden">
             <Container className="flex flex-col gap-2.5 py-3.5">
+              {localeOptions.length ? (
+                <div className="flex items-center gap-2 px-1">
+                  <span className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">{languageLabel}</span>
+                  <div className="flex items-center gap-1 rounded-full border border-[var(--p-border)] bg-white/[0.035] px-1.5 py-1">
+                    {localeOptions.map((option) => {
+                      const active = option.value === locale
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => onLocaleChange?.(option.value)}
+                          aria-pressed={active}
+                          aria-label={option.label}
+                          className={cn(
+                            'rounded-full px-2 py-1 text-xs font-semibold text-slate-300 transition',
+                            active && 'bg-white/10 text-white border border-[var(--p-border-strong)]',
+                          )}
+                        >
+                          {option.shortLabel}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              ) : null}
               {onReenterParadise ? (
                 <button
                   type="button"
@@ -283,7 +341,7 @@ export function PageShell({
                   }}
                   className="rounded-[var(--radius-md)] px-3 py-2.5 text-left text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]"
                 >
-                  Intro
+                  {introLabel}
                 </button>
               ) : null}
               {navItems.map((item) => (
