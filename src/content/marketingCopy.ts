@@ -16,6 +16,7 @@ export type UseCaseKey =
 export const marketingCopy = {
   nav: [
     { label: 'Solución', href: '#solucion' },
+    { label: 'Manifiesto', href: '#manifiesto' },
     { label: 'Demo', href: '#demo' },
     { label: 'Cómo piensa', href: '#como-piensa' },
     { label: 'Cómo funciona', href: '#como-funciona' },
@@ -33,7 +34,7 @@ export const marketingCopy = {
       'Paradise es un ecosistema evolutivo diseñado para conectar visión, inteligencia y construcción.',
     ctas: {
       primary: { label: 'Explorar Paradise', href: '#ecosistema' },
-      secondary: { label: 'Ver introducción' },
+      secondary: { label: 'Ver manifiesto', href: '#manifiesto' },
     },
     proof: ['visual', 'modular', 'evolutivo', 'listo para demo'],
     heroSignals: ['alerta SLA rota', 'brief de club', 'agenda de curso', 'cola operativa'],
@@ -41,6 +42,25 @@ export const marketingCopy = {
     heroArtifact: 'Artifact listo · brief ejecutivo / export / documentación',
   },
   trustStrip: ['modular', 'demo-first', 'evolutivo', 'adaptable por dominio'],
+  manifesto: {
+    kicker: 'Manifiesto',
+    title: 'Un ecosistema vivo',
+    videoAriaLabel: 'Video manifiesto de Paradise en YouTube',
+    highlights: [
+      { name: 'Paradise AI', role: 'La mente del sistema' },
+      { name: 'Nimbus', role: 'Sistema nervioso' },
+      { name: 'Módulos', role: 'Cuerpo especializado' },
+      { name: 'Artifacts', role: 'Resultados concretos' },
+    ],
+    paragraphs: [
+      'Paradise no nace como una herramienta aislada.',
+      'Nace como un ecosistema vivo: una forma de conectar ideas, datos, procesos y decisiones dentro de una misma inteligencia.',
+      'Paradise AI funciona como la mente del sistema: interpreta contexto, entiende necesidades y ayuda a pensar el próximo paso.',
+      'Nimbus actúa como su sistema nervioso: conecta señales, módulos, artifacts y resultados para que cada parte pueda trabajar en conjunto.',
+      'Y cada módulo se comporta como una parte especializada de ese cuerpo: preparado para resolver necesidades concretas en distintos mundos de trabajo.',
+      'Paradise no es un destino terminado. Es algo que se construye, se adapta y evoluciona con cada persona, equipo o empresa.',
+    ],
+  },
   demo: {
     title: 'Ver Paradise en acción',
     subtitle:

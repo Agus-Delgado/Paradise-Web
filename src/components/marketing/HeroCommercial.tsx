@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react'
-import { useCallback, useRef, useState } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { ParadiseMark } from '../branding/ParadiseMark'
 import { Badge } from '../ui/Badge'
@@ -7,7 +6,6 @@ import { Container } from '../ui/Container'
 import { Link } from '../ui/Link'
 import { Pill } from '../ui/Pill'
 import { HeroAurora } from '../landing/HeroAurora'
-import { ManifestoVideoModal } from './ManifestoVideoModal'
 
 import type { Locale } from '../../content/localization'
 
@@ -17,7 +15,7 @@ type HeroCommercialProps = {
   description: string
   ctas: {
     primary: { label: string; href: string }
-    secondary: { label: string }
+    secondary: { label: string; href: string }
   }
   proof: ReadonlyArray<string>
   heroSignals: readonly string[]
@@ -37,14 +35,6 @@ export function HeroCommercial({
   heroArtifact,
   locale = 'es',
 }: HeroCommercialProps) {
-  const [openVideo, setOpenVideo] = useState(false)
-  const manifestBtnRef = useRef<HTMLButtonElement>(null)
-
-  const closeManifest = useCallback(() => {
-    setOpenVideo(false)
-    queueMicrotask(() => manifestBtnRef.current?.focus())
-  }, [])
-
   const isExternalHref = (href: string) => /^https?:\/\//i.test(href)
   const primaryExternal = isExternalHref(ctas.primary.href)
 
@@ -69,16 +59,12 @@ export function HeroCommercial({
                 >
                   {ctas.primary.label}
                 </Link>
-                <button
-                  ref={manifestBtnRef}
-                  type="button"
-                  onClick={() => setOpenVideo(true)}
-                  aria-haspopup="dialog"
-                  aria-expanded={openVideo}
+                <Link
+                  href={ctas.secondary.href}
                   className="p-btn-secondary inline-flex min-h-11 rounded-[var(--radius-pill)] px-5 py-2.5 text-sm font-semibold sm:px-6 sm:py-3"
                 >
                   {ctas.secondary.label}
-                </button>
+                </Link>
               </div>
 
               <div className="mt-6 flex flex-wrap gap-2 sm:mt-7">
@@ -137,8 +123,6 @@ export function HeroCommercial({
           </div>
         </Container>
       </HeroAurora>
-
-      <ManifestoVideoModal open={openVideo} onClose={closeManifest} />
     </>
   )
 }

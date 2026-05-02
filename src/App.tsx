@@ -14,6 +14,7 @@ import {
   HonestRoadmap,
   HowItWorks,
   LegalFooter,
+  ManifestoSection,
   ParadiseBrainShowcase,
   ParadiseDemo,
   TrustStrip,
@@ -161,6 +162,14 @@ export default function App() {
             heroModules={marketingCopy.hero.heroModules}
             heroArtifact={marketingCopy.hero.heroArtifact}
             locale={locale}
+          />
+
+          <ManifestoSection
+            kicker={marketingCopy.manifesto.kicker}
+            title={marketingCopy.manifesto.title}
+            videoAriaLabel={marketingCopy.manifesto.videoAriaLabel}
+            highlights={marketingCopy.manifesto.highlights}
+            paragraphs={marketingCopy.manifesto.paragraphs}
           />
 
           <TrustStrip items={marketingCopy.trustStrip} />

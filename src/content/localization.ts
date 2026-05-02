@@ -14,6 +14,7 @@ export const localeOptions: ReadonlyArray<{ value: Locale; label: string; shortL
 export const marketingCopyEn = {
   nav: [
     { label: 'Solution', href: '#solucion' },
+    { label: 'Manifesto', href: '#manifiesto' },
     { label: 'Demo', href: '#demo' },
     { label: 'How it thinks', href: '#como-piensa' },
     { label: 'How it works', href: '#como-funciona' },
@@ -30,7 +31,7 @@ export const marketingCopyEn = {
     description: 'Paradise is an evolving ecosystem designed to connect vision, intelligence, and execution.',
     ctas: {
       primary: { label: 'Explore Paradise', href: '#ecosistema' },
-      secondary: { label: 'Watch introduction' },
+      secondary: { label: 'Watch manifesto', href: '#manifiesto' },
     },
     proof: ['visual', 'modular', 'evolving', 'demo-ready'],
     heroSignals: ['broken SLA alert', 'club brief', 'course schedule', 'ops queue'],
@@ -38,6 +39,25 @@ export const marketingCopyEn = {
     heroArtifact: 'Artifact ready · executive brief / export / documentation',
   },
   trustStrip: ['modular', 'demo-first', 'evolving', 'adaptable by domain'],
+  manifesto: {
+    kicker: 'Manifesto',
+    title: 'A living ecosystem',
+    videoAriaLabel: 'Paradise manifesto video on YouTube',
+    highlights: [
+      { name: 'Paradise AI', role: 'Mind of the system' },
+      { name: 'Nimbus', role: 'Nervous system' },
+      { name: 'Modules', role: 'Specialized body' },
+      { name: 'Artifacts', role: 'Concrete outcomes' },
+    ],
+    paragraphs: [
+      'Paradise is not born as an isolated tool.',
+      'It is built as a living ecosystem: a way to connect ideas, data, processes, and decisions through one shared intelligence.',
+      'Paradise AI works as the mind of the system: it understands context, interprets needs, and helps reveal the next step.',
+      'Nimbus acts as its nervous system: connecting signals, modules, artifacts, and outcomes so every part can work together.',
+      'Each module becomes a specialized part of that body, designed to solve real needs across different worlds of work.',
+      'Paradise is not a finished destination. It is something we build, adapt, and evolve with every person, team, and organization.',
+    ],
+  },
   demo: {
     title: 'See Paradise in action',
     subtitle:
