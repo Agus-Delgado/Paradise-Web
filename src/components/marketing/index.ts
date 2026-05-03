@@ -1,4 +1,5 @@
 export * from './HeroCommercial'
+export * from './ParadisePresentationModal'
 export * from './ManifestoSection'
 export * from './ManifestoVideoModal'
 export * from './TrustStrip'

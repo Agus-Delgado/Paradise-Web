@@ -22,6 +22,9 @@ type HeroCommercialProps = {
   heroModules: readonly string[]
   heroArtifact: string
   locale?: Locale
+  onOpenPresentation?: () => void
+  presentationCta?: string
+  presentationCtaAriaLabel?: string
 }
 
 export function HeroCommercial({
@@ -34,6 +37,9 @@ export function HeroCommercial({
   heroModules,
   heroArtifact,
   locale = 'es',
+  onOpenPresentation,
+  presentationCta,
+  presentationCtaAriaLabel,
 }: HeroCommercialProps) {
   const isExternalHref = (href: string) => /^https?:\/\//i.test(href)
   const primaryExternal = isExternalHref(ctas.primary.href)
@@ -65,6 +71,16 @@ export function HeroCommercial({
                 >
                   {ctas.secondary.label}
                 </Link>
+                {onOpenPresentation && presentationCta ? (
+                  <button
+                    type="button"
+                    onClick={onOpenPresentation}
+                    aria-label={presentationCtaAriaLabel ?? presentationCta}
+                    className="p-btn-secondary inline-flex min-h-11 rounded-[var(--radius-pill)] px-5 py-2.5 text-sm font-semibold sm:px-6 sm:py-3"
+                  >
+                    {presentationCta}
+                  </button>
+                ) : null}
               </div>
 
               <div className="mt-6 flex flex-wrap gap-2 sm:mt-7">

@@ -416,6 +416,10 @@ export const siteCopy = {
       trademarks: 'Los nombres \"Paradise\" y los nombres de sus módulos pueden considerarse marcas o identificadores del proyecto.',
     },
     introGate: { title: 'Bienvenido a Paradise', button: 'Entrar a Paradise', videoLabel: 'Video manifiesto de Paradise', dialogLabel: 'Intro de Paradise', buttonAria: 'Reproducir mensaje de bienvenida y entrar a Paradise' },
+    presentationButton: 'Presentación',
+    presentationCta: 'Ver presentación',
+    presentationCloseLabel: 'Cerrar presentación',
+    presentationDialogLabel: 'Video presentación de Paradise',
   },
   en: {
     brandSubtitle: 'Evolving ecosystem',
@@ -476,6 +480,10 @@ export const siteCopy = {
       trademarks: 'The name \"Paradise\" and the names of its modules may be considered trademarks or identifiers of the project.',
     },
     introGate: { title: 'Welcome to Paradise', button: 'Enter Paradise', videoLabel: 'Paradise manifesto video', dialogLabel: 'Paradise intro', buttonAria: 'Play welcome message and enter Paradise' },
+    presentationButton: 'Presentation',
+    presentationCta: 'Watch presentation',
+    presentationCloseLabel: 'Close presentation',
+    presentationDialogLabel: 'Paradise presentation video',
   },
 } as const
 

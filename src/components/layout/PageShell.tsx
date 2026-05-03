@@ -21,6 +21,9 @@ type PageShellProps = {
   enableCommandPalette?: boolean
   brand?: { title: string; subtitle: string }
   onReenterParadise?: () => void
+  onOpenPresentation?: () => void
+  presentationNavLabel?: string
+  presentationNavAriaLabel?: string
   locale?: Locale
   onLocaleChange?: (locale: Locale) => void
   localeOptions?: ReadonlyArray<{ value: Locale; label: string; shortLabel: string }>
@@ -36,6 +39,9 @@ export function PageShell({
   enableCommandPalette = false,
   brand = { title: 'Paradise', subtitle: 'Ecosistema evolutivo' },
   onReenterParadise,
+  onOpenPresentation,
+  presentationNavLabel,
+  presentationNavAriaLabel,
   locale = 'es',
   onLocaleChange,
   localeOptions = [],
@@ -276,7 +282,19 @@ export function PageShell({
                   })}
                 </div>
               ) : null}
-              {onReenterParadise ? (
+              {onOpenPresentation && presentationNavLabel ? (
+                <button
+                  type="button"
+                  onClick={onOpenPresentation}
+                  aria-label={presentationNavAriaLabel ?? presentationNavLabel}
+                  className={cn(
+                    'shrink-0 whitespace-nowrap rounded-full px-2.5 py-1.5 text-sm text-slate-200 transition-colors duration-200 ease-out hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]',
+                    !reduceMotion && 'transition-transform hover:-translate-y-0.5',
+                  )}
+                >
+                  {presentationNavLabel}
+                </button>
+              ) : onReenterParadise ? (
                 <button
                   type="button"
                   onClick={onReenterParadise}
@@ -332,7 +350,19 @@ export function PageShell({
                   </div>
                 </div>
               ) : null}
-              {onReenterParadise ? (
+              {onOpenPresentation && presentationNavLabel ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onOpenPresentation()
+                    setMenuOpen(false)
+                  }}
+                  aria-label={presentationNavAriaLabel ?? presentationNavLabel}
+                  className="rounded-[var(--radius-md)] px-3 py-2.5 text-left text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[rgb(var(--p-accent-rgb)/0.8)]"
+                >
+                  {presentationNavLabel}
+                </button>
+              ) : onReenterParadise ? (
                 <button
                   type="button"
                   onClick={() => {

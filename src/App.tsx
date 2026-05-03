@@ -17,6 +17,7 @@ import {
   ManifestoSection,
   ParadiseBrainShowcase,
   ParadiseDemo,
+  ParadisePresentationModal,
   TrustStrip,
   UseCaseTabs,
 } from './components/marketing'
@@ -72,9 +73,9 @@ export default function App() {
   const reduceMotion = useReducedMotion() ?? false
   const [locale, setLocale] = useState<Locale>(getInitialLocale)
   const [introOpen, setIntroOpen] = useState(true)
-  const [introSession, setIntroSession] = useState(0)
   const [landingReveal, setLandingReveal] = useState(false)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [presentationOpen, setPresentationOpen] = useState(false)
 
   const marketingCopy = useMemo(() => getMarketingCopy(locale), [locale])
   const siteCopy = useMemo(() => getSiteCopy(locale), [locale])
@@ -95,13 +96,8 @@ export default function App() {
     document.documentElement.lang = locale
   }, [locale])
 
-  const openIntro = useCallback(() => {
-    if (typeof window !== 'undefined') {
-      window.scrollTo(0, 0)
-    }
-    setIntroSession((s) => s + 1)
-    setIntroOpen(true)
-  }, [])
+  const openPresentation = useCallback(() => setPresentationOpen(true), [])
+  const closePresentation = useCallback(() => setPresentationOpen(false), [])
 
   useEffect(() => {
     if (introOpen) {
@@ -124,17 +120,27 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      {introOpen ? <ParadiseIntroGate key={introSession} onDismissed={() => setIntroOpen(false)} locale={locale} /> : null}
+      {introOpen ? <ParadiseIntroGate key="paradise-intro" onDismissed={() => setIntroOpen(false)} locale={locale} /> : null}
+
+      {presentationOpen ? (
+        <ParadisePresentationModal
+          open={presentationOpen}
+          onClose={closePresentation}
+          closeLabel={siteCopy.presentationCloseLabel}
+          dialogLabel={siteCopy.presentationDialogLabel}
+        />
+      ) : null}
 
       <PageShell
         navItems={navItems}
         enableCommandPalette={false}
         brand={{ title: 'Paradise', subtitle: siteCopy.brandSubtitle }}
-        onReenterParadise={openIntro}
+        onOpenPresentation={openPresentation}
+        presentationNavLabel={siteCopy.presentationButton}
+        presentationNavAriaLabel={`${siteCopy.presentationButton}. ${siteCopy.presentationDialogLabel}`}
         locale={locale}
         onLocaleChange={setLocale}
         localeOptions={localeOptions}
-        introLabel={siteCopy.introButton}
         languageLabel={siteCopy.languageLabel}
       >
         <a
@@ -162,6 +168,9 @@ export default function App() {
             heroModules={marketingCopy.hero.heroModules}
             heroArtifact={marketingCopy.hero.heroArtifact}
             locale={locale}
+            onOpenPresentation={openPresentation}
+            presentationCta={siteCopy.presentationCta}
+            presentationCtaAriaLabel={`${siteCopy.presentationCta}. ${siteCopy.presentationDialogLabel}`}
           />
 
           <ManifestoSection
