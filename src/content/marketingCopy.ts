@@ -17,6 +17,7 @@ export const marketingCopy = {
   nav: [
     { label: 'Solución', href: '#solucion' },
     { label: 'Manifiesto', href: '#manifiesto' },
+    { label: 'Comunidad', href: '#comunidad' },
     { label: 'Demo', href: '#demo' },
     { label: 'Cómo piensa', href: '#como-piensa' },
     { label: 'Cómo funciona', href: '#como-funciona' },
@@ -60,6 +61,115 @@ export const marketingCopy = {
       'Y cada módulo se comporta como una parte especializada de ese cuerpo: preparado para resolver necesidades concretas en distintos mundos de trabajo.',
       'Paradise no es un destino terminado. Es algo que se construye, se adapta y evoluciona con cada persona, equipo o empresa.',
     ],
+  },
+  community: {
+    kicker: 'Comunidad Paradise',
+    title: 'Primeras señales',
+    intro:
+      'Paradise no busca ser un chatbot común ni un producto comercial cerrado: es un ecosistema vivo que necesita señales humanas para evolucionar con criterio. Este espacio es una invitación a participar sin backend ni promesas mágicas: podés dejar una huella y responder una encuesta breve para ayudar a orientar el rumbo.',
+    signalsHeading: 'Señales en la página',
+    signalsEmptyTitle: 'Sin señales publicadas todavía',
+    signalsEmptyBody:
+      'Cuando haya aportes aprobados, van a aparecer acá. Todo lo que se muestra en esta sección pasa antes por una revisión manual.',
+    formsNotConfiguredNotice:
+      'Los envíos a Google Forms todavía no están configurados en el código. Completá las URLs y los entry.* en src/constants/communityGoogleForms.ts para habilitar el envío.',
+    footprint: {
+      title: 'Dejá tu huella',
+      body:
+        'Paradise no se construye solamente con código. También se construye con ideas, preguntas, experiencias y miradas humanas. Este espacio existe para que cualquier persona pueda dejar una señal, una reflexión o una idea para que Paradise siga creciendo.',
+      submit: 'Enviar señal',
+      aliasLabel: 'Nombre o alias',
+      aliasPlaceholder: 'Cómo querés que te leamos',
+      areaLabel: 'Área de interés',
+      areaPlaceholder: 'Ej.: educación, salud, comunidad, producto…',
+      messageLabel: 'Comentario / aporte',
+      messagePlaceholder: 'Una idea, una pregunta o una experiencia que quieras compartir',
+      emailLabel: 'Email (opcional)',
+      emailHint: 'Solo si querés que podamos responderte por fuera de la página.',
+      emailPlaceholder: 'tu@email.com',
+      consentLabel:
+        'Acepto que mi comentario pueda ser revisado y publicado en la página de Paradise.',
+    },
+    survey: {
+      title: 'Alimentá Paradise',
+      body:
+        'Paradise no busca ser un chatbot más. La idea es construir una inteligencia con propósito, una presencia digital que pueda aprender de las personas, comprender problemas reales y evolucionar con una mirada más humana.',
+      submit: 'Enviar encuesta',
+      q1: {
+        legend: '¿Creés en el paraíso?',
+        options: ['Sí', 'No', 'No lo sé', 'Creo que puede construirse'],
+      },
+      q2: {
+        legend: 'Cuando pensás en “paraíso”, ¿qué imagen o idea aparece primero?',
+        placeholder: 'Escribí libremente…',
+      },
+      q3: {
+        legend: '¿Qué sistema sentís que hace años no funciona como debería?',
+        options: [
+          'Educación',
+          'Salud',
+          'Trabajo',
+          'Política',
+          'Justicia',
+          'Tecnología',
+          'Comunidad y vínculos humanos',
+          'Medio ambiente',
+          'Otro',
+        ],
+      },
+      q4: {
+        legend: 'Si pudieras mejorar un solo problema de la sociedad usando tecnología, ¿cuál sería?',
+        placeholder: 'Una idea concreta…',
+      },
+      q5: {
+        legend: '¿Qué debería tener una inteligencia artificial para sentirse más humana?',
+        options: [
+          'Escuchar mejor',
+          'Entender contexto',
+          'Tener memoria',
+          'Ser transparente',
+          'Ayudar sin manipular',
+          'Adaptarse a cada persona',
+          'Reconocer límites',
+          'Tener propósito',
+        ],
+      },
+      q6: {
+        legend: '¿Qué te preocupa más sobre el futuro de la inteligencia artificial?',
+        options: [
+          'Pérdida de empleos',
+          'Manipulación de información',
+          'Falta de humanidad',
+          'Dependencia tecnológica',
+          'Privacidad',
+          'Desigualdad',
+          'Que solo beneficie a grandes empresas',
+          'Otro',
+        ],
+      },
+      q7: {
+        legend: '¿Te gustaría que Paradise evolucione con aportes de una comunidad?',
+        options: ['Sí', 'No', 'Depende de cómo se gestione', 'Me interesa, pero con límites claros'],
+      },
+      q8: {
+        legend: '¿Qué te gustaría aportarle a Paradise?',
+        options: [
+          'Ideas',
+          'Conocimiento técnico',
+          'Experiencias personales',
+          'Diseño',
+          'Datos',
+          'Investigación',
+          'Crítica constructiva',
+          'Difusión',
+          'Nada por ahora, solo observar',
+        ],
+      },
+      q9: {
+        legend: 'Opcional: ¿querés dejar una frase, idea o mensaje para Paradise?',
+        placeholder: 'Podés dejarlo en blanco si preferís no escribir nada acá.',
+      },
+    },
   },
   demo: {
     title: 'Ver Paradise en acción',
@@ -358,3 +468,42 @@ export const marketingCopy = {
     ],
   },
 } as const
+
+export type CommunityMarketingCopy = {
+  kicker: string
+  title: string
+  intro: string
+  signalsHeading: string
+  signalsEmptyTitle: string
+  signalsEmptyBody: string
+  formsNotConfiguredNotice: string
+  footprint: {
+    title: string
+    body: string
+    submit: string
+    aliasLabel: string
+    aliasPlaceholder: string
+    areaLabel: string
+    areaPlaceholder: string
+    messageLabel: string
+    messagePlaceholder: string
+    emailLabel: string
+    emailHint: string
+    emailPlaceholder: string
+    consentLabel: string
+  }
+  survey: {
+    title: string
+    body: string
+    submit: string
+    q1: { legend: string; options: readonly string[] }
+    q2: { legend: string; placeholder: string }
+    q3: { legend: string; options: readonly string[] }
+    q4: { legend: string; placeholder: string }
+    q5: { legend: string; options: readonly string[] }
+    q6: { legend: string; options: readonly string[] }
+    q7: { legend: string; options: readonly string[] }
+    q8: { legend: string; options: readonly string[] }
+    q9: { legend: string; placeholder: string }
+  }
+}

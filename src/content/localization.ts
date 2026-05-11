@@ -15,6 +15,7 @@ export const marketingCopyEn = {
   nav: [
     { label: 'Solution', href: '#solucion' },
     { label: 'Manifesto', href: '#manifiesto' },
+    { label: 'Community', href: '#comunidad' },
     { label: 'Demo', href: '#demo' },
     { label: 'How it thinks', href: '#como-piensa' },
     { label: 'How it works', href: '#como-funciona' },
@@ -57,6 +58,115 @@ export const marketingCopyEn = {
       'Each module becomes a specialized part of that body, designed to solve real needs across different worlds of work.',
       'Paradise is not a finished destination. It is something we build, adapt, and evolve with every person, team, and organization.',
     ],
+  },
+  community: {
+    kicker: 'Paradise community',
+    title: 'Early signals',
+    intro:
+      'Paradise is not aiming to be a generic chatbot or a closed commercial product: it is a living ecosystem that needs human signals to evolve with judgment. This space is an invitation to participate—no backend, no magic promises: you can leave a trace and answer a short survey to help steer the direction.',
+    signalsHeading: 'Signals on this page',
+    signalsEmptyTitle: 'No published signals yet',
+    signalsEmptyBody:
+      'When there are approved contributions, they will appear here. Everything shown in this section is manually reviewed before it goes live.',
+    formsNotConfiguredNotice:
+      'Google Forms submissions are not configured in code yet. Fill in the URLs and entry.* values in src/constants/communityGoogleForms.ts to enable sending.',
+    footprint: {
+      title: 'Leave your mark',
+      body:
+        'Paradise is not built with code alone. It is also built with ideas, questions, experiences, and human perspectives. This space exists so anyone can leave a signal, a reflection, or an idea to help Paradise keep growing.',
+      submit: 'Send signal',
+      aliasLabel: 'Name or alias',
+      aliasPlaceholder: 'How you want us to read you',
+      areaLabel: 'Area of interest',
+      areaPlaceholder: 'e.g. education, health, community, product…',
+      messageLabel: 'Comment / contribution',
+      messagePlaceholder: 'An idea, a question, or an experience you want to share',
+      emailLabel: 'Email (optional)',
+      emailHint: 'Only if you want us to be able to reply outside this page.',
+      emailPlaceholder: 'you@email.com',
+      consentLabel:
+        'I agree that my comment may be reviewed and published on the Paradise page.',
+    },
+    survey: {
+      title: 'Feed Paradise',
+      body:
+        'Paradise is not trying to be just another chatbot. The goal is to build purposeful intelligence—a digital presence that can learn from people, understand real problems, and evolve with a more human lens.',
+      submit: 'Send survey',
+      q1: {
+        legend: 'Do you believe in paradise?',
+        options: ['Yes', 'No', "I don't know", 'I think it can be built'],
+      },
+      q2: {
+        legend: 'When you think of “paradise,” what image or idea shows up first?',
+        placeholder: 'Write freely…',
+      },
+      q3: {
+        legend: 'Which system do you feel has not worked as it should for years?',
+        options: [
+          'Education',
+          'Health',
+          'Work',
+          'Politics',
+          'Justice',
+          'Technology',
+          'Community and human bonds',
+          'Environment',
+          'Other',
+        ],
+      },
+      q4: {
+        legend: 'If you could improve one societal problem using technology, what would it be?',
+        placeholder: 'One concrete idea…',
+      },
+      q5: {
+        legend: 'What should artificial intelligence have to feel more human?',
+        options: [
+          'Listen better',
+          'Understand context',
+          'Have memory',
+          'Be transparent',
+          'Help without manipulating',
+          'Adapt to each person',
+          'Recognize limits',
+          'Have purpose',
+        ],
+      },
+      q6: {
+        legend: 'What worries you most about the future of artificial intelligence?',
+        options: [
+          'Job loss',
+          'Information manipulation',
+          'Lack of humanity',
+          'Technology dependence',
+          'Privacy',
+          'Inequality',
+          'That it only benefits large companies',
+          'Other',
+        ],
+      },
+      q7: {
+        legend: 'Would you like Paradise to evolve with contributions from a community?',
+        options: ['Yes', 'No', 'It depends how it is managed', 'I am interested, but with clear limits'],
+      },
+      q8: {
+        legend: 'What would you like to contribute to Paradise?',
+        options: [
+          'Ideas',
+          'Technical knowledge',
+          'Personal experiences',
+          'Design',
+          'Data',
+          'Research',
+          'Constructive criticism',
+          'Spreading the word',
+          'Nothing for now, just observing',
+        ],
+      },
+      q9: {
+        legend: 'Optional: do you want to leave a phrase, idea, or message for Paradise?',
+        placeholder: 'You can leave this blank if you prefer not to write anything here.',
+      },
+    },
   },
   demo: {
     title: 'See Paradise in action',
@@ -413,7 +523,7 @@ export const siteCopy = {
       privacyP1: 'Este sitio no recolecta datos personales de forma directa.',
       privacyP2: 'Si se incluyen métricas/analytics en el futuro, se informará aquí.',
       privacyP3: 'Para contacto: augusto.delgado00@hotmail.com.',
-      trademarks: 'Los nombres \"Paradise\" y los nombres de sus módulos pueden considerarse marcas o identificadores del proyecto.',
+      trademarks: 'Los nombres "Paradise" y los nombres de sus módulos pueden considerarse marcas o identificadores del proyecto.',
     },
     introGate: { title: 'Bienvenido a Paradise', button: 'Entrar a Paradise', videoLabel: 'Video manifiesto de Paradise', dialogLabel: 'Intro de Paradise', buttonAria: 'Reproducir mensaje de bienvenida y entrar a Paradise' },
     presentationButton: 'Presentación',
@@ -477,7 +587,7 @@ export const siteCopy = {
       privacyP1: 'This site does not directly collect personal data.',
       privacyP2: 'If metrics or analytics are included in the future, that will be stated here.',
       privacyP3: 'For contact: augusto.delgado00@hotmail.com.',
-      trademarks: 'The name \"Paradise\" and the names of its modules may be considered trademarks or identifiers of the project.',
+      trademarks: 'The name "Paradise" and the names of its modules may be considered trademarks or identifiers of the project.',
     },
     introGate: { title: 'Welcome to Paradise', button: 'Enter Paradise', videoLabel: 'Paradise manifesto video', dialogLabel: 'Paradise intro', buttonAria: 'Play welcome message and enter Paradise' },
     presentationButton: 'Presentation',

@@ -6,6 +6,7 @@ import { PageShell } from './components/layout/PageShell'
 import { Status, type ModuleItem } from './data/modules'
 import {
   Contact,
+  CommunitySection,
   CreatorSection,
   EcosystemMap,
   Faq,
@@ -31,6 +32,7 @@ import {
   localeOptions,
   type Locale,
 } from './content/localization'
+import { communitySignals } from './data/communitySignals'
 
 function pickFeatured(all: ModuleItem[], max = 5) {
   const priority = (m: ModuleItem) => (m.status === Status.Active ? 2 : m.status === Status.Mvp ? 1 : 0)
@@ -182,6 +184,8 @@ export default function App() {
           />
 
           <TrustStrip items={marketingCopy.trustStrip} />
+
+          <CommunitySection copy={marketingCopy.community} locale={locale} signals={communitySignals} />
 
           <ParadiseDemo title={marketingCopy.demo.title} subtitle={marketingCopy.demo.subtitle} scenarios={marketingCopy.demo.scenarios} locale={locale} />
 
