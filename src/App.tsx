@@ -185,8 +185,6 @@ export default function App() {
 
           <TrustStrip items={marketingCopy.trustStrip} />
 
-          <CommunitySection copy={marketingCopy.community} locale={locale} signals={communitySignals} />
-
           <ParadiseDemo title={marketingCopy.demo.title} subtitle={marketingCopy.demo.subtitle} scenarios={marketingCopy.demo.scenarios} locale={locale} />
 
           <ParadiseBrainShowcase traces={showcaseTraces} locale={locale} />
@@ -218,6 +216,8 @@ export default function App() {
           <HonestRoadmap title={marketingCopy.roadmap.title} subtitle={marketingCopy.roadmap.subtitle} columns={marketingCopy.roadmap.columns} locale={locale} />
 
           <CreatorSection locale={locale} />
+
+          <CommunitySection copy={marketingCopy.community} locale={locale} signals={communitySignals} />
 
           <Faq title={marketingCopy.faq.title} items={marketingCopy.faq.items} />
 

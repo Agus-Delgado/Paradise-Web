@@ -1,4 +1,4 @@
-import type { FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import type { CommunityMarketingCopy } from '../../content/marketingCopy'
 import type { Locale } from '../../content/localization'
 import type { CommunitySignal } from '../../data/communitySignals'
@@ -8,6 +8,8 @@ import {
   COMMUNITY_SURVEY_FORM_RESPONSE_URL,
   communityFootprintEntryIds,
   communitySurveyEntryIds,
+  FOOTPRINT_CONSENT_SUBMIT_VALUE,
+  SURVEY_CONSENT_SUBMIT_VALUE,
 } from '../../constants/communityGoogleForms'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
@@ -26,7 +28,7 @@ type CommunitySectionProps = {
   signals: readonly CommunitySignal[]
 }
 
-function preventGoogleSubmit(event: FormEvent<HTMLFormElement>) {
+function handleDisabledFormSubmit(event: FormEvent<HTMLFormElement>) {
   event.preventDefault()
 }
 
@@ -35,6 +37,13 @@ const formsInactiveFormClass =
 
 export function CommunitySection({ copy, locale, signals }: CommunitySectionProps) {
   const formsReady = areCommunityGoogleFormsConfigured()
+  const [footprintSubmitted, setFootprintSubmitted] = useState(false)
+  const [surveySubmitted, setSurveySubmitted] = useState(false)
+
+  useEffect(() => {
+    setFootprintSubmitted(false)
+    setSurveySubmitted(false)
+  }, [locale])
 
   return (
     <Section id="comunidad" className="relative py-16 sm:py-20 md:py-24">
@@ -43,6 +52,8 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
         aria-hidden
       />
       <Container>
+        <iframe name="community-footprint-frame" title="Community footprint form target" className="hidden" tabIndex={-1} />
+        <iframe name="community-survey-frame" title="Community survey form target" className="hidden" tabIndex={-1} />
         <header className="max-w-[65ch] space-y-4">
           <p className="prompt-block">{copy.kicker}</p>
           <h2 className="font-display text-2xl font-semibold tracking-tight text-white sm:text-3xl md:text-4xl">{copy.title}</h2>
@@ -63,7 +74,9 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
           {signals.length === 0 ? (
             <Card className="max-w-lg border border-white/10 bg-white/[0.025] px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm sm:px-5 sm:py-5">
               <p className="text-sm font-semibold text-slate-200">{copy.signalsEmptyTitle}</p>
-              <p className="mt-2 text-sm leading-relaxed text-slate-400">{copy.signalsEmptyBody}</p>
+              {copy.signalsEmptyBody.trim() ? (
+                <p className="mt-2 text-sm leading-relaxed text-slate-400">{copy.signalsEmptyBody}</p>
+              ) : null}
             </Card>
           ) : (
             <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -101,8 +114,14 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                 className={cn('space-y-4', !formsReady && formsInactiveFormClass)}
                 method="post"
                 action={formsReady ? COMMUNITY_FOOTPRINT_FORM_RESPONSE_URL : '#'}
-                target={formsReady ? '_blank' : undefined}
-                onSubmit={formsReady ? undefined : preventGoogleSubmit}
+                target={formsReady ? 'community-footprint-frame' : undefined}
+                onSubmit={(e) => {
+                  if (!formsReady) {
+                    handleDisabledFormSubmit(e)
+                    return
+                  }
+                  setFootprintSubmitted(true)
+                }}
               >
                 <input type="hidden" name={communityFootprintEntryIds.locale} value={locale} />
                 <div>
@@ -170,7 +189,7 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     className="mt-1 h-4 w-4 shrink-0 rounded border border-white/20 bg-white/[0.06] text-[rgb(var(--p-accent-rgb))] focus:ring-[rgb(var(--p-accent-rgb)/0.5)]"
                     name={communityFootprintEntryIds.consent}
                     type="checkbox"
-                    value="accepted"
+                    value={FOOTPRINT_CONSENT_SUBMIT_VALUE}
                     required={formsReady}
                     disabled={!formsReady}
                   />
@@ -181,6 +200,11 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                 <Button type="submit" size="md" className="mt-2" disabled={!formsReady}>
                   {copy.footprint.submit}
                 </Button>
+                {footprintSubmitted ? (
+                  <p className="mt-3 text-sm leading-relaxed text-emerald-200/95" role="status">
+                    {copy.footprintSuccessMessage}
+                  </p>
+                ) : null}
               </form>
             </div>
           </Card>
@@ -204,8 +228,14 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                 className={cn('space-y-6', !formsReady && formsInactiveFormClass)}
                 method="post"
                 action={formsReady ? COMMUNITY_SURVEY_FORM_RESPONSE_URL : '#'}
-                target={formsReady ? '_blank' : undefined}
-                onSubmit={formsReady ? undefined : preventGoogleSubmit}
+                target={formsReady ? 'community-survey-frame' : undefined}
+                onSubmit={(e) => {
+                  if (!formsReady) {
+                    handleDisabledFormSubmit(e)
+                    return
+                  }
+                  setSurveySubmitted(true)
+                }}
               >
                 <input type="hidden" name={communitySurveyEntryIds.locale} value={locale} />
 
@@ -403,9 +433,29 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                   />
                 </div>
 
+                <div className="flex items-start gap-3 pt-1">
+                  <input
+                    id="survey-consent"
+                    className="mt-1 h-4 w-4 shrink-0 rounded border border-white/20 bg-white/[0.06] text-[rgb(var(--p-accent-rgb))] focus:ring-[rgb(var(--p-accent-rgb)/0.5)]"
+                    name={communitySurveyEntryIds.consent}
+                    type="checkbox"
+                    value={SURVEY_CONSENT_SUBMIT_VALUE}
+                    required={formsReady}
+                    disabled={!formsReady}
+                  />
+                  <label htmlFor="survey-consent" className="text-sm leading-relaxed text-slate-300/95">
+                    {copy.survey.consentLabel}
+                  </label>
+                </div>
+
                 <Button type="submit" size="md" className="mt-1" disabled={!formsReady}>
                   {copy.survey.submit}
                 </Button>
+                {surveySubmitted ? (
+                  <p className="mt-3 text-sm leading-relaxed text-emerald-200/95" role="status">
+                    {copy.surveySuccessMessage}
+                  </p>
+                ) : null}
               </form>
             </div>
           </Card>

@@ -15,7 +15,6 @@ export const marketingCopyEn = {
   nav: [
     { label: 'Solution', href: '#solucion' },
     { label: 'Manifesto', href: '#manifiesto' },
-    { label: 'Community', href: '#comunidad' },
     { label: 'Demo', href: '#demo' },
     { label: 'How it thinks', href: '#como-piensa' },
     { label: 'How it works', href: '#como-funciona' },
@@ -23,6 +22,7 @@ export const marketingCopyEn = {
     { label: 'Use cases', href: '#casos' },
     { label: 'Modules', href: '#modulos' },
     { label: 'Roadmap', href: '#roadmap' },
+    { label: 'Community', href: '#comunidad' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Contact', href: '#contacto' },
   ],
@@ -65,11 +65,13 @@ export const marketingCopyEn = {
     intro:
       'Paradise is not aiming to be a generic chatbot or a closed commercial product: it is a living ecosystem that needs human signals to evolve with judgment. This space is an invitation to participate—no backend, no magic promises: you can leave a trace and answer a short survey to help steer the direction.',
     signalsHeading: 'Signals on this page',
-    signalsEmptyTitle: 'No published signals yet',
-    signalsEmptyBody:
-      'When there are approved contributions, they will appear here. Everything shown in this section is manually reviewed before it goes live.',
+    signalsEmptyTitle: 'No signals published yet.',
+    signalsEmptyBody: '',
     formsNotConfiguredNotice:
-      'Google Forms submissions are not configured in code yet. Fill in the URLs and entry.* values in src/constants/communityGoogleForms.ts to enable sending.',
+      "This section is being prepared. Soon you'll be able to leave your signal for Paradise.",
+    footprintSuccessMessage: 'Thank you. Your signal was sent to Paradise.',
+    surveySuccessMessage:
+      "Thank you. Your responses are now part of Paradise's first signals.",
     footprint: {
       title: 'Leave your mark',
       body:
@@ -85,13 +87,15 @@ export const marketingCopyEn = {
       emailHint: 'Only if you want us to be able to reply outside this page.',
       emailPlaceholder: 'you@email.com',
       consentLabel:
-        'I agree that my comment may be reviewed and published on the Paradise page.',
+        'I agree that my contribution may become part of Paradise.',
     },
     survey: {
       title: 'Feed Paradise',
       body:
         'Paradise is not trying to be just another chatbot. The goal is to build purposeful intelligence—a digital presence that can learn from people, understand real problems, and evolve with a more human lens.',
       submit: 'Send survey',
+      consentLabel:
+        'I agree that my responses may be used as signals to help Paradise evolve.',
       q1: {
         legend: 'Do you believe in paradise?',
         options: ['Yes', 'No', "I don't know", 'I think it can be built'],

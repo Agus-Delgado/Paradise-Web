@@ -17,7 +17,6 @@ export const marketingCopy = {
   nav: [
     { label: 'Solución', href: '#solucion' },
     { label: 'Manifiesto', href: '#manifiesto' },
-    { label: 'Comunidad', href: '#comunidad' },
     { label: 'Demo', href: '#demo' },
     { label: 'Cómo piensa', href: '#como-piensa' },
     { label: 'Cómo funciona', href: '#como-funciona' },
@@ -25,6 +24,7 @@ export const marketingCopy = {
     { label: 'Casos', href: '#casos' },
     { label: 'Módulos', href: '#modulos' },
     { label: 'Roadmap', href: '#roadmap' },
+    { label: 'Comunidad', href: '#comunidad' },
     { label: 'FAQ', href: '#faq' },
     { label: 'Contacto', href: '#contacto' },
   ],
@@ -68,11 +68,12 @@ export const marketingCopy = {
     intro:
       'Paradise no busca ser un chatbot común ni un producto comercial cerrado: es un ecosistema vivo que necesita señales humanas para evolucionar con criterio. Este espacio es una invitación a participar sin backend ni promesas mágicas: podés dejar una huella y responder una encuesta breve para ayudar a orientar el rumbo.',
     signalsHeading: 'Señales en la página',
-    signalsEmptyTitle: 'Sin señales publicadas todavía',
-    signalsEmptyBody:
-      'Cuando haya aportes aprobados, van a aparecer acá. Todo lo que se muestra en esta sección pasa antes por una revisión manual.',
+    signalsEmptyTitle: 'Sin señales publicadas todavía.',
+    signalsEmptyBody: '',
     formsNotConfiguredNotice:
-      'Los envíos a Google Forms todavía no están configurados en el código. Completá las URLs y los entry.* en src/constants/communityGoogleForms.ts para habilitar el envío.',
+      'Esta sección está en preparación. Pronto vas a poder dejar tu señal para Paradise.',
+    footprintSuccessMessage: 'Gracias. Tu señal fue enviada a Paradise.',
+    surveySuccessMessage: 'Gracias. Tus respuestas ya forman parte de las primeras señales de Paradise.',
     footprint: {
       title: 'Dejá tu huella',
       body:
@@ -88,13 +89,15 @@ export const marketingCopy = {
       emailHint: 'Solo si querés que podamos responderte por fuera de la página.',
       emailPlaceholder: 'tu@email.com',
       consentLabel:
-        'Acepto que mi comentario pueda ser revisado y publicado en la página de Paradise.',
+        'Acepto que mi aporte pueda formar parte de Paradise.',
     },
     survey: {
       title: 'Alimentá Paradise',
       body:
         'Paradise no busca ser un chatbot más. La idea es construir una inteligencia con propósito, una presencia digital que pueda aprender de las personas, comprender problemas reales y evolucionar con una mirada más humana.',
       submit: 'Enviar encuesta',
+      consentLabel:
+        'Acepto que mis respuestas puedan ser utilizadas como señales para ayudar a evolucionar Paradise.',
       q1: {
         legend: '¿Creés en el paraíso?',
         options: ['Sí', 'No', 'No lo sé', 'Creo que puede construirse'],
@@ -477,6 +480,8 @@ export type CommunityMarketingCopy = {
   signalsEmptyTitle: string
   signalsEmptyBody: string
   formsNotConfiguredNotice: string
+  footprintSuccessMessage: string
+  surveySuccessMessage: string
   footprint: {
     title: string
     body: string
@@ -496,6 +501,7 @@ export type CommunityMarketingCopy = {
     title: string
     body: string
     submit: string
+    consentLabel: string
     q1: { legend: string; options: readonly string[] }
     q2: { legend: string; placeholder: string }
     q3: { legend: string; options: readonly string[] }
