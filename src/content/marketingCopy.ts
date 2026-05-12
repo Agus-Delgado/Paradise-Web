@@ -1,3 +1,5 @@
+import { COMMUNITY_FOOTPRINT_AREA_SUBMIT_VALUES } from '../constants/communityGoogleForms'
+
 export type UseCaseKey =
   | 'ops'
   | 'community'
@@ -86,7 +88,8 @@ export const marketingCopy = {
       aliasLabel: 'Nombre o alias',
       aliasPlaceholder: 'Cómo querés que te leamos',
       areaLabel: 'Área de interés',
-      areaPlaceholder: 'Ej.: educación, salud, comunidad, producto…',
+      areaPlaceholder: 'Seleccioná un área',
+      areaOptions: COMMUNITY_FOOTPRINT_AREA_SUBMIT_VALUES.map((value) => ({ value, label: value })),
       messageLabel: 'Comentario / aporte',
       messagePlaceholder: 'Una idea, una pregunta o una experiencia que quieras compartir',
       emailLabel: 'Email (opcional)',
@@ -496,6 +499,7 @@ export type CommunityMarketingCopy = {
     aliasPlaceholder: string
     areaLabel: string
     areaPlaceholder: string
+    areaOptions: readonly { value: string; label: string }[]
     messageLabel: string
     messagePlaceholder: string
     emailLabel: string

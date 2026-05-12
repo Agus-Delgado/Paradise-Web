@@ -153,8 +153,10 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     return
                   }
                   writeSubmittedFlag(STORAGE_FOOTPRINT_SUBMITTED)
-                  setFootprintLocked(true)
                   setFootprintFreshSuccess(true)
+                  setTimeout(() => {
+                    setFootprintLocked(true)
+                  }, 0)
                 }}
               >
                 <input type="hidden" name={communityFootprintEntryIds.locale} value={locale} />
@@ -177,16 +179,27 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                   <label className={labelClass} htmlFor="community-area">
                     {copy.footprint.areaLabel}
                   </label>
-                  <input
+                  <select
                     id="community-area"
-                    className={inputClass}
+                    className={cn(
+                      inputClass,
+                      'appearance-none bg-white/[0.06] text-slate-100 border-white/10 focus:border-violet-300/50 focus:ring-violet-300/20',
+                    )}
                     name={communityFootprintEntryIds.area}
-                    type="text"
                     autoComplete="off"
-                    placeholder={copy.footprint.areaPlaceholder}
                     required={formsReady && !footprintLocked}
                     disabled={footprintInactive}
-                  />
+                    defaultValue=""
+                  >
+                    <option value="" disabled className="bg-slate-900 text-slate-400">
+                      {copy.footprint.areaPlaceholder}
+                    </option>
+                    {copy.footprint.areaOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value} className="bg-slate-900 text-slate-100">
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label className={labelClass} htmlFor="community-message">
@@ -273,8 +286,10 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     return
                   }
                   writeSubmittedFlag(STORAGE_SURVEY_SUBMITTED)
-                  setSurveyLocked(true)
                   setSurveyFreshSuccess(true)
+                  setTimeout(() => {
+                    setSurveyLocked(true)
+                  }, 0)
                 }}
               >
                 <input type="hidden" name={communitySurveyEntryIds.locale} value={locale} />

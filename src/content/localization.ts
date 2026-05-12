@@ -1,4 +1,5 @@
 import { marketingCopy as marketingCopyEs } from './marketingCopy'
+import { COMMUNITY_FOOTPRINT_AREA_SUBMIT_VALUES } from '../constants/communityGoogleForms'
 import { modules as modulesEs, statusLabel as statusLabelEs, pillarLabel as pillarLabelEs, type ModuleItem, type Status, type Pillar } from '../data/modules'
 import { moduleDetails as moduleDetailsEs, type ModuleDetail } from '../data/moduleDetails'
 import { showcaseTraces as showcaseTracesEs, type ShowcaseTrace } from '../data/showcaseTraces'
@@ -9,6 +10,18 @@ export const defaultLocale: Locale = 'es'
 export const localeOptions: ReadonlyArray<{ value: Locale; label: string; shortLabel: string }> = [
   { value: 'es', label: 'Español', shortLabel: 'ES' },
   { value: 'en', label: 'English', shortLabel: 'EN' },
+] as const
+
+const FOOTPRINT_AREA_LABELS_EN = [
+  'Technology',
+  'Education',
+  'Health',
+  'Community',
+  'Artificial intelligence',
+  'Design',
+  'Data',
+  'Humanity',
+  'Other',
 ] as const
 
 export const marketingCopyEn = {
@@ -84,7 +97,11 @@ export const marketingCopyEn = {
       aliasLabel: 'Name or alias',
       aliasPlaceholder: 'How you want us to read you',
       areaLabel: 'Area of interest',
-      areaPlaceholder: 'e.g. education, health, community, product…',
+      areaPlaceholder: 'Select an area',
+      areaOptions: COMMUNITY_FOOTPRINT_AREA_SUBMIT_VALUES.map((value, i) => ({
+        value,
+        label: FOOTPRINT_AREA_LABELS_EN[i] ?? value,
+      })),
       messageLabel: 'Comment / contribution',
       messagePlaceholder: 'An idea, a question, or an experience you want to share',
       emailLabel: 'Email (optional)',

@@ -18,6 +18,19 @@ export const COMMUNITY_FORM_FIELDS = {
   locale: 'entry.1691324414',
 } as const
 
+/** Valores exactos del desplegable "Área de interés" en Google Forms (formulario en español). */
+export const COMMUNITY_FOOTPRINT_AREA_SUBMIT_VALUES = [
+  'Tecnología',
+  'Educación',
+  'Salud',
+  'Comunidad',
+  'Inteligencia artificial',
+  'Diseño',
+  'Datos',
+  'Humanidad',
+  'Otro',
+] as const
+
 export const SURVEY_FORM_FIELDS = {
   believesInParadise: 'entry.1832451703',
   paradiseImage: 'entry.2137518931',
