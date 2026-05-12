@@ -72,6 +72,10 @@ export const marketingCopyEn = {
     footprintSuccessMessage: 'Thank you. Your signal was sent to Paradise.',
     surveySuccessMessage:
       "Thank you. Your responses are now part of Paradise's first signals.",
+    footprintAlreadySubmittedMessage:
+      'We already registered a signal from this browser. Thank you for feeding Paradise.',
+    surveyAlreadySubmittedMessage:
+      "We already registered your responses from this browser. Thank you for being part of Paradise's first signals.",
     footprint: {
       title: 'Leave your mark',
       body:

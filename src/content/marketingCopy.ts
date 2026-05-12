@@ -74,6 +74,10 @@ export const marketingCopy = {
       'Esta sección está en preparación. Pronto vas a poder dejar tu señal para Paradise.',
     footprintSuccessMessage: 'Gracias. Tu señal fue enviada a Paradise.',
     surveySuccessMessage: 'Gracias. Tus respuestas ya forman parte de las primeras señales de Paradise.',
+    footprintAlreadySubmittedMessage:
+      'Ya registramos una señal desde este navegador. Gracias por alimentar Paradise.',
+    surveyAlreadySubmittedMessage:
+      'Ya registramos tus respuestas desde este navegador. Gracias por formar parte de las primeras señales de Paradise.',
     footprint: {
       title: 'Dejá tu huella',
       body:
@@ -482,6 +486,8 @@ export type CommunityMarketingCopy = {
   formsNotConfiguredNotice: string
   footprintSuccessMessage: string
   surveySuccessMessage: string
+  footprintAlreadySubmittedMessage: string
+  surveyAlreadySubmittedMessage: string
   footprint: {
     title: string
     body: string

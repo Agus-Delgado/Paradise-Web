@@ -35,15 +35,43 @@ function handleDisabledFormSubmit(event: FormEvent<HTMLFormElement>) {
 const formsInactiveFormClass =
   'pointer-events-none cursor-default [&_label]:cursor-default [&_input]:cursor-not-allowed [&_textarea]:cursor-not-allowed [&_button]:cursor-not-allowed'
 
+const STORAGE_FOOTPRINT_SUBMITTED = 'paradise.community.footprintSubmitted'
+const STORAGE_SURVEY_SUBMITTED = 'paradise.community.surveySubmitted'
+
+function readSubmittedFlag(key: string): boolean {
+  try {
+    if (typeof window === 'undefined') return false
+    return window.localStorage.getItem(key) === 'true'
+  } catch {
+    return false
+  }
+}
+
+function writeSubmittedFlag(key: string): void {
+  try {
+    if (typeof window === 'undefined') return
+    window.localStorage.setItem(key, 'true')
+  } catch {
+    // Storage unavailable or quota exceeded — submission still proceeds when applicable.
+  }
+}
+
 export function CommunitySection({ copy, locale, signals }: CommunitySectionProps) {
   const formsReady = areCommunityGoogleFormsConfigured()
-  const [footprintSubmitted, setFootprintSubmitted] = useState(false)
-  const [surveySubmitted, setSurveySubmitted] = useState(false)
+  const [footprintLocked, setFootprintLocked] = useState(false)
+  const [surveyLocked, setSurveyLocked] = useState(false)
+  const [footprintFreshSuccess, setFootprintFreshSuccess] = useState(false)
+  const [surveyFreshSuccess, setSurveyFreshSuccess] = useState(false)
 
   useEffect(() => {
-    setFootprintSubmitted(false)
-    setSurveySubmitted(false)
+    setFootprintLocked(readSubmittedFlag(STORAGE_FOOTPRINT_SUBMITTED))
+    setSurveyLocked(readSubmittedFlag(STORAGE_SURVEY_SUBMITTED))
+    setFootprintFreshSuccess(false)
+    setSurveyFreshSuccess(false)
   }, [locale])
+
+  const footprintInactive = !formsReady || footprintLocked
+  const surveyInactive = !formsReady || surveyLocked
 
   return (
     <Section id="comunidad" className="relative py-16 sm:py-20 md:py-24">
@@ -111,7 +139,7 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                 <p className="mt-3 max-w-[65ch] text-sm leading-relaxed text-slate-300/95 sm:text-base">{copy.footprint.body}</p>
               </div>
               <form
-                className={cn('space-y-4', !formsReady && formsInactiveFormClass)}
+                className={cn('space-y-4', footprintInactive && formsInactiveFormClass)}
                 method="post"
                 action={formsReady ? COMMUNITY_FOOTPRINT_FORM_RESPONSE_URL : '#'}
                 target={formsReady ? 'community-footprint-frame' : undefined}
@@ -120,7 +148,13 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     handleDisabledFormSubmit(e)
                     return
                   }
-                  setFootprintSubmitted(true)
+                  if (footprintLocked) {
+                    e.preventDefault()
+                    return
+                  }
+                  writeSubmittedFlag(STORAGE_FOOTPRINT_SUBMITTED)
+                  setFootprintLocked(true)
+                  setFootprintFreshSuccess(true)
                 }}
               >
                 <input type="hidden" name={communityFootprintEntryIds.locale} value={locale} />
@@ -135,8 +169,8 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     type="text"
                     autoComplete="nickname"
                     placeholder={copy.footprint.aliasPlaceholder}
-                    required={formsReady}
-                    disabled={!formsReady}
+                    required={formsReady && !footprintLocked}
+                    disabled={footprintInactive}
                   />
                 </div>
                 <div>
@@ -150,8 +184,8 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     type="text"
                     autoComplete="off"
                     placeholder={copy.footprint.areaPlaceholder}
-                    required={formsReady}
-                    disabled={!formsReady}
+                    required={formsReady && !footprintLocked}
+                    disabled={footprintInactive}
                   />
                 </div>
                 <div>
@@ -163,8 +197,8 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     className={cn(inputClass, 'min-h-[120px] resize-y')}
                     name={communityFootprintEntryIds.message}
                     placeholder={copy.footprint.messagePlaceholder}
-                    required={formsReady}
-                    disabled={!formsReady}
+                    required={formsReady && !footprintLocked}
+                    disabled={footprintInactive}
                     rows={4}
                   />
                 </div>
@@ -179,7 +213,7 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     type="email"
                     autoComplete="email"
                     placeholder={copy.footprint.emailPlaceholder}
-                    disabled={!formsReady}
+                    disabled={footprintInactive}
                   />
                   <p className="mt-1.5 text-xs leading-relaxed text-slate-500">{copy.footprint.emailHint}</p>
                 </div>
@@ -190,19 +224,19 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     name={communityFootprintEntryIds.consent}
                     type="checkbox"
                     value={FOOTPRINT_CONSENT_SUBMIT_VALUE}
-                    required={formsReady}
-                    disabled={!formsReady}
+                    required={formsReady && !footprintLocked}
+                    disabled={footprintInactive}
                   />
                   <label htmlFor="community-consent" className="text-sm leading-relaxed text-slate-300/95">
                     {copy.footprint.consentLabel}
                   </label>
                 </div>
-                <Button type="submit" size="md" className="mt-2" disabled={!formsReady}>
+                <Button type="submit" size="md" className="mt-2" disabled={footprintInactive}>
                   {copy.footprint.submit}
                 </Button>
-                {footprintSubmitted ? (
+                {footprintLocked ? (
                   <p className="mt-3 text-sm leading-relaxed text-emerald-200/95" role="status">
-                    {copy.footprintSuccessMessage}
+                    {footprintFreshSuccess ? copy.footprintSuccessMessage : copy.footprintAlreadySubmittedMessage}
                   </p>
                 ) : null}
               </form>
@@ -225,7 +259,7 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                 <p className="mt-3 max-w-[65ch] text-sm leading-relaxed text-slate-300/95 sm:text-base">{copy.survey.body}</p>
               </div>
               <form
-                className={cn('space-y-6', !formsReady && formsInactiveFormClass)}
+                className={cn('space-y-6', surveyInactive && formsInactiveFormClass)}
                 method="post"
                 action={formsReady ? COMMUNITY_SURVEY_FORM_RESPONSE_URL : '#'}
                 target={formsReady ? 'community-survey-frame' : undefined}
@@ -234,7 +268,13 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     handleDisabledFormSubmit(e)
                     return
                   }
-                  setSurveySubmitted(true)
+                  if (surveyLocked) {
+                    e.preventDefault()
+                    return
+                  }
+                  writeSubmittedFlag(STORAGE_SURVEY_SUBMITTED)
+                  setSurveyLocked(true)
+                  setSurveyFreshSuccess(true)
                 }}
               >
                 <input type="hidden" name={communitySurveyEntryIds.locale} value={locale} />
@@ -247,15 +287,15 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                         key={opt}
                         className={cn(
                           'flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-200 transition hover:border-white/15',
-                          formsReady ? 'cursor-pointer' : 'cursor-default',
+                          formsReady && !surveyLocked ? 'cursor-pointer' : 'cursor-default',
                         )}
                       >
                         <input
                           type="radio"
                           name={communitySurveyEntryIds.q1}
                           value={opt}
-                          required={formsReady}
-                          disabled={!formsReady}
+                          required={formsReady && !surveyLocked}
+                          disabled={surveyInactive}
                           className="h-4 w-4 shrink-0 border-white/20 bg-white/[0.06] text-[rgb(var(--p-accent-rgb))]"
                         />
                         <span>{opt}</span>
@@ -273,8 +313,8 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     className={cn(inputClass, 'min-h-[88px] resize-y')}
                     name={communitySurveyEntryIds.q2}
                     placeholder={copy.survey.q2.placeholder}
-                    required={formsReady}
-                    disabled={!formsReady}
+                    required={formsReady && !surveyLocked}
+                    disabled={surveyInactive}
                     rows={3}
                   />
                 </div>
@@ -287,15 +327,15 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                         key={opt}
                         className={cn(
                           'flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-200 transition hover:border-white/15',
-                          formsReady ? 'cursor-pointer' : 'cursor-default',
+                          formsReady && !surveyLocked ? 'cursor-pointer' : 'cursor-default',
                         )}
                       >
                         <input
                           type="radio"
                           name={communitySurveyEntryIds.q3}
                           value={opt}
-                          required={formsReady}
-                          disabled={!formsReady}
+                          required={formsReady && !surveyLocked}
+                          disabled={surveyInactive}
                           className="h-4 w-4 shrink-0 border-white/20 bg-white/[0.06] text-[rgb(var(--p-accent-rgb))]"
                         />
                         <span>{opt}</span>
@@ -313,8 +353,8 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     className={cn(inputClass, 'min-h-[88px] resize-y')}
                     name={communitySurveyEntryIds.q4}
                     placeholder={copy.survey.q4.placeholder}
-                    required={formsReady}
-                    disabled={!formsReady}
+                    required={formsReady && !surveyLocked}
+                    disabled={surveyInactive}
                     rows={3}
                   />
                 </div>
@@ -327,15 +367,15 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                         key={opt}
                         className={cn(
                           'flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-200 transition hover:border-white/15',
-                          formsReady ? 'cursor-pointer' : 'cursor-default',
+                          formsReady && !surveyLocked ? 'cursor-pointer' : 'cursor-default',
                         )}
                       >
                         <input
                           type="radio"
                           name={communitySurveyEntryIds.q5}
                           value={opt}
-                          required={formsReady}
-                          disabled={!formsReady}
+                          required={formsReady && !surveyLocked}
+                          disabled={surveyInactive}
                           className="h-4 w-4 shrink-0 border-white/20 bg-white/[0.06] text-[rgb(var(--p-accent-rgb))]"
                         />
                         <span>{opt}</span>
@@ -352,15 +392,15 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                         key={opt}
                         className={cn(
                           'flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-200 transition hover:border-white/15',
-                          formsReady ? 'cursor-pointer' : 'cursor-default',
+                          formsReady && !surveyLocked ? 'cursor-pointer' : 'cursor-default',
                         )}
                       >
                         <input
                           type="radio"
                           name={communitySurveyEntryIds.q6}
                           value={opt}
-                          required={formsReady}
-                          disabled={!formsReady}
+                          required={formsReady && !surveyLocked}
+                          disabled={surveyInactive}
                           className="h-4 w-4 shrink-0 border-white/20 bg-white/[0.06] text-[rgb(var(--p-accent-rgb))]"
                         />
                         <span>{opt}</span>
@@ -377,15 +417,15 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                         key={opt}
                         className={cn(
                           'flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-200 transition hover:border-white/15',
-                          formsReady ? 'cursor-pointer' : 'cursor-default',
+                          formsReady && !surveyLocked ? 'cursor-pointer' : 'cursor-default',
                         )}
                       >
                         <input
                           type="radio"
                           name={communitySurveyEntryIds.q7}
                           value={opt}
-                          required={formsReady}
-                          disabled={!formsReady}
+                          required={formsReady && !surveyLocked}
+                          disabled={surveyInactive}
                           className="h-4 w-4 shrink-0 border-white/20 bg-white/[0.06] text-[rgb(var(--p-accent-rgb))]"
                         />
                         <span>{opt}</span>
@@ -402,15 +442,15 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                         key={opt}
                         className={cn(
                           'flex items-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2.5 text-sm text-slate-200 transition hover:border-white/15',
-                          formsReady ? 'cursor-pointer' : 'cursor-default',
+                          formsReady && !surveyLocked ? 'cursor-pointer' : 'cursor-default',
                         )}
                       >
                         <input
                           type="radio"
                           name={communitySurveyEntryIds.q8}
                           value={opt}
-                          required={formsReady}
-                          disabled={!formsReady}
+                          required={formsReady && !surveyLocked}
+                          disabled={surveyInactive}
                           className="h-4 w-4 shrink-0 border-white/20 bg-white/[0.06] text-[rgb(var(--p-accent-rgb))]"
                         />
                         <span>{opt}</span>
@@ -428,7 +468,7 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     className={cn(inputClass, 'min-h-[88px] resize-y')}
                     name={communitySurveyEntryIds.q9}
                     placeholder={copy.survey.q9.placeholder}
-                    disabled={!formsReady}
+                    disabled={surveyInactive}
                     rows={3}
                   />
                 </div>
@@ -440,20 +480,20 @@ export function CommunitySection({ copy, locale, signals }: CommunitySectionProp
                     name={communitySurveyEntryIds.consent}
                     type="checkbox"
                     value={SURVEY_CONSENT_SUBMIT_VALUE}
-                    required={formsReady}
-                    disabled={!formsReady}
+                    required={formsReady && !surveyLocked}
+                    disabled={surveyInactive}
                   />
                   <label htmlFor="survey-consent" className="text-sm leading-relaxed text-slate-300/95">
                     {copy.survey.consentLabel}
                   </label>
                 </div>
 
-                <Button type="submit" size="md" className="mt-1" disabled={!formsReady}>
+                <Button type="submit" size="md" className="mt-1" disabled={surveyInactive}>
                   {copy.survey.submit}
                 </Button>
-                {surveySubmitted ? (
+                {surveyLocked ? (
                   <p className="mt-3 text-sm leading-relaxed text-emerald-200/95" role="status">
-                    {copy.surveySuccessMessage}
+                    {surveyFreshSuccess ? copy.surveySuccessMessage : copy.surveyAlreadySubmittedMessage}
                   </p>
                 ) : null}
               </form>
